@@ -9,11 +9,7 @@
 using namespace std;
 
 
-enum Medalha {
-	ouro,
-	prata,
-	bronze
-};
+enum Medalha {ouro, prata, bronze};
 
 
 class Atleta: public Pessoa {
@@ -23,7 +19,6 @@ class Atleta: public Pessoa {
 public:
 	Atleta();
 };
-
 
 
 

@@ -8,9 +8,11 @@ using namespace std;
 
 
 class Infrastrutura {
+	string nome;
 	string cidade;
 public:
-	Infrastrutura(string city);
+	Infrastrutura(string name, string city);
+	string getNome() const;
 	string getCidade() const;
 };
 

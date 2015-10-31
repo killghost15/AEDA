@@ -11,18 +11,21 @@ Campeonato campeonato;
 void MenuInicial();
 
 
-// Apresenta o form para a criação da infrastrutura
+// Apresenta o form para a adição da infrastrutura
 void AdicionarInfrastrutura() {
-	string cidade_infrastrutura;
+	string cidade_infrastrutura, nome_infrastrutura;
 
-	cout << "----------------------------------------------" << endl;
+	//cout << "----------------------------------------------" << endl;
+	cout << " Nome da Infrastrutura: ";
+	cin >> nome_infrastrutura;
+	cout << endl;
 	cout << " Cidade da Infrastrutura: ";
 	cin >> cidade_infrastrutura;
 	cout << endl;
-	cout << "----------------------------------------------" << endl;
+	//cout << "----------------------------------------------" << endl;
 
-	Infrastrutura *infra = new Infrastrutura(cidade_infrastrutura);
-	campeonato.saveInfrastrutura(*infra);
+	Infrastrutura *infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
+	campeonato.addInfrastrutura(*infra);
 
 	cout << "Infrastrutura adicionada com sucesso!" << endl << endl;
 }
@@ -50,12 +53,12 @@ void MenuInfrastruturas() {
 
 	switch (escolha_infrastruturas) {
 		case 1:
-			cout << endl;
+			cout << endl << endl;
 			AdicionarInfrastrutura();
 			MenuInicial();
 			break;
 		case 2:
-			cout << endl;
+			cout << endl << endl;
 			//
 			break;
 		case 3:
@@ -151,6 +154,63 @@ void MenuEquipasAtletas() {
 	}
 }
 
+
+// Menu das Listagens, efetua a listagem de toda a informação que o utilizador quiser
+void MenuListagens() {
+	int escolha_listagens;
+
+	cout << "---------------------------------------------" << endl;
+	cout << "-             *** Listagens ***             -" << endl;
+	cout << "-                                           -" << endl;
+	cout << "- O que pretende listar?                    -" << endl;
+	cout << "-                                           -" << endl;
+	cout << "- 1. Atletas                                -" << endl;
+	cout << "- 2. Equipas                                -" << endl;
+	cout << "- 3. Desportos                              -" << endl;
+	cout << "- 4. Modalidades                            -" << endl;
+	cout << "- 5. Funcionários                           -" << endl;
+	cout << "- 6. Infrastruturas                         -" << endl;
+	cout << "-                                           -" << endl;
+	cout << "---------------------------------------------" << endl;
+
+	cout << " O que pretende fazer? ";
+	cin >> escolha_listagens;
+
+	if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5 && escolha_listagens != 6 ) {
+		cout << " Por favor, faça uma escolha adequada." << endl << endl;
+		MenuInicial();
+	}
+
+
+	switch (escolha_listagens) {
+		case 1:
+			cout << endl;
+			//MenuEquipasAtletas();
+			break;
+		case 2:
+			cout << endl;
+			//MenuDesportosModalidades();
+			break;
+		case 3:
+			cout << endl;
+			//MenuCalendario();
+			break;
+		case 4:
+			cout << endl;
+			//MenuInfrastruturas();
+			break;
+		case 5:
+			cout << endl;
+			//MenuListagens();
+			break;
+		case 6:
+			cout << endl;
+			//MenuListagens();
+			break;
+	}
+}
+
+
 // Menu Principal, chama todos os outros Menus mediante a escolha do utilizador
 void MenuInicial() {
 	int escolha_menu;
@@ -170,7 +230,7 @@ void MenuInicial() {
 	cin >> escolha_menu;
 
 	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 ) {
-		cout << " Por favor, faça uma escolha adequada." << endl;
+		cout << " Por favor, faça uma escolha adequada." << endl << endl;
 		MenuInicial();
 	}
 
@@ -201,7 +261,12 @@ void MenuInicial() {
 
 
 int main() {
+	//Carrega a informação para os respetivos vetores
+	campeonato.loadInfrastrutura();
+
+	//Chama o Menu Inicial
 	MenuInicial();
+
 	return 0;
 }
 

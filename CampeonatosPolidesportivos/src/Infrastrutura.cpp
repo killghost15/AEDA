@@ -2,8 +2,14 @@
 
 
 // Construtor da Classe Infrastrutura
-Infrastrutura::Infrastrutura(string city) {
+Infrastrutura::Infrastrutura(string name, string city) {
+	nome = name;
 	cidade = city;
+}
+
+//getNome()
+string Infrastrutura::getNome() const {
+	return nome;
 }
 
 //getCidade()
