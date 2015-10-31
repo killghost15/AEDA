@@ -1,10 +1,31 @@
 #include <iostream>
+#include "Campeonato.h"
+#include "Infrastrutura.h"
 
 using namespace std;
+
+
+Campeonato campeonato;
 
 // Declaração das funções
 void MenuInicial();
 
+
+// Apresenta o form para a criação da infrastrutura
+void AdicionarInfrastrutura() {
+	string cidade_infrastrutura;
+
+	cout << "----------------------------------------------" << endl;
+	cout << " Cidade da Infrastrutura: ";
+	cin >> cidade_infrastrutura;
+	cout << endl;
+	cout << "----------------------------------------------" << endl;
+
+	Infrastrutura *infra = new Infrastrutura(cidade_infrastrutura);
+	campeonato.saveInfrastrutura(*infra);
+
+	cout << "Infrastrutura adicionada com sucesso!" << endl << endl;
+}
 
 // Menu de Manutenção das Infrastruturas do campeonato
 void MenuInfrastruturas() {
@@ -13,24 +34,25 @@ void MenuInfrastruturas() {
 	cout << "----------------------------------------------" << endl;
 	cout << "-            ** Infrastruturas **            -" << endl;
 	cout << "-                                            -" << endl;
-	cout << "- 1. Criar Infrastrutura                     -" << endl;
+	cout << "- 1. Adicionar Infrastrutura                 -" << endl;
 	cout << "- 2. Apagar Infrastrutura                    -" << endl;
 	cout << "- 3. Voltar ao Menu Principal                -" << endl;
 	cout << "-                                            -" << endl;
 	cout << "----------------------------------------------" << endl;
 
-	cout << "O que pretende fazer? ";
+	cout << " O que pretende fazer? ";
 	cin >> escolha_infrastruturas;
 
 	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 ) {
-		cout << "Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada." << endl << endl;
 		MenuInfrastruturas();
 	}
 
 	switch (escolha_infrastruturas) {
 		case 1:
 			cout << endl;
-			//
+			AdicionarInfrastrutura();
+			MenuInicial();
 			break;
 		case 2:
 			cout << endl;
@@ -59,11 +81,11 @@ void MenuDesportosModalidades() {
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
-	cout << "O que pretende fazer? ";
+	cout << " O que pretende fazer? ";
 	cin >> escolha_desportos;
 
 	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4 ) {
-		cout << "Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada." << endl << endl;
 		MenuDesportosModalidades();
 	}
 
@@ -101,11 +123,11 @@ void MenuEquipasAtletas() {
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
-	cout << "O que pretende fazer? ";
+	cout << " O que pretende fazer? ";
 	cin >> escolha_equipas;
 
 	if ( escolha_equipas != 1 && escolha_equipas != 2 && escolha_equipas != 3 && escolha_equipas != 4 ) {
-		cout << "Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada." << endl << endl;
 		MenuEquipasAtletas();
 	}
 
@@ -144,11 +166,11 @@ void MenuInicial() {
 	cout << "-                                            -" << endl;
 	cout << "----------------------------------------------" << endl;
 
-	cout << "O que pretende fazer? ";
+	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
 
 	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 ) {
-		cout << "Por favor, faça uma escolha adequada." << endl;
+		cout << " Por favor, faça uma escolha adequada." << endl;
 		MenuInicial();
 	}
 

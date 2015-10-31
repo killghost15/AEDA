@@ -10,6 +10,8 @@ using namespace std;
 class Infrastrutura {
 	string cidade;
 public:
+	Infrastrutura(string city);
+	string getCidade() const;
 };
 
 

@@ -8,7 +8,7 @@ using namespace std;
 
 
 class Equipa {
-	vector<Atleta> atletas;
+	string nome;
 public:
 };
 

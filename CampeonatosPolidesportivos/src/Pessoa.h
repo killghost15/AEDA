@@ -9,7 +9,9 @@ using namespace std;
 
 class Pessoa {
 	string nome;
+	int idade;
 public:
+	Pessoa(string name, int age);
 };
 
 

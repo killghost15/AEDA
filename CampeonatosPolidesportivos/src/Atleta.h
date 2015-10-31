@@ -3,6 +3,8 @@
 
 
 #include <iostream>
+#include "Pessoa.h"
+#include "Equipa.h"
 
 using namespace std;
 
@@ -11,7 +13,7 @@ enum Medalha {
 	ouro,
 	prata,
 	bronze
-}
+};
 
 
 class Atleta: public Pessoa {
@@ -19,6 +21,7 @@ class Atleta: public Pessoa {
 	vector<Medalha> medalhas;
 	Equipa* equipa;
 public:
+	Atleta();
 };
 
 
