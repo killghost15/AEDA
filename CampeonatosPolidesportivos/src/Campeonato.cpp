@@ -2,14 +2,17 @@
 
 
 // Carraga a informação da infrastrutura do ficheiro infrastruturas.txt
-void Campeonato::loadInfrastrutura() {
+int Campeonato::loadInfrastrutura() {
 	string nome, cidade;
+	string trash;
 	Infrastrutura *infra;
 
 	ifstream file;
 	file.open(file_infrastruturas);
 
 	if ( file.is_open() ) {
+
+		getline(file, trash);
 
 		while ( !file.eof() ) {
 			getline(file, nome);
@@ -19,6 +22,11 @@ void Campeonato::loadInfrastrutura() {
 		}
 
 		file.close();
+
+		if ( trash != "" )
+			return 0;
+		else
+			return -1;
 	}
 }
 

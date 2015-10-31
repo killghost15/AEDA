@@ -23,7 +23,7 @@ class Campeonato {
 public:
 	// Métodos sobre Infrastruturas
 	void addInfrastrutura(Infrastrutura &infra);
-	void loadInfrastrutura();
+	int loadInfrastrutura();
 	void saveInfrastrutura();
 };
 

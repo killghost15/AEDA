@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include "Campeonato.h"
 #include "Infrastrutura.h"
 
@@ -261,8 +262,9 @@ void MenuInicial() {
 
 
 int main() {
-	//Carrega a informação para os respetivos vetores
-	campeonato.loadInfrastrutura();
+	//Carrega a informação para os respetivos vetores, e elimina o ficheiro se nao existir nada
+	if ( campeonato.loadInfrastrutura() != 0 )
+		remove(file_infrastruturas);
 
 	//Chama o Menu Inicial
 	MenuInicial();
