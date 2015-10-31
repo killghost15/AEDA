@@ -14,14 +14,17 @@ void MenuInicial();
 
 // Apresenta o form para a adição da infrastrutura
 void AdicionarInfrastrutura() {
-	string cidade_infrastrutura, nome_infrastrutura;
+	string nome_infrastrutura, cidade_infrastrutura;
+
+	cin.clear();
+	cin.sync();
 
 	//cout << "----------------------------------------------" << endl;
 	cout << " Nome da Infrastrutura: ";
-	cin >> nome_infrastrutura;
+	getline(cin, nome_infrastrutura);
 	cout << endl;
 	cout << " Cidade da Infrastrutura: ";
-	cin >> cidade_infrastrutura;
+	getline(cin, cidade_infrastrutura);
 	cout << endl;
 	//cout << "----------------------------------------------" << endl;
 
@@ -261,11 +264,27 @@ void MenuInicial() {
 }
 
 
+// Verifica se o ficheiro tem alguma coisa. Retorna true se nao tiver e false se tiver
+bool file_isEmpty( const char* filename ) {
+	ifstream file;
+	string trash;
+	file.open(filename);
+
+	getline(file, trash);
+
+	if ( trash == "" )
+		return true;
+
+	return false;
+}
+
+
 int main() {
-	//Carrega a informação para os respetivos vetores, e elimina o ficheiro se nao existir nada
-	if ( campeonato.loadInfrastrutura() != 0 )
+	//Carrega a informação para os respetivos vetores, e elimina o ficheiro se nao tiver nada
+	if ( file_isEmpty(file_infrastruturas) == true )
 		remove(file_infrastruturas);
 
+	campeonato.loadInfrastruturas();
 	//Chama o Menu Inicial
 	MenuInicial();
 

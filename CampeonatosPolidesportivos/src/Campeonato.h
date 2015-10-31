@@ -21,9 +21,10 @@ class Campeonato {
 	vector<Desporto> desportos;
 	vector<Infrastrutura> infrastruturas;
 public:
+	vector<Infrastrutura> getInfrastruturas() { return infrastruturas; }
 	// Métodos sobre Infrastruturas
 	void addInfrastrutura(Infrastrutura &infra);
-	int loadInfrastrutura();
+	void loadInfrastruturas();
 	void saveInfrastrutura();
 };
 

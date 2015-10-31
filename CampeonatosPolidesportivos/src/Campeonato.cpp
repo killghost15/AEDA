@@ -2,7 +2,7 @@
 
 
 // Carraga a informação da infrastrutura do ficheiro infrastruturas.txt
-int Campeonato::loadInfrastrutura() {
+void Campeonato::loadInfrastruturas() {
 	string nome, cidade;
 	string trash;
 	Infrastrutura *infra;
@@ -12,21 +12,15 @@ int Campeonato::loadInfrastrutura() {
 
 	if ( file.is_open() ) {
 
-		getline(file, trash);
-
 		while ( !file.eof() ) {
 			getline(file, nome);
 			getline(file, cidade);
+			getline(file, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
 			infra = new Infrastrutura(nome, cidade);
 			infrastruturas.push_back(*infra);
 		}
 
 		file.close();
-
-		if ( trash != "" )
-			return 0;
-		else
-			return -1;
 	}
 }
 
@@ -41,10 +35,18 @@ void Campeonato::saveInfrastrutura() {
 		return;
 	}
 
-	vector<Infrastrutura>::iterator it;
-	for ( it = infrastruturas.begin(); it != infrastruturas.end(); it++ ) {
+	vector<Infrastrutura>::iterator it = infrastruturas.begin();
+
+	//guarda apenas a primeira infrastrutura
+	file << (*it).getNome() << endl;
+	file << (*it).getCidade();
+	it++;
+
+	//guarda as restantes infrastruturas
+	for ( ; it != infrastruturas.end(); it++ ) {
+		file << endl << endl;
 		file << (*it).getNome() << endl;
-		file << (*it).getCidade() << endl << endl;
+		file << (*it).getCidade();
 	}
 
 	file.close();
