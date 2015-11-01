@@ -7,27 +7,23 @@
 using namespace std;
 
 
-Campeonato campeonato;
-
-// Declaração das funções
 void MenuInicial();
 
+Campeonato campeonato;
 
-// Apresenta o form para a adição da infrastrutura
+
+// Apresenta o form para a adição da infrastrutura ao campeonato
 void AdicionarInfrastrutura() {
 	string nome_infrastrutura, cidade_infrastrutura;
 
 	cin.clear();
 	cin.sync();
 
-	//cout << "----------------------------------------------" << endl;
 	cout << " Nome da Infrastrutura: ";
 	getline(cin, nome_infrastrutura);
-	//cout << endl;
 	cout << " Cidade da Infrastrutura: ";
 	getline(cin, cidade_infrastrutura);
 	cout << endl;
-	//cout << "----------------------------------------------" << endl;
 
 	Infrastrutura *infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
 	campeonato.addInfrastrutura(*infra);
@@ -76,7 +72,7 @@ void MenuInfrastruturas() {
 }
 
 
-// Apresenta o form para a adição do desporto
+// Apresenta o form para a adição do desporto ao campeonato
 void AdicionarDesporto() {
 	string nome_desporto, nome_modalidade;
 	unsigned int num_modalidades;
@@ -84,10 +80,9 @@ void AdicionarDesporto() {
 	cin.clear();
 	cin.sync();
 
-	//cout << "----------------------------------------------" << endl;
 	cout << " Nome do desporto: ";
 	getline(cin, nome_desporto);
-	//check if desporto exists/ error if it does
+	// TODO: check if desporto exists/ error if it does
 	cout << " Quantos modalidades tem o desporto: ";
 	cin >> num_modalidades;
 	cout << endl;
@@ -108,27 +103,24 @@ void AdicionarDesporto() {
 	Desporto *desp = new Desporto(nome_desporto);
 
 	for ( unsigned int j = 0; j < mods.size(); j++ ) {
-		string cena = mods[j];
-		Modalidade *modal = new Modalidade(cena);
+		string modalidade_string = mods[j];
+		Modalidade *modal = new Modalidade(modalidade_string);
 		desp->pushModalidade(*modal);
 	}
 
-	cout << endl << desp->getModalidades().size() << endl;
-
-	//cout << "----------------------------------------------" << endl;
 	campeonato.addDesporto(*desp);
 	cout << " Desporto e modalidades adicionados com sucesso!" << endl << endl;
 }
 
 
-// Menu de Manutenção dos Desportos e Modalidades, bem como os atletas e equipas de cada modalidade
+// Menu de Manutenção dos Desportos e Modalidades, bem como dos atletas de cada modalidade
 void MenuDesportosModalidades() {
 	int escolha_desportos;
 
 	cout << "-----------------------------------------------" << endl;
 	cout << "-        ** Desportos e Modalidades **        -" << endl;
 	cout << "-                                             -" << endl;
-	cout << "- 1. Adicionar Desporto                           -" << endl;
+	cout << "- 1. Adicionar Desporto                       -" << endl;
 	cout << "- 2. Apagar Desporto                          -" << endl;
 	cout << "- 3. Adicionar Atletas à Modalidade           -" << endl;
 	cout << "- 3. Retirar Atletas à Modalidade             -" << endl;
@@ -164,6 +156,49 @@ void MenuDesportosModalidades() {
 			MenuInicial();
 			break;
 	}
+}
+
+
+// Apresenta o form para a adição da equipa ao campeonato
+void AdicionarEquipa() {
+	string nome_equipa, nome_desporto, nome_atleta;
+	float peso_atleta, estatura_atleta;
+	unsigned int num_desportos, num_atletas, idade_atleta;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Nome da equipa: ";
+	getline(cin, nome_equipa);
+	// TODO: check if equipa exists/ error if it does
+	cout << " Em quantos desportos a equipa vai participar: ";
+	cin >> num_desportos;
+	cout << endl;
+
+	vector<string> sports;
+
+	//form para todos os desportos da equipa
+	for ( unsigned int i = 0; i < num_desportos; i++ ) {
+		cin.clear();
+		cin.sync();
+		cout << " Nome do Desporto " << i+1 << ": ";
+		getline(cin, nome_desporto);
+
+		sports.push_back(nome_desporto);
+	}
+
+	//criaçao do objeto da classe desporto para adicionar ao campeonato
+	Equipa *equi = new Equipa(nome_equipa);
+
+	for ( unsigned int j = 0; j < sports.size(); j++ ) {
+		string desporto_string = sports[j];
+		Desporto *desp = new Desporto(desporto_string);
+		equi->pushDesporto(*desp);
+	}
+
+	//AMANHA TO BE CONTINUED
+	//campeonato.addDesporto(*desp);
+	//cout << " Desporto e modalidades adicionados com sucesso!" << endl << endl;
 }
 
 
@@ -242,27 +277,27 @@ void MenuListagens() {
 	switch (escolha_listagens) {
 		case 1:
 			cout << string(8,'\n');
-			//MenuEquipasAtletas();
+			//
 			break;
 		case 2:
 			cout << string(8,'\n');
-			//MenuDesportosModalidades();
+			//
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//MenuCalendario();
+			//
 			break;
 		case 4:
 			cout << string(8,'\n');
-			//MenuInfrastruturas();
+			//
 			break;
 		case 5:
 			cout << string(8,'\n');
-			//MenuListagens();
+			//
 			break;
 		case 6:
 			cout << string(8,'\n');
-			//MenuListagens();
+			//
 			break;
 	}
 }
@@ -291,7 +326,6 @@ void MenuInicial() {
 		cout << string(8,'\n');
 		MenuInicial();
 	}
-
 
 	switch (escolha_menu) {
 		case 1:
@@ -334,16 +368,17 @@ bool file_isEmpty( const char* filename ) {
 
 
 int main() {
-	//Carrega a informação para os respetivos vetores, e elimina o ficheiro se nao tiver nada
+	// Elimina o ficheiro se nao tiver nada
 	if ( file_isEmpty(file_infrastruturas) == true )
 		remove(file_infrastruturas);
 	if ( file_isEmpty(file_desportos) == true )
 		remove(file_desportos);
 
+	// Carrega a informação para os respetivos vetores
 	campeonato.loadInfrastruturas();
 	campeonato.loadDesportos();
 
-	//Chama o Menu Inicial
+	// Chama o Menu Inicial
 	MenuInicial();
 
 	return 0;
