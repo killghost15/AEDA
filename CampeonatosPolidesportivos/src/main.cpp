@@ -23,7 +23,7 @@ void AdicionarInfrastrutura() {
 	//cout << "----------------------------------------------" << endl;
 	cout << " Nome da Infrastrutura: ";
 	getline(cin, nome_infrastrutura);
-	cout << endl;
+	//cout << endl;
 	cout << " Cidade da Infrastrutura: ";
 	getline(cin, cidade_infrastrutura);
 	cout << endl;
@@ -32,7 +32,8 @@ void AdicionarInfrastrutura() {
 	Infrastrutura *infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
 	campeonato.addInfrastrutura(*infra);
 
-	cout << "Infrastrutura adicionada com sucesso!" << endl << endl;
+	cout << " Infrastrutura adicionada com sucesso!";
+	cout << string(8,'\n');
 }
 
 // Menu de Manutenção das Infrastruturas do campeonato
@@ -52,25 +53,74 @@ void MenuInfrastruturas() {
 	cin >> escolha_infrastruturas;
 
 	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 ) {
-		cout << " Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada.";
+		cout << string(8,'\n');
 		MenuInfrastruturas();
 	}
 
 	switch (escolha_infrastruturas) {
 		case 1:
-			cout << endl << endl;
+			cout << string(8,'\n');
 			AdicionarInfrastrutura();
 			MenuInicial();
 			break;
 		case 2:
-			cout << endl << endl;
+			cout << string(8,'\n');
 			//
 			break;
 		case 3:
-			cout << endl;
+			cout << string(8,'\n');
 			MenuInicial();
 			break;
 	}
+}
+
+
+// Apresenta o form para a adição do desporto
+void AdicionarDesporto() {
+	string nome_desporto;
+	unsigned int num_modalidades;
+
+	cin.clear();
+	cin.sync();
+
+	//cout << "----------------------------------------------" << endl;
+	cout << " Nome do desporto: ";
+	getline(cin, nome_desporto);
+	//check if desporto exists/ error if it does
+	cout << " Quantos modalidades tem o desporto: ";
+	cin >> num_modalidades;
+	cout << endl;
+
+	Desporto *desp = new Desporto(nome_desporto);
+	//campeonato.getDesportos().push_back(*desp);
+
+	vector<string> mods;
+	//form para todas as modalidades do desporto
+	for ( unsigned int i = 0; i < num_modalidades; i++ ) {
+		string nome_modalidade;
+		cin.clear();
+		cin.sync();
+		cout << " Nome da Modalidade " << i+1 << ": ";
+		getline(cin, nome_modalidade);
+
+		mods.push_back(nome_modalidade);
+		//cout << "ola";
+		//Modalidade *modal = new Modalidade(nome_modalidade);
+		//desp->getModalidades().push_back(*modal);
+	}
+
+	for ( int j = 0; j < mods.size(); j++ ) {
+		string cena = mods[j];
+		Modalidade *modal = new Modalidade(cena);
+		desp->pushModalidade(*modal);
+	}
+
+	cout << endl << desp->getModalidades().size() << endl;
+
+	//cout << "----------------------------------------------" << endl;
+	campeonato.addDesporto(*desp);
+	cout << " Desporto e modalidades adicionados com sucesso!" << endl << endl;
 }
 
 
@@ -81,7 +131,7 @@ void MenuDesportosModalidades() {
 	cout << "-----------------------------------------------" << endl;
 	cout << "-        ** Desportos e Modalidades **        -" << endl;
 	cout << "-                                             -" << endl;
-	cout << "- 1. Criar Desporto                           -" << endl;
+	cout << "- 1. Adicionar Desporto                           -" << endl;
 	cout << "- 2. Apagar Desporto                          -" << endl;
 	cout << "- 3. Adicionar Atletas à Modalidade           -" << endl;
 	cout << "- 3. Retirar Atletas à Modalidade             -" << endl;
@@ -93,68 +143,30 @@ void MenuDesportosModalidades() {
 	cin >> escolha_desportos;
 
 	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4 ) {
-		cout << " Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada.";
+		cout << string(8,'\n');
 		MenuDesportosModalidades();
 	}
 
 	switch (escolha_desportos) {
 		case 1:
-			cout << endl;
-			//
+			cout << string(8,'\n');
+			AdicionarDesporto();
+			MenuInicial();
 			break;
 		case 2:
-			cout << endl;
+			cout << string(8,'\n');
 			//
 			break;
 		case 3:
-			cout << endl;
+			cout << string(8,'\n');
 			//
 			break;
 		case 4:
-			cout << endl;
+			cout << string(8,'\n');
 			MenuInicial();
 			break;
 	}
-}
-
-
-// Apresenta o form para a adição da infrastrutura
-void AdicionarEquipa() {
-	string nome_equipa, num_atletas;
-
-	cin.clear();
-	cin.sync();
-
-	//cout << "----------------------------------------------" << endl;
-	cout << " Nome da Equipa: ";
-	getline(cin, nome_equipa);
-	cout << endl;
-	cout << " Quantos atletas tem a equipa inicialmente: ";
-	getline(cin, num_atletas);
-	cout << endl;
-
-	int num_atletas_int = atoi(num_atletas.c_str());
-
-	//form para todos os atletas iniciais da equipa
-	for ( unsigned int i = 0; i < num_atletas_int; i++ ) {
-		cout << endl;
-		cout << "Nome do Atleta: ";
-		getline(cin, nome_atleta);
-		cout << endl;
-		cout << "Idade do Atleta: ";
-		getline(cin, idade_atleta);
-		cout << endl;
-		cout << "Peso do Atleta: ";
-		getline(cin, peso_atleta);
-		cout << endl;
-		cout << "Altura do Atleta: ";
-		getline(cin, altura_atleta);
-		cout << endl;
-	}
-
-	//cout << "----------------------------------------------" << endl;
-
-	cout << "Equipa e atletas adicionados com sucesso!" << endl << endl;
 }
 
 
@@ -176,25 +188,26 @@ void MenuEquipasAtletas() {
 	cin >> escolha_equipas;
 
 	if ( escolha_equipas != 1 && escolha_equipas != 2 && escolha_equipas != 3 && escolha_equipas != 4 ) {
-		cout << " Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada.";
+		cout << string(8,'\n');
 		MenuEquipasAtletas();
 	}
 
 	switch (escolha_equipas) {
 		case 1:
-			cout << endl;
+			cout << string(8,'\n');
 			//
 			break;
 		case 2:
-			cout << endl;
+			cout << string(8,'\n');
 			//
 			break;
 		case 3:
-			cout << endl;
+			cout << string(8,'\n');
 			//
 			break;
 		case 4:
-			cout << endl;
+			cout << string(8,'\n');
 			MenuInicial();
 			break;
 	}
@@ -223,34 +236,35 @@ void MenuListagens() {
 	cin >> escolha_listagens;
 
 	if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5 && escolha_listagens != 6 ) {
-		cout << " Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada.";
+		cout << string(8,'\n');
 		MenuInicial();
 	}
 
 
 	switch (escolha_listagens) {
 		case 1:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuEquipasAtletas();
 			break;
 		case 2:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuDesportosModalidades();
 			break;
 		case 3:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuCalendario();
 			break;
 		case 4:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuInfrastruturas();
 			break;
 		case 5:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuListagens();
 			break;
 		case 6:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuListagens();
 			break;
 	}
@@ -276,30 +290,31 @@ void MenuInicial() {
 	cin >> escolha_menu;
 
 	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 ) {
-		cout << " Por favor, faça uma escolha adequada." << endl << endl;
+		cout << " Por favor, faça uma escolha adequada.";
+		cout << string(8,'\n');
 		MenuInicial();
 	}
 
 
 	switch (escolha_menu) {
 		case 1:
-			cout << endl;
+			cout << string(8,'\n');
 			MenuEquipasAtletas();
 			break;
 		case 2:
-			cout << endl;
+			cout << string(8,'\n');
 			MenuDesportosModalidades();
 			break;
 		case 3:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuCalendario();
 			break;
 		case 4:
-			cout << endl;
+			cout << string(8,'\n');
 			MenuInfrastruturas();
 			break;
 		case 5:
-			cout << endl;
+			cout << string(8,'\n');
 			//MenuListagens();
 			break;
 	}
@@ -325,6 +340,8 @@ int main() {
 	//Carrega a informação para os respetivos vetores, e elimina o ficheiro se nao tiver nada
 	if ( file_isEmpty(file_infrastruturas) == true )
 		remove(file_infrastruturas);
+	if ( file_isEmpty(file_desportos) == true )
+		remove(file_desportos);
 
 	campeonato.loadInfrastruturas();
 	//Chama o Menu Inicial

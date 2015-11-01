@@ -40,11 +40,6 @@ void Campeonato::saveInfrastrutura() {
 	ofstream file;
 	file.open(file_infrastruturas);
 
-	if ( !file ) {
-		cout << "Não consegui abrir o ficheiro com as Infrastruturas :(" << endl;
-		return;
-	}
-
 	vector<Infrastrutura>::iterator it = infrastruturas.begin();
 
 	//guarda apenas a primeira infrastrutura
@@ -69,4 +64,47 @@ void Campeonato::addInfrastrutura(Infrastrutura &infra) {
 	saveInfrastrutura();
 }
 
+
+// Guarda o desporto no ficheiro desportos.txt
+void Campeonato::saveDesporto() {
+	ofstream file;
+	file.open(file_desportos);
+
+	vector<Desporto>::iterator it = desportos.begin();
+
+	cout << (*it).getNome();
+	//guarda apenas o primeiro desporto
+	file << (*it).getNome();
+
+	vector<Modalidade>::iterator it2 = (*it).getModalidades().begin();
+
+	//guarda as modalidades do primeiro desporto
+	for( it2 = (*it).getModalidades().begin() ; it2 != (*it).getModalidades().end(); it2++ ) {
+		file << endl;
+		file << " " << (*it2).getNome();
+	}
+
+	it++;
+
+	//guarda os restantes desportos
+	for ( ; it != desportos.end(); it++ ) {
+		file << endl << endl;
+		file << (*it).getNome() << endl;
+
+		for( it2 = (*it).getModalidades().begin() ; it2 != (*it).getModalidades().end(); it2++ ) {
+			file << endl;
+			file << " " << (*it2).getNome();
+		}
+	}
+
+	file.close();
+}
+
+
+// Adiciona o desporto no vetor e guarda no ficheiro
+void Campeonato::addDesporto(Desporto &desp) {
+	desportos.push_back(desp);
+	cout << desportos[0].getModalidades().size();
+	saveDesporto();
+}
 

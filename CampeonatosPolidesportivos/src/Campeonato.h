@@ -27,6 +27,9 @@ public:
 	void addInfrastrutura(Infrastrutura &infra);
 	void loadInfrastruturas();
 	void saveInfrastrutura();
+	// Métodos sobre Desportos
+	void addDesporto(Desporto &desp);
+	void saveDesporto();
 };
 
 
