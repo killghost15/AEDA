@@ -12,10 +12,12 @@ class Desporto {
 	string nome;
 	vector<Modalidade> modalidades;
 public:
-	void pushModalidade(Modalidade &modal);
+	Desporto(string name);
+	// Metodos get
 	string getNome() const;
 	vector<Modalidade> getModalidades();
-	Desporto(string name);
+	// outros metodos
+	void pushModalidade(Modalidade &modal);
 };
 
 

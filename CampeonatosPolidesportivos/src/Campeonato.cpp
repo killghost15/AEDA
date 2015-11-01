@@ -68,9 +68,7 @@ void Campeonato::addInfrastrutura(Infrastrutura &infra) {
 // Carraga a informação dos desportos do ficheiro desportos.txt
 void Campeonato::loadDesportos() {
 	string nome_desp, nome_mod;
-	//string trash;
-	//Desporto *desp;
-
+	Desporto *desp;
 
 	ifstream filedesp;
 	filedesp.open(file_desportos);
@@ -81,35 +79,28 @@ void Campeonato::loadDesportos() {
 
 			getline(filedesp, nome_desp);
 
-			Desporto *desp = new Desporto(nome_desp);
+			desp = new Desporto(nome_desp);
 
 			vector<string> mods;
 			while ( true ) {
-
 				getline(filedesp, nome_mod);
 
 				if ( nome_mod != "" ) {
 					nome_mod.erase(nome_mod.begin());
 					mods.push_back(nome_mod);
 				}
-				else {
+				else
 					break;
-				}
-
 			}
 
 			for ( unsigned int j = 0; j < mods.size(); j++ ) {
-				string cena = mods[j];
-				Modalidade *modal = new Modalidade(cena);
+				string modalidade_string = mods[j];
+				Modalidade *modal = new Modalidade(modalidade_string);
 				desp->pushModalidade(*modal);
 			}
-			mods.clear();
-			//getline(filedesp, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
-			desportos.push_back(*desp);
 
-			//cout << "asd";
-			//int qwe;
-			//cin >> qwe;
+			mods.clear();
+			desportos.push_back(*desp);
 		}
 
 		filedesp.close();
