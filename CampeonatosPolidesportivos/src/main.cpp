@@ -78,7 +78,7 @@ void MenuInfrastruturas() {
 
 // Apresenta o form para a adição do desporto
 void AdicionarDesporto() {
-	string nome_desporto;
+	string nome_desporto, nome_modalidade;
 	unsigned int num_modalidades;
 
 	cin.clear();
@@ -98,7 +98,7 @@ void AdicionarDesporto() {
 	vector<string> mods;
 	//form para todas as modalidades do desporto
 	for ( unsigned int i = 0; i < num_modalidades; i++ ) {
-		string nome_modalidade;
+		//string nome_modalidade;
 		cin.clear();
 		cin.sync();
 		cout << " Nome da Modalidade " << i+1 << ": ";
@@ -111,6 +111,7 @@ void AdicionarDesporto() {
 	}
 
 	for ( int j = 0; j < mods.size(); j++ ) {
+		cout << mods[j] << endl;
 		string cena = mods[j];
 		Modalidade *modal = new Modalidade(cena);
 		desp->pushModalidade(*modal);

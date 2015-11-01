@@ -67,44 +67,42 @@ void Campeonato::addInfrastrutura(Infrastrutura &infra) {
 
 // Guarda o desporto no ficheiro desportos.txt
 void Campeonato::saveDesporto() {
-	ofstream file;
-	file.open(file_desportos);
+	ofstream filedesp;
+	filedesp.open(file_desportos);
 
-	vector<Desporto>::iterator it = desportos.begin();
+	//vector<Desporto>::iterator it = desportos.begin();
 
-	cout << (*it).getNome();
+	cout << desportos[0].getNome();
 	//guarda apenas o primeiro desporto
-	file << (*it).getNome();
+	filedesp << desportos[0].getNome();
 
-	vector<Modalidade>::iterator it2 = (*it).getModalidades().begin();
+	//vector<Modalidade>::iterator it2 = desportos[0].getModalidades().begin();
 
 	//guarda as modalidades do primeiro desporto
-	for( it2 = (*it).getModalidades().begin() ; it2 != (*it).getModalidades().end(); it2++ ) {
-		file << endl;
-		file << " " << (*it2).getNome();
+	for( int i = 0; i < desportos[0].getModalidades().size(); i++ ) {
+		filedesp << endl;
+		filedesp << " " << desportos[0].getModalidades()[i].getNome();
 	}
 
-	it++;
-
 	//guarda os restantes desportos
-	for ( ; it != desportos.end(); it++ ) {
-		file << endl << endl;
-		file << (*it).getNome() << endl;
+	for ( int j = 1; j < desportos.size(); j++ ) {
+		filedesp << endl << endl;
+		filedesp << desportos[j].getNome();
 
-		for( it2 = (*it).getModalidades().begin() ; it2 != (*it).getModalidades().end(); it2++ ) {
-			file << endl;
-			file << " " << (*it2).getNome();
+		for( int i = 0; i < desportos[j].getModalidades().size(); i++ ) {
+			filedesp << endl;
+			filedesp << " " << desportos[j].getModalidades()[i].getNome();
 		}
 	}
 
-	file.close();
+	filedesp.close();
 }
 
 
 // Adiciona o desporto no vetor e guarda no ficheiro
 void Campeonato::addDesporto(Desporto &desp) {
 	desportos.push_back(desp);
-	cout << desportos[0].getModalidades().size();
+	//cout << desportos[0].getModalidades().size();
 	saveDesporto();
 }
 
