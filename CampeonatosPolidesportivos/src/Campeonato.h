@@ -20,16 +20,17 @@ class Campeonato {
 	vector<Desporto> desportos;
 	vector<Infrastrutura> infrastruturas;
 public:
-	//métodos get
+	// Metodos get
 	vector<Desporto> getDesportos();
 	vector<Infrastrutura> getInfrastruturas();
-	// Métodos sobre Infrastruturas
-	void addInfrastrutura(Infrastrutura &infra);
+	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();
-	// Métodos sobre Desportos
-	void addDesporto(Desporto &desp);
+	void addInfrastrutura(Infrastrutura &infra);
+	// Metodos sobre Desportos
+	void loadDesportos();
 	void saveDesporto();
+	void addDesporto(Desporto &desp);
 };
 
 

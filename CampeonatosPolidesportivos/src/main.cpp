@@ -92,26 +92,22 @@ void AdicionarDesporto() {
 	cin >> num_modalidades;
 	cout << endl;
 
-	Desporto *desp = new Desporto(nome_desporto);
-	//campeonato.getDesportos().push_back(*desp);
-
 	vector<string> mods;
+
 	//form para todas as modalidades do desporto
 	for ( unsigned int i = 0; i < num_modalidades; i++ ) {
-		//string nome_modalidade;
 		cin.clear();
 		cin.sync();
 		cout << " Nome da Modalidade " << i+1 << ": ";
 		getline(cin, nome_modalidade);
 
 		mods.push_back(nome_modalidade);
-		//cout << "ola";
-		//Modalidade *modal = new Modalidade(nome_modalidade);
-		//desp->getModalidades().push_back(*modal);
 	}
 
-	for ( int j = 0; j < mods.size(); j++ ) {
-		cout << mods[j] << endl;
+	//criaçao do objeto da classe desporto para adicionar ao campeonato
+	Desporto *desp = new Desporto(nome_desporto);
+
+	for ( unsigned int j = 0; j < mods.size(); j++ ) {
 		string cena = mods[j];
 		Modalidade *modal = new Modalidade(cena);
 		desp->pushModalidade(*modal);
@@ -345,6 +341,8 @@ int main() {
 		remove(file_desportos);
 
 	campeonato.loadInfrastruturas();
+	campeonato.loadDesportos();
+
 	//Chama o Menu Inicial
 	MenuInicial();
 
