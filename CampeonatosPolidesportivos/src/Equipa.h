@@ -10,6 +10,7 @@ using namespace std;
 class Equipa {
 	string nome;
 public:
+	Equipa(string name);
 };
 
 

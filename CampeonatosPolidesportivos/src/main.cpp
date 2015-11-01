@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include "Campeonato.h"
 #include "Infrastrutura.h"
 
@@ -116,6 +117,47 @@ void MenuDesportosModalidades() {
 	}
 }
 
+
+// Apresenta o form para a adição da infrastrutura
+void AdicionarEquipa() {
+	string nome_equipa, num_atletas;
+
+	cin.clear();
+	cin.sync();
+
+	//cout << "----------------------------------------------" << endl;
+	cout << " Nome da Equipa: ";
+	getline(cin, nome_equipa);
+	cout << endl;
+	cout << " Quantos atletas tem a equipa inicialmente: ";
+	getline(cin, num_atletas);
+	cout << endl;
+
+	int num_atletas_int = atoi(num_atletas.c_str());
+
+	//form para todos os atletas iniciais da equipa
+	for ( unsigned int i = 0; i < num_atletas_int; i++ ) {
+		cout << endl;
+		cout << "Nome do Atleta: ";
+		getline(cin, nome_atleta);
+		cout << endl;
+		cout << "Idade do Atleta: ";
+		getline(cin, idade_atleta);
+		cout << endl;
+		cout << "Peso do Atleta: ";
+		getline(cin, peso_atleta);
+		cout << endl;
+		cout << "Altura do Atleta: ";
+		getline(cin, altura_atleta);
+		cout << endl;
+	}
+
+	//cout << "----------------------------------------------" << endl;
+
+	cout << "Equipa e atletas adicionados com sucesso!" << endl << endl;
+}
+
+
 // Menu de Manutenção das Equipas e respetivos Atletas
 void MenuEquipasAtletas() {
 	int escolha_equipas;
@@ -123,7 +165,7 @@ void MenuEquipasAtletas() {
 	cout << "-----------------------------------------------" << endl;
 	cout << "-           ** Equipas e Atletas **           -" << endl;
 	cout << "-                                             -" << endl;
-	cout << "- 1. Criar Equipa                             -" << endl;
+	cout << "- 1. Adicionar Equipa                         -" << endl;
 	cout << "- 2. Apagar Equipa                            -" << endl;
 	cout << "- 3. Adicionar Atletas à Equipa               -" << endl;
 	cout << "- 4. Voltar ao Menu Principal                 -" << endl;

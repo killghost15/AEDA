@@ -1,6 +1,16 @@
 #include "Campeonato.h"
 
 
+vector<Desporto> Campeonato::getDesportos() {
+	return desportos;
+}
+
+vector<Infrastrutura> Campeonato::getInfrastruturas() {
+	return infrastruturas;
+}
+
+
+
 // Carraga a informação da infrastrutura do ficheiro infrastruturas.txt
 void Campeonato::loadInfrastruturas() {
 	string nome, cidade;

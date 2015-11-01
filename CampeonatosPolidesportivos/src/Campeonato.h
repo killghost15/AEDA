@@ -17,11 +17,12 @@ using namespace std;
 
 
 class Campeonato {
-	vector<Atleta> atletas;
 	vector<Desporto> desportos;
 	vector<Infrastrutura> infrastruturas;
 public:
-	vector<Infrastrutura> getInfrastruturas() { return infrastruturas; }
+	//métodos get
+	vector<Desporto> getDesportos();
+	vector<Infrastrutura> getInfrastruturas();
 	// Métodos sobre Infrastruturas
 	void addInfrastrutura(Infrastrutura &infra);
 	void loadInfrastruturas();

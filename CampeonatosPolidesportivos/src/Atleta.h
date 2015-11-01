@@ -13,11 +13,11 @@ enum Medalha {ouro, prata, bronze};
 
 
 class Atleta: public Pessoa {
+	float peso;
 	float estatura;
-	vector<Medalha> medalhas;
 	Equipa* equipa;
 public:
-	Atleta();
+	Atleta(string name, unsigned int age, float weight, float height);
 };
 
 
