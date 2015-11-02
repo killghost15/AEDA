@@ -11,14 +11,14 @@ using namespace std;
 
 class Modalidade {
 	string nome;
-	vector<Atleta> atletas;
+	vector<Atleta*> atletas;
 public:
 	Modalidade(string name);
 	// metodos get
 	string getNome() const;
-	vector<Atleta> getAtletas();
+	vector<Atleta*> getAtletas();
 	// outros metodos
-	void pushAtleta(Atleta &atl);
+	void pushAtleta(Atleta *atl);
 };
 
 

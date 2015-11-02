@@ -26,7 +26,7 @@ void AdicionarInfrastrutura() {
 	cout << endl;
 
 	Infrastrutura *infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
-	campeonato.addInfrastrutura(*infra);
+	campeonato.addInfrastrutura(infra);
 
 	cout << " Infrastrutura adicionada com sucesso!";
 	cout << string(8,'\n');
@@ -108,10 +108,10 @@ void AdicionarDesporto() {
 		string modalidade_string = mods[j];
 		Modalidade *modal = new Modalidade(modalidade_string);
 		desp->pushModalidade(*modal);
-		campeonato.addModalidade(*modal);
+		campeonato.addModalidade(modal);
 	}
 
-	campeonato.addDesporto(*desp);
+	campeonato.addDesporto(desp);
 	cout << endl << " Desporto e modalidades adicionados com sucesso!";
 }
 
@@ -200,7 +200,7 @@ void AdicionarEquipa() {
 	vector<Atleta> athletes;
 
 	//form para todos os atletas da equipa
-	for ( unsigned int i = 0; i < num_desportos; i++ ) {
+	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
 		cin.sync();
 		cout << " Nome do Atleta " << i+1 << ": ";
@@ -235,7 +235,7 @@ void AdicionarEquipa() {
 		float atletaEstatura = athletes[j].getEstatura();
 		atl = new Atleta(atletaNome, atletaIdade, atletaPeso, atletaEstatura);
 		atl->setEquipa(equi);
-		campeonato.addAtleta(*atl);
+		campeonato.addAtleta(atl);
 	}
 
 	campeonato.addEquipa(equi);

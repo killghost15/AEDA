@@ -23,7 +23,7 @@ float Atleta::getEstatura() const {
 }
 
 
-Equipa *Atleta::getEquipa() {
+Equipa* Atleta::getEquipa() {
 	return equipa;
 }
 

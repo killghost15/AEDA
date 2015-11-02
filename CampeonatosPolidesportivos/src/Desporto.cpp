@@ -11,11 +11,11 @@ string Desporto::getNome() const {
 }
 
 
-vector<Modalidade> Desporto::getModalidades() {
+vector<Modalidade*> Desporto::getModalidades() {
 	return modalidades;
 }
 
 
-void Desporto::pushModalidade(Modalidade &modal) {
+void Desporto::pushModalidade(Modalidade *modal) {
 	modalidades.push_back(modal);
 }
