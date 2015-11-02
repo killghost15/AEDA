@@ -18,6 +18,9 @@ public:
 	// Metodos get
 	float getPeso() const;
 	float getEstatura() const;
+	Equipa *getEquipa();
+	// Metodo set
+	void setEquipa(Equipa *equi);
 };
 
 

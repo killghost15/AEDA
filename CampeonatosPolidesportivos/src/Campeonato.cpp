@@ -1,8 +1,16 @@
 #include "Campeonato.h"
 
 
+vector<Atleta> Campeonato::getAtletas() {
+	return atletas;
+}
+
 vector<Desporto> Campeonato::getDesportos() {
 	return desportos;
+}
+
+vector<Equipa> Campeonato::getEquipas() {
+	return equipas;
 }
 
 vector<Infrastrutura> Campeonato::getInfrastruturas() {
@@ -13,7 +21,7 @@ vector<Infrastrutura> Campeonato::getInfrastruturas() {
 
 // Carraga a informação das infrastruturas do ficheiro infrastruturas.txt
 void Campeonato::loadInfrastruturas() {
-	string nome, cidade;
+	string nome_infrastrutura, cidade_infrastrutura;
 	string trash;
 	Infrastrutura *infra;
 
@@ -23,10 +31,10 @@ void Campeonato::loadInfrastruturas() {
 	if ( fileinfra.is_open() ) {
 
 		while ( !fileinfra.eof() ) {
-			getline(fileinfra, nome);
-			getline(fileinfra, cidade);
+			getline(fileinfra, nome_infrastrutura);
+			getline(fileinfra, cidade_infrastrutura);
 			getline(fileinfra, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
-			infra = new Infrastrutura(nome, cidade);
+			infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
 			infrastruturas.push_back(*infra);
 		}
 
@@ -148,7 +156,7 @@ void Campeonato::addDesporto(Desporto &desp) {
 }
 
 
-// Carrega a informação das equipas do ficheiro equipas.txt ///////////////////////////
+// Carrega a informação das equipas do ficheiro equipas.txt
 void Campeonato::loadEquipas() {
 	string nome_equi, nome_desp;
 	Equipa *equi;
@@ -201,7 +209,7 @@ void Campeonato::saveEquipa() {
 	//guarda os desportos da primeira equipa
 	for( unsigned int i = 0; i < equipas[0].getDesportos().size(); i++ ) {
 		fileequi << endl;
-		fileequi << " " << equipas[0].getDesportos()[i];//.getNome();
+		fileequi << " " << equipas[0].getDesportos()[i];
 	}
 
 	fileequi << endl;
@@ -213,7 +221,7 @@ void Campeonato::saveEquipa() {
 
 		for( unsigned int i = 0; i < equipas[j].getDesportos().size(); i++ ) {
 			fileequi << endl;
-			fileequi << " " << equipas[j].getDesportos()[i];//.getNome();
+			fileequi << " " << equipas[j].getDesportos()[i];
 		}
 
 		fileequi << endl;
@@ -227,6 +235,74 @@ void Campeonato::saveEquipa() {
 void Campeonato::addEquipa(Equipa &equi) {
 	equipas.push_back(equi);
 	saveEquipa();
+}
+
+
+// Carrega a informação dos atletas do ficheiro atletas.txt
+void Campeonato::loadAtletas() {
+	string nome_atleta, nome_equipa;
+	unsigned int idade_atleta;
+	float peso_atleta, estatura_atleta;
+	string trash;
+
+	Atleta *atl;
+
+	ifstream fileatl;
+	fileatl.open(file_atletas);
+
+	if ( fileatl.is_open() ) {
+
+		while ( !fileatl.eof() ) {
+			cout << "asd";
+				int flag;
+				cin >> flag;
+			getline(fileatl, nome_atleta);
+			fileatl >> idade_atleta;	//também faz \n
+			fileatl >> peso_atleta;
+			fileatl >> estatura_atleta;
+			getline(fileatl, nome_equipa);
+			getline(fileatl, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
+			Equipa *equi = new Equipa(nome_equipa);
+			atl = new Atleta(nome_atleta, idade_atleta, peso_atleta, estatura_atleta);
+			atl->setEquipa(equi);
+			atletas.push_back(*atl);
+		}
+
+		fileatl.close();
+	}
+}
+
+
+// Guarda o atleta no ficheiro atletas.txt
+void Campeonato::saveAtleta() {
+	ofstream fileatl;
+	fileatl.open(file_atletas);
+
+	//guarda apenas a primeira equipa
+	fileatl << atletas[0].getNome() << endl;
+	fileatl << atletas[0].getIdade() << endl;
+	fileatl << atletas[0].getPeso() << endl;
+	fileatl << atletas[0].getEstatura() << endl;
+	fileatl << " " << atletas[0].getEquipa()->getNome();
+
+	//guarda os restantes atletas
+	for ( unsigned int j = 1; j < atletas.size(); j++ ) {
+		fileatl << endl << endl;
+		fileatl << atletas[j].getNome() << endl;
+		fileatl << atletas[j].getIdade() << endl;
+		fileatl << atletas[j].getPeso() << endl;
+		fileatl << atletas[j].getEstatura() << endl;
+		fileatl << " " << atletas[j].getEquipa()->getNome();
+	}
+
+	fileatl.close();
+}
+
+
+// Adiciona o atleta no vetor e guarda no ficheiro
+void Campeonato::addAtleta(Atleta &atl) {
+	atletas.push_back(atl);
+	saveAtleta();
 }
 
 

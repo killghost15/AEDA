@@ -21,12 +21,15 @@ using namespace std;
 
 
 class Campeonato {
+	vector<Atleta> atletas;
 	vector<Desporto> desportos;
 	vector<Equipa> equipas;
 	vector<Infrastrutura> infrastruturas;
 public:
 	// Metodos get
+	vector<Atleta> getAtletas();
 	vector<Desporto> getDesportos();
+	vector<Equipa> getEquipas();
 	vector<Infrastrutura> getInfrastruturas();
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
@@ -40,6 +43,10 @@ public:
 	void loadEquipas();
 	void saveEquipa();
 	void addEquipa(Equipa &equi);
+	// Metodos sobre Atletas
+	void loadAtletas();
+	void saveAtleta();
+	void addAtleta(Atleta &atl);
 };
 
 

@@ -12,6 +12,9 @@ class Pessoa {
 	unsigned int idade;
 public:
 	Pessoa(string name, unsigned int age);
+	// Metodos get
+	string getNome() const;
+	unsigned int getIdade() const;
 };
 
 

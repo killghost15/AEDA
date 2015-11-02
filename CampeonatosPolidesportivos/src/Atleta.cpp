@@ -6,3 +6,23 @@ Atleta::Atleta(string name, unsigned int age, float weight, float height) : Pess
 	estatura = height;
 	equipa = NULL;
 }
+
+
+float Atleta::getPeso() const {
+	return peso;
+}
+
+
+float Atleta::getEstatura() const {
+	return estatura;
+}
+
+
+Equipa *Atleta::getEquipa() {
+	return equipa;
+}
+
+
+void Atleta::setEquipa(Equipa *equi) {
+	equipa = equi;
+}
