@@ -13,9 +13,10 @@ class Modalidade {
 	string nome;
 	vector<Atleta> atletas;
 public:
-	string getNome() const;
-	vector<Atleta> getAtletas() const;
 	Modalidade(string name);
+	// metodos get
+	string getNome() const;
+	vector<Atleta> getAtletas();
 };
 
 

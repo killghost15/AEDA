@@ -32,6 +32,7 @@ void AdicionarInfrastrutura() {
 	cout << string(8,'\n');
 }
 
+
 // Menu de Manutenção das Infrastruturas do campeonato
 void MenuInfrastruturas() {
 	int escolha_infrastruturas;
@@ -187,7 +188,9 @@ void AdicionarEquipa() {
 		sports.push_back(nome_desporto);
 	}
 
-	//criaçao do objeto da classe desporto para adicionar ao campeonato
+	cout << endl;
+
+	//criaçao do objeto da classe equipa para adicionar ao campeonato
 	Equipa *equi = new Equipa(nome_equipa);
 
 	for ( unsigned int j = 0; j < sports.size(); j++ ) {
@@ -196,9 +199,8 @@ void AdicionarEquipa() {
 		equi->pushDesporto(*desp);
 	}
 
-	//AMANHA TO BE CONTINUED
-	//campeonato.addDesporto(*desp);
-	//cout << " Desporto e modalidades adicionados com sucesso!" << endl << endl;
+	campeonato.addEquipa(*equi);
+	cout << " Equipa adicionada com sucesso!" << endl << endl;
 }
 
 

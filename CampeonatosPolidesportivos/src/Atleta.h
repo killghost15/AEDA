@@ -15,7 +15,7 @@ enum Medalha {ouro, prata, bronze};
 class Atleta: public Pessoa {
 	float peso;
 	float estatura;
-	Equipa* equipa;
+	Equipa *equipa;
 public:
 	Atleta(string name, unsigned int age, float weight, float height);
 	// Metodos get

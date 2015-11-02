@@ -11,6 +11,6 @@ string Modalidade::getNome() const {
 }
 
 
-vector<Atleta> Modalidade::getAtletas() const {
+vector<Atleta> Modalidade::getAtletas() {
 	return atletas;
 }
