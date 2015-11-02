@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdlib.h>
 //#include "Modalidade.h"
 #include "Desporto.h"
 //#include "Equipa.h"

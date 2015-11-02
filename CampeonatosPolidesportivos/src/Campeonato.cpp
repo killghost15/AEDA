@@ -241,8 +241,7 @@ void Campeonato::addEquipa(Equipa &equi) {
 // Carrega a informação dos atletas do ficheiro atletas.txt
 void Campeonato::loadAtletas() {
 	string nome_atleta, nome_equipa;
-	unsigned int idade_atleta;
-	float peso_atleta, estatura_atleta;
+	string idade_atleta, peso_atleta, estatura_atleta;;
 	string trash;
 
 	Atleta *atl;
@@ -253,17 +252,20 @@ void Campeonato::loadAtletas() {
 	if ( fileatl.is_open() ) {
 
 		while ( !fileatl.eof() ) {
-			cout << "asd";
-				int flag;
-				cin >> flag;
 			getline(fileatl, nome_atleta);
-			fileatl >> idade_atleta;	//também faz \n
-			fileatl >> peso_atleta;
-			fileatl >> estatura_atleta;
+			getline(fileatl, idade_atleta);
+			getline(fileatl, peso_atleta);
+			getline(fileatl, estatura_atleta);
 			getline(fileatl, nome_equipa);
 			getline(fileatl, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
+
+			nome_equipa.erase(nome_equipa.begin());
+			int idadeAtleta_int = atoi(idade_atleta.c_str());
+			float pesoAtleta_float = atof(peso_atleta.c_str());
+			float estaturaAtleta_float = atof(estatura_atleta.c_str());
+
 			Equipa *equi = new Equipa(nome_equipa);
-			atl = new Atleta(nome_atleta, idade_atleta, peso_atleta, estatura_atleta);
+			atl = new Atleta(nome_atleta, idadeAtleta_int, pesoAtleta_float, estaturaAtleta_float);
 			atl->setEquipa(equi);
 			atletas.push_back(*atl);
 		}
