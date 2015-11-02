@@ -59,6 +59,7 @@ void MenuInfrastruturas() {
 		case 1:
 			cout << string(8,'\n');
 			AdicionarInfrastrutura();
+			cout << string(8,'\n');
 			MenuInicial();
 			break;
 		case 2:
@@ -110,7 +111,7 @@ void AdicionarDesporto() {
 	}
 
 	campeonato.addDesporto(*desp);
-	cout << " Desporto e modalidades adicionados com sucesso!" << endl << endl;
+	cout << " Desporto e modalidades adicionados com sucesso!";
 }
 
 
@@ -142,6 +143,7 @@ void MenuDesportosModalidades() {
 		case 1:
 			cout << string(8,'\n');
 			AdicionarDesporto();
+			cout << string(8,'\n');
 			MenuInicial();
 			break;
 		case 2:
@@ -162,9 +164,9 @@ void MenuDesportosModalidades() {
 
 // Apresenta o form para a adição da equipa ao campeonato
 void AdicionarEquipa() {
-	string nome_equipa, nome_desporto, nome_atleta;
-	float peso_atleta, estatura_atleta;
-	unsigned int num_desportos, num_atletas, idade_atleta;
+	string nome_equipa, nome_desporto;//, nome_atleta;
+	//float peso_atleta, estatura_atleta;
+	unsigned int num_desportos;//, num_atletas, idade_atleta;
 
 	cin.clear();
 	cin.sync();
@@ -195,12 +197,12 @@ void AdicionarEquipa() {
 
 	for ( unsigned int j = 0; j < sports.size(); j++ ) {
 		string desporto_string = sports[j];
-		Desporto *desp = new Desporto(desporto_string);
-		equi->pushDesporto(*desp);
+		//Desporto *desp = new Desporto(desporto_string);
+		equi->pushDesporto(desporto_string);
 	}
 
 	campeonato.addEquipa(*equi);
-	cout << " Equipa adicionada com sucesso!" << endl << endl;
+	cout << " Equipa adicionada com sucesso!";
 }
 
 
@@ -230,7 +232,9 @@ void MenuEquipasAtletas() {
 	switch (escolha_equipas) {
 		case 1:
 			cout << string(8,'\n');
-			//
+			AdicionarEquipa();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 2:
 			cout << string(8,'\n');

@@ -5,11 +5,12 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "Atleta.h"
+//#include "Modalidade.h"
 #include "Desporto.h"
-#include "Equipa.h"
+//#include "Equipa.h"
+//#include "Atleta.h"
 #include "Infrastrutura.h"
-#include "Modalidade.h"
+
 
 #define file_atletas "atletas.txt"
 #define file_desportos "desportos.txt"

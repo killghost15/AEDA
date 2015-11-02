@@ -9,9 +9,6 @@
 using namespace std;
 
 
-enum Medalha {ouro, prata, bronze};
-
-
 class Atleta: public Pessoa {
 	float peso;
 	float estatura;

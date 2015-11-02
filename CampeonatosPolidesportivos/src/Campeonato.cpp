@@ -202,7 +202,7 @@ void Campeonato::saveEquipa() {
 	//guarda os desportos da primeira equipa
 	for( unsigned int i = 0; i < equipas[0].getDesportos().size(); i++ ) {
 		fileequi << endl;
-		fileequi << " " << equipas[0].getDesportos()[i].getNome();
+		fileequi << " " << equipas[0].getDesportos()[i];//.getNome();
 	}
 
 	fileequi << endl;
@@ -214,7 +214,7 @@ void Campeonato::saveEquipa() {
 
 		for( unsigned int i = 0; i < equipas[j].getDesportos().size(); i++ ) {
 			fileequi << endl;
-			fileequi << " " << equipas[j].getDesportos()[i].getNome();
+			fileequi << " " << equipas[j].getDesportos()[i];//.getNome();
 		}
 
 		fileequi << endl;
@@ -224,9 +224,10 @@ void Campeonato::saveEquipa() {
 }
 
 
-// Adiciona o desporto no vetor e guarda no ficheiro
+// Adiciona a equipa no vetor e guarda no ficheiro
 void Campeonato::addEquipa(Equipa &equi) {
 	equipas.push_back(equi);
 	saveEquipa();
 }
+
 

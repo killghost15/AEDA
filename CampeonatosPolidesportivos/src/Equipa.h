@@ -4,21 +4,21 @@
 
 #include <iostream>
 #include <vector>
-#include "Desporto.h"
+//#include "Desporto.h"
 
 using namespace std;
 
 
 class Equipa {
 	string nome;
-	vector<Desporto> desportos;
+	vector<string> desportos;
 public:
 	Equipa(string name);
 	// metodos get
 	string getNome() const;
-	vector<Desporto> getDesportos();
+	vector<string> getDesportos();
 	// outros metodos
-	void pushDesporto(Desporto &desp);
+	void pushDesporto(string desp);
 };
 
 

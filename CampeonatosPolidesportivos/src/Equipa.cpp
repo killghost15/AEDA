@@ -12,11 +12,11 @@ string Equipa::getNome() const {
 }
 
 
-vector<Desporto> Equipa::getDesportos() {
+vector<string> Equipa::getDesportos() {
 	return desportos;
 }
 
 
-void Equipa::pushDesporto(Desporto &desp) {
+void Equipa::pushDesporto(string desp) {
 	desportos.push_back(desp);
 }
