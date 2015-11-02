@@ -422,11 +422,11 @@ int main() {
 		remove(file_modalidades);
 
 	// Carrega a informação para os respetivos vetores
-	campeonato.loadInfrastruturas();
-	campeonato.loadDesportos();
-	campeonato.loadModalidades();
 	campeonato.loadEquipas();
 	campeonato.loadAtletas();
+	campeonato.loadModalidades();
+	campeonato.loadDesportos();
+	campeonato.loadInfrastruturas();
 
 	// Chama o Menu Inicial
 	MenuInicial();

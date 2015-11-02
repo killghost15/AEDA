@@ -22,6 +22,12 @@ vector<Infrastrutura> Campeonato::getInfrastruturas() {
 }
 
 
+// Procura uma equipa com um nome especifico no vetor equipas
+Equipa* findEquipa(string nomeEquipa) {
+	//TODO
+}
+
+
 
 // Carraga a informação das infrastruturas do ficheiro infrastruturas.txt
 void Campeonato::loadInfrastruturas() {
@@ -268,7 +274,7 @@ void Campeonato::loadAtletas() {
 			float pesoAtleta_float = atof(peso_atleta.c_str());
 			float estaturaAtleta_float = atof(estatura_atleta.c_str());
 
-			Equipa *equi = new Equipa(nome_equipa);
+			Equipa *equi = new Equipa(nome_equipa); // nao pode ser equipa nova, reestruturar
 			atl = new Atleta(nome_atleta, idadeAtleta_int, pesoAtleta_float, estaturaAtleta_float);
 			atl->setEquipa(equi);
 			atletas.push_back(*atl);
