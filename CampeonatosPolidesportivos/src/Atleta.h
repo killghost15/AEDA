@@ -14,6 +14,7 @@ class Atleta: public Pessoa {
 	float estatura;
 	Equipa *equipa;
 public:
+	Atleta(string name);
 	Atleta(string name, unsigned int age, float weight, float height);
 	// Metodos get
 	float getPeso() const;

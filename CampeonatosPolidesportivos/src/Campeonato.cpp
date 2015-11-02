@@ -13,6 +13,10 @@ vector<Equipa> Campeonato::getEquipas() {
 	return equipas;
 }
 
+vector<Modalidade> Campeonato::getModalidades() {
+	return modalidades;
+}
+
 vector<Infrastrutura> Campeonato::getInfrastruturas() {
 	return infrastruturas;
 }
@@ -280,7 +284,7 @@ void Campeonato::saveAtleta() {
 	ofstream fileatl;
 	fileatl.open(file_atletas);
 
-	//guarda apenas a primeira equipa
+	//guarda apenas o primeira atleta
 	fileatl << atletas[0].getNome() << endl;
 	fileatl << atletas[0].getIdade() << endl;
 	fileatl << atletas[0].getPeso() << endl;
@@ -305,6 +309,88 @@ void Campeonato::saveAtleta() {
 void Campeonato::addAtleta(Atleta &atl) {
 	atletas.push_back(atl);
 	saveAtleta();
+}
+
+
+void Campeonato::loadModalidades() {
+	string nome_mod, nome_atl;
+	Modalidade *modal;
+
+	ifstream filemod;
+	filemod.open(file_modalidades);
+
+	if ( filemod.is_open() ) {
+
+		while ( !filemod.eof() ) {
+
+			getline(filemod, nome_mod);
+
+			modal = new Modalidade(nome_mod);
+
+			vector<string> athletes;
+			while ( true ) {
+				getline(filemod, nome_atl);
+
+				if ( nome_atl != "" ) {
+					nome_atl.erase(nome_atl.begin());
+					athletes.push_back(nome_atl);
+				}
+				else
+					break;
+			}
+
+			for ( unsigned int j = 0; j < athletes.size(); j++ ) {
+				string atleta_string = athletes[j];
+				Atleta *atl = new Atleta(atleta_string);
+				modal->pushAtleta(*atl);
+			}
+
+			athletes.clear();
+			modalidades.push_back(*modal);
+		}
+
+		filemod.close();
+	}
+}
+
+
+// Guarda a modalidade no ficheiro modalidades.txt
+void Campeonato::saveModalidade() {
+	ofstream filemod;
+	filemod.open(file_modalidades);
+
+	//guarda apenas a primeira modalidade
+	filemod << modalidades[0].getNome();
+
+	//guarda os atletas da primeira modalidade
+	for( unsigned int i = 0; i < modalidades[0].getAtletas().size(); i++ ) {
+		filemod << endl;
+		filemod << " " << modalidades[0].getAtletas()[i].getNome();
+	}
+
+	filemod << endl;
+
+	//guarda as restantes modalidades
+	for ( unsigned int j = 1; j < modalidades.size(); j++ ) {
+		filemod << endl;
+		filemod << modalidades[j].getNome();
+
+		for( unsigned int i = 0; i < modalidades[j].getAtletas().size(); i++ ) {
+			filemod << endl;
+			filemod << " " << modalidades[j].getAtletas()[i].getNome();
+		}
+
+		filemod << endl;
+	}
+
+	filemod.close();
+}
+
+
+// Adiciona o atleta no vetor e guarda no ficheiro
+void Campeonato::addModalidade(Modalidade &modal) {
+	modalidades.push_back(modal);
+	saveModalidade();
 }
 
 

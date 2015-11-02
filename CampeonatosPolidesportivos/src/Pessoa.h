@@ -11,6 +11,7 @@ class Pessoa {
 	string nome;
 	unsigned int idade;
 public:
+	Pessoa(string name);
 	Pessoa(string name, unsigned int age);
 	// Metodos get
 	string getNome() const;

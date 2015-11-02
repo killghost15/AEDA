@@ -108,10 +108,11 @@ void AdicionarDesporto() {
 		string modalidade_string = mods[j];
 		Modalidade *modal = new Modalidade(modalidade_string);
 		desp->pushModalidade(*modal);
+		campeonato.addModalidade(*modal);
 	}
 
 	campeonato.addDesporto(*desp);
-	cout << " Desporto e modalidades adicionados com sucesso!";
+	cout << endl << " Desporto e modalidades adicionados com sucesso!";
 }
 
 
@@ -198,7 +199,7 @@ void AdicionarEquipa() {
 
 	vector<Atleta> athletes;
 
-	//form para todos os desportos da equipa
+	//form para todos os atletas da equipa
 	for ( unsigned int i = 0; i < num_desportos; i++ ) {
 		cin.clear();
 		cin.sync();
@@ -221,7 +222,6 @@ void AdicionarEquipa() {
 
 	for ( unsigned int j = 0; j < sports.size(); j++ ) {
 		string desporto_string = sports[j];
-		//Desporto *desp = new Desporto(desporto_string);
 		equi->pushDesporto(desporto_string);
 	}
 
@@ -239,7 +239,7 @@ void AdicionarEquipa() {
 	}
 
 	campeonato.addEquipa(*equi);
-	cout << " Equipa adicionada com sucesso!";
+	cout << " Equipa e atletas adicionados com sucesso!";
 }
 
 
@@ -418,10 +418,13 @@ int main() {
 		remove(file_desportos);
 	if ( file_isEmpty(file_equipas) == true )
 		remove(file_equipas);
+	if ( file_isEmpty(file_modalidades) == true )
+		remove(file_modalidades);
 
 	// Carrega a informação para os respetivos vetores
 	campeonato.loadInfrastruturas();
 	campeonato.loadDesportos();
+	campeonato.loadModalidades();
 	campeonato.loadEquipas();
 	campeonato.loadAtletas();
 

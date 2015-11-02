@@ -17,6 +17,8 @@ public:
 	// metodos get
 	string getNome() const;
 	vector<Atleta> getAtletas();
+	// outros metodos
+	void pushAtleta(Atleta &atl);
 };
 
 

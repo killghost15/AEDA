@@ -11,6 +11,13 @@ fr
  wer
  bgdfvd rew
 
-Tenis
- Tenis Individual
- Tenis Pares
+Futebol
+ Futebol
+
+Voleibol
+ Voleibol
+
+Natação
+ Bruços
+ Freestyle
+ Costas

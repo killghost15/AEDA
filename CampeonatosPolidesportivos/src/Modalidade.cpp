@@ -14,3 +14,8 @@ string Modalidade::getNome() const {
 vector<Atleta> Modalidade::getAtletas() {
 	return atletas;
 }
+
+
+void Modalidade::pushAtleta(Atleta &atl) {
+	atletas.push_back(atl);
+}
