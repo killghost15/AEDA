@@ -25,16 +25,18 @@ using namespace std;
 class Campeonato {
 	vector<Atleta> atletas;
 	vector<Desporto> desportos;
-	vector<Equipa> equipas;
+	vector<Equipa*> equipas;
 	vector<Modalidade> modalidades;
 	vector<Infrastrutura> infrastruturas;
 public:
 	// Metodos get
 	vector<Atleta> getAtletas();
 	vector<Desporto> getDesportos();
-	vector<Equipa> getEquipas();
+	vector<Equipa*> getEquipas();
 	vector<Modalidade> getModalidades();
 	vector<Infrastrutura> getInfrastruturas();
+	// Metodos find
+	Equipa* findEquipa(string nomeEquipa);
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();
@@ -46,7 +48,7 @@ public:
 	// Metodos sobre Equipas
 	void loadEquipas();
 	void saveEquipa();
-	void addEquipa(Equipa &equi);
+	void addEquipa(Equipa *equi);
 	// Metodos sobre Atletas
 	void loadAtletas();
 	void saveAtleta();

@@ -9,7 +9,7 @@ vector<Desporto> Campeonato::getDesportos() {
 	return desportos;
 }
 
-vector<Equipa> Campeonato::getEquipas() {
+vector<Equipa*> Campeonato::getEquipas() {
 	return equipas;
 }
 
@@ -23,8 +23,17 @@ vector<Infrastrutura> Campeonato::getInfrastruturas() {
 
 
 // Procura uma equipa com um nome especifico no vetor equipas
-Equipa* findEquipa(string nomeEquipa) {
-	//TODO
+Equipa* Campeonato::findEquipa(string nomeEquipa) {
+	//vector<Equipa>::iterator it;
+	Equipa *equi;
+
+	for( unsigned int i = 0; i < equipas.size(); i++ ) {
+		if( equipas[i]->getNome() == nomeEquipa )
+			equi = equipas[i];
+	}
+
+	return equi;
+
 }
 
 
@@ -200,7 +209,7 @@ void Campeonato::loadEquipas() {
 			}
 
 			sports.clear();
-			equipas.push_back(*equi);
+			equipas.push_back(equi);
 		}
 
 		fileequi.close();
@@ -214,12 +223,12 @@ void Campeonato::saveEquipa() {
 	fileequi.open(file_equipas);
 
 	//guarda apenas a primeira equipa
-	fileequi << equipas[0].getNome();
+	fileequi << equipas[0]->getNome();
 
 	//guarda os desportos da primeira equipa
-	for( unsigned int i = 0; i < equipas[0].getDesportos().size(); i++ ) {
+	for( unsigned int i = 0; i < equipas[0]->getDesportos().size(); i++ ) {
 		fileequi << endl;
-		fileequi << " " << equipas[0].getDesportos()[i];
+		fileequi << " " << equipas[0]->getDesportos()[i];
 	}
 
 	fileequi << endl;
@@ -227,11 +236,11 @@ void Campeonato::saveEquipa() {
 	//guarda as restantes equipas
 	for ( unsigned int j = 1; j < equipas.size(); j++ ) {
 		fileequi << endl;
-		fileequi << equipas[j].getNome();
+		fileequi << equipas[j]->getNome();
 
-		for( unsigned int i = 0; i < equipas[j].getDesportos().size(); i++ ) {
+		for( unsigned int i = 0; i < equipas[j]->getDesportos().size(); i++ ) {
 			fileequi << endl;
-			fileequi << " " << equipas[j].getDesportos()[i];
+			fileequi << " " << equipas[j]->getDesportos()[i];
 		}
 
 		fileequi << endl;
@@ -242,7 +251,7 @@ void Campeonato::saveEquipa() {
 
 
 // Adiciona a equipa no vetor e guarda no ficheiro
-void Campeonato::addEquipa(Equipa &equi) {
+void Campeonato::addEquipa(Equipa *equi) {
 	equipas.push_back(equi);
 	saveEquipa();
 }

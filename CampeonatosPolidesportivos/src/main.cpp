@@ -238,7 +238,7 @@ void AdicionarEquipa() {
 		campeonato.addAtleta(*atl);
 	}
 
-	campeonato.addEquipa(*equi);
+	campeonato.addEquipa(equi);
 	cout << " Equipa e atletas adicionados com sucesso!";
 }
 
