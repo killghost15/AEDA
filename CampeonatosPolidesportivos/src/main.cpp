@@ -379,10 +379,13 @@ int main() {
 		remove(file_infrastruturas);
 	if ( file_isEmpty(file_desportos) == true )
 		remove(file_desportos);
+	if ( file_isEmpty(file_equipas) == true )
+		remove(file_equipas);
 
 	// Carrega a informação para os respetivos vetores
 	campeonato.loadInfrastruturas();
 	campeonato.loadDesportos();
+	campeonato.loadEquipas();
 
 	// Chama o Menu Inicial
 	MenuInicial();

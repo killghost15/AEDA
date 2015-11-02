@@ -149,46 +149,45 @@ void Campeonato::addDesporto(Desporto &desp) {
 
 
 // Carrega a informação das equipas do ficheiro equipas.txt ///////////////////////////
-/*void Campeonato::loadEquipas() {
-	string nome_desp, nome_mod;
-	Desporto *desp;
+void Campeonato::loadEquipas() {
+	string nome_equi, nome_desp;
+	Equipa *equi;
 
-	ifstream filedesp;
-	filedesp.open(file_desportos);
+	ifstream fileequi;
+	fileequi.open(file_equipas);
 
-	if ( filedesp.is_open() ) {
+	if ( fileequi.is_open() ) {
 
-		while ( !filedesp.eof() ) {
+		while ( !fileequi.eof() ) {
 
-			getline(filedesp, nome_desp);
+			getline(fileequi, nome_equi);
 
-			desp = new Desporto(nome_desp);
+			equi = new Equipa(nome_equi);
 
-			vector<string> mods;
+			vector<string> sports;
 			while ( true ) {
-				getline(filedesp, nome_mod);
+				getline(fileequi, nome_desp);
 
-				if ( nome_mod != "" ) {
-					nome_mod.erase(nome_mod.begin());
-					mods.push_back(nome_mod);
+				if ( nome_desp != "" ) {
+					nome_desp.erase(nome_desp.begin());
+					sports.push_back(nome_desp);
 				}
 				else
 					break;
 			}
 
-			for ( unsigned int j = 0; j < mods.size(); j++ ) {
-				string modalidade_string = mods[j];
-				Modalidade *modal = new Modalidade(modalidade_string);
-				desp->pushModalidade(*modal);
+			for ( unsigned int j = 0; j < sports.size(); j++ ) {
+				string desporto_string = sports[j];
+				equi->pushDesporto(desporto_string);
 			}
 
-			mods.clear();
-			desportos.push_back(*desp);
+			sports.clear();
+			equipas.push_back(*equi);
 		}
 
-		filedesp.close();
+		fileequi.close();
 	}
-}*/
+}
 
 
 // Guarda a equipa no ficheiro equipas.txt
