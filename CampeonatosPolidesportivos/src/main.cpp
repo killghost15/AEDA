@@ -53,7 +53,7 @@ void AdicionarEquipa() {
 	cin >> num_atletas;
 	cout << endl;
 
-	vector<Atleta> athletes;
+	vector<Atleta*> athletes;
 
 	//form para todos os atletas da equipa
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
@@ -70,7 +70,7 @@ void AdicionarEquipa() {
 		cout << endl;
 
 		Atleta *atlet = new Atleta(nome_atleta, idade_atleta, peso_atleta, estatura_atleta);
-		athletes.push_back(*atlet);
+		athletes.push_back(atlet);
 	}
 
 	//criaçao do objeto da classe equipa para adicionar ao campeonato
@@ -88,16 +88,71 @@ void AdicionarEquipa() {
 	Atleta *atl;
 
 	for ( unsigned int j = 0; j < athletes.size(); j++ ) {
-		string atletaNome = athletes[j].getNome();
-		unsigned int atletaIdade = athletes[j].getIdade();
-		float atletaPeso = athletes[j].getPeso();
-		float atletaEstatura = athletes[j].getEstatura();
+		string atletaNome = athletes[j]->getNome();
+		unsigned int atletaIdade = athletes[j]->getIdade();
+		float atletaPeso = athletes[j]->getPeso();
+		float atletaEstatura = athletes[j]->getEstatura();
 		atl = new Atleta(atletaNome, atletaIdade, atletaPeso, atletaEstatura);
 		atl->setEquipa(equi);
 		campeonato.addAtleta(atl);
 	}
 
 	cout << " Equipa e atletas adicionados com sucesso!";
+}
+
+
+// Apresenta o form para adicionar atletas à equipa //////////////////////////
+void AdicionarAtletasEquipa() {
+	string nome_equipa, nome_atleta;
+	float peso_atleta, estatura_atleta;
+	unsigned int num_atletas, idade_atleta;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Em que equipa pretende adicionar atletas: ";
+	getline(cin, nome_equipa);
+	// TODO: check if equipa exists/ error if it does
+	cout << " Quantos atletas pretende adicionar: ";
+	cin >> num_atletas;
+	cout << endl;
+
+	vector<Atleta*> athletes;
+
+	//form para todos os atletas da equipa
+	for ( unsigned int i = 0; i < num_atletas; i++ ) {
+		cin.clear();
+		cin.sync();
+		cout << " Nome do Atleta " << i+1 << ": ";
+		getline(cin, nome_atleta);
+		cout << " Idade do Atleta " << i+1 << ": ";
+		cin >> idade_atleta;
+		cout << " Peso do Atleta " << i+1 << ": ";
+		cin >> peso_atleta;
+		cout << " Estatura do Atleta " << i+1 << ": ";
+		cin >> estatura_atleta;
+		cout << endl;
+
+		Atleta *atlet = new Atleta(nome_atleta, idade_atleta, peso_atleta, estatura_atleta);
+		athletes.push_back(atlet);
+	}
+
+	Equipa *equi = campeonato.findEquipa(nome_equipa);
+
+	//criaçao do objeto da classe atleta para adicionar ao campeonato
+	Atleta *atl;
+
+	for ( unsigned int j = 0; j < athletes.size(); j++ ) {
+		string atletaNome = athletes[j]->getNome();
+		unsigned int atletaIdade = athletes[j]->getIdade();
+		float atletaPeso = athletes[j]->getPeso();
+		float atletaEstatura = athletes[j]->getEstatura();
+		atl = new Atleta(atletaNome, atletaIdade, atletaPeso, atletaEstatura);
+		atl->setEquipa(equi);
+		campeonato.addAtleta(atl);
+	}
+
+	cout << " Atletas adicionados à equipa com sucesso!";
 }
 
 
@@ -137,7 +192,9 @@ void MenuEquipasAtletas() {
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//
+			AdicionarAtletasEquipa();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 4:
 			cout << string(8,'\n');
