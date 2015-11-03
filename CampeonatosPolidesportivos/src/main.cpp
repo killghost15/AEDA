@@ -94,6 +94,7 @@ void AdicionarEquipa() {
 		float atletaEstatura = athletes[j]->getEstatura();
 		atl = new Atleta(atletaNome, atletaIdade, atletaPeso, atletaEstatura);
 		atl->setEquipa(equi);
+
 		campeonato.addAtleta(atl);
 	}
 
@@ -149,6 +150,7 @@ void AdicionarAtletasEquipa() {
 		float atletaEstatura = athletes[j]->getEstatura();
 		atl = new Atleta(atletaNome, atletaIdade, atletaPeso, atletaEstatura);
 		atl->setEquipa(equi);
+
 		campeonato.addAtleta(atl);
 	}
 
@@ -166,14 +168,15 @@ void MenuEquipasAtletas() {
 	cout << "- 1. Adicionar Equipa                         -" << endl;
 	cout << "- 2. Apagar Equipa                            -" << endl;
 	cout << "- 3. Adicionar Atletas à Equipa               -" << endl;
-	cout << "- 4. Voltar ao Menu Principal                 -" << endl;
+	cout << "- 4. Retirar Atletas à Equipa                 -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                 -" << endl;
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_equipas;
 
-	if ( escolha_equipas != 1 && escolha_equipas != 2 && escolha_equipas != 3 && escolha_equipas != 4 ) {
+	if ( escolha_equipas != 1 && escolha_equipas != 2 && escolha_equipas != 3 && escolha_equipas != 4  && escolha_equipas != 5 ) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuEquipasAtletas();
@@ -197,6 +200,10 @@ void MenuEquipasAtletas() {
 			MenuInicial();
 			break;
 		case 4:
+			cout << string(8,'\n');
+			//
+			break;
+		case 5:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
@@ -366,8 +373,24 @@ void AdicionarInfrastrutura() {
 	Infrastrutura *infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
 	campeonato.addInfrastrutura(infra);
 
-	cout << " Infrastrutura adicionada com sucesso!";
-	cout << string(8,'\n');
+	cout << endl << " Infrastrutura adicionada com sucesso!";
+}
+
+
+// Apresenta o form para a adição da infrastrutura ao campeonato
+void ApagarInfrastrutura() {
+	string nome_infrastrutura;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Nome da Infrastrutura a apagar: ";
+	getline(cin, nome_infrastrutura);
+
+	campeonato.eraseInfrastrutura(nome_infrastrutura);
+	campeonato.saveInfrastrutura();
+
+	cout << " Infrastrutura apagada com sucesso!";
 }
 
 
@@ -402,7 +425,9 @@ void MenuInfrastruturas() {
 			break;
 		case 2:
 			cout << string(8,'\n');
-			//
+			ApagarInfrastrutura();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 3:
 			cout << string(8,'\n');

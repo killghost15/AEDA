@@ -38,6 +38,9 @@ public:
 	Atleta* findAtleta(string nomeAtleta);
 	Modalidade* findModalidade(string nomeModalidade);
 	Desporto* findDesporto(string nomeDesporto);
+	Infrastrutura* findInfrastrutura(string nomeInfrastrutura);
+	// Metodos erase
+	void eraseInfrastrutura(string nomeInfrastrutura);
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();

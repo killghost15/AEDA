@@ -23,6 +23,11 @@ vector<Infrastrutura*> Campeonato::getInfrastruturas() {
 }
 
 
+/**
+ *  METODOS DE PROCURA DE OBJETOS COM DETERMINADO NOME NOS VETORES
+ */
+
+
 // Procura uma equipa com um nome especifico no vetor equipas
 Equipa* Campeonato::findEquipa(string nomeEquipa) {
 	Equipa *equi;
@@ -71,6 +76,38 @@ Desporto* Campeonato::findDesporto(string nomeDesporto) {
 }
 
 
+// Procura uma infrastrutura com um nome especifico no vetor infrastruturas
+Infrastrutura* Campeonato::findInfrastrutura(string nomeInfrastrutura) {
+	Infrastrutura *infra;
+
+	for( unsigned int i = 0; i < infrastruturas.size(); i++ )
+		if( infrastruturas[i]->getNome() == nomeInfrastrutura )
+			infra = infrastruturas[i];
+
+	return infra;
+}
+
+
+/**
+ *  METODOS PARA ELIMINAR OBJETOS COM UM DETERMINADO NOME DOS VETORES
+ */
+
+
+// Apaga a infrastrutura com um nome especifico do vetor infrastruturas
+void Campeonato::eraseInfrastrutura(string nomeInfrastrutura) {
+	vector<Infrastrutura*>::iterator it;
+
+	for( it = infrastruturas.begin(); it != infrastruturas.end(); it++ )
+		if( (*it)->getNome() == nomeInfrastrutura )
+			infrastruturas.erase(it);
+}
+
+
+/**
+ *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
+ */
+
+
 // Procura o indice de uma modalidade com um nome especifico no vetor modalidades
 int Campeonato::findModalidadeIndex(string nomeModalidade) {
 	int index;
@@ -92,6 +129,7 @@ void Campeonato::changeModalidade(int index, Modalidade *mod) {
 /**
  *  METODOS DE SAVE/LOAD DOS VETORES E FICHEIROS
  */
+
 
 // Carrega a informação das equipas do ficheiro equipas.txt
 void Campeonato::loadEquipas() {
