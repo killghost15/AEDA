@@ -8,7 +8,6 @@ using namespace std;
 
 
 class Prova {
-	int duracao;
 public:
 };
 

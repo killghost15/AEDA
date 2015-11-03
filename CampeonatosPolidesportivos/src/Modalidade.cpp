@@ -1,6 +1,7 @@
 #include "Modalidade.h"
 
 
+
 Modalidade::Modalidade(string name) {
 	nome = name;
 }

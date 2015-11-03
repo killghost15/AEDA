@@ -14,7 +14,7 @@ class Equipa {
 	vector<string> desportos;
 public:
 	Equipa(string name);
-	// metodos get
+	// Metodos get
 	string getNome() const;
 	vector<string> getDesportos();
 	// outros metodos

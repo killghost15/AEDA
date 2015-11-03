@@ -38,12 +38,6 @@ public:
 	Atleta* findAtleta(string nomeAtleta);
 	Modalidade* findModalidade(string nomeModalidade);
 	Desporto* findDesporto(string nomeDesporto);
-
-
-	int findModalidadeIndex(string nomeModalidade);
-	void changeModalidade(int index, Modalidade *mod);
-
-
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();
@@ -64,6 +58,9 @@ public:
 	void loadModalidades();
 	void saveModalidade();
 	void addModalidade(Modalidade *modal);
+	// Metodos para adicionar atletas a uma modalidade
+	int findModalidadeIndex(string nomeModalidade);
+	void changeModalidade(int index, Modalidade *mod);
 };
 
 

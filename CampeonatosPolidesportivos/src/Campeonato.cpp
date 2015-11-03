@@ -70,8 +70,8 @@ Desporto* Campeonato::findDesporto(string nomeDesporto) {
 	return desp;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
 
+// Procura o indice de uma modalidade com um nome especifico no vetor modalidades
 int Campeonato::findModalidadeIndex(string nomeModalidade) {
 	int index;
 
@@ -82,12 +82,16 @@ int Campeonato::findModalidadeIndex(string nomeModalidade) {
 	return index;
 }
 
-//
+
+// Troca a modalidade no indice index no vetor modalidades pela modalidade mod
 void Campeonato::changeModalidade(int index, Modalidade *mod) {
 	modalidades[index] = mod;
 }
 
 
+/**
+ *  METODOS DE SAVE/LOAD DOS VETORES E FICHEIROS
+ */
 
 // Carrega a informação das equipas do ficheiro equipas.txt
 void Campeonato::loadEquipas() {
@@ -272,7 +276,7 @@ void Campeonato::loadModalidades() {
 
 			for ( unsigned int j = 0; j < athletes.size(); j++ ) {
 				string atleta_string = athletes[j];
-				Atleta *atl = new Atleta(atleta_string);
+				Atleta *atl = findAtleta(atleta_string);
 				modal->pushAtleta(atl);
 			}
 
@@ -318,7 +322,7 @@ void Campeonato::saveModalidade() {
 }
 
 
-// Adiciona o atleta no vetor e guarda no ficheiro
+// Adiciona a modalidade no vetor e guarda no ficheiro
 void Campeonato::addModalidade(Modalidade *modal) {
 	modalidades.push_back(modal);
 	saveModalidade();
@@ -355,7 +359,7 @@ void Campeonato::loadDesportos() {
 
 			for ( unsigned int j = 0; j < mods.size(); j++ ) {
 				string modalidade_string = mods[j];
-				Modalidade *modal = new Modalidade(modalidade_string);
+				Modalidade *modal = findModalidade(modalidade_string);
 				desp->pushModalidade(modal);
 			}
 
@@ -408,7 +412,7 @@ void Campeonato::addDesporto(Desporto *desp) {
 }
 
 
-// Carraga a informação das infrastruturas do ficheiro infrastruturas.txt
+// Carrega a informação das infrastruturas do ficheiro infrastruturas.txt
 void Campeonato::loadInfrastruturas() {
 	string nome_infrastrutura, cidade_infrastrutura;
 	string trash;
