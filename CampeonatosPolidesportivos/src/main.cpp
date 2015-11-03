@@ -330,7 +330,7 @@ void RetirarAtletasModalidade() {
 		campeonato.eraseAtletaModalidade(nome_modalidade, nome_atleta);
 	}
 
-	cout << campeonato.getModalidades()[0]->getAtletas()[1]->getNome();
+	cout << campeonato.getModalidades()[ campeonato.findModalidadeIndex(nome_modalidade)]->getAtletas()[1]->getNome();
 	campeonato.saveModalidade();
 
 	cout << endl << " Atletas retirados à modalidade com sucesso!";
@@ -556,13 +556,13 @@ void MenuInicial() {
 	cout << "- 3. Manutenção do Calendário das provas     -" << endl;
 	cout << "- 4. Manutenção de Infrastruturas            -" << endl;
 	cout << "- 5. Listagens                               -" << endl;
-	cout << "-                                            -" << endl;
+	cout << "- 6. Terminar o programa                     -" << endl;
 	cout << "----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
 
-	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 ) {
+	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInicial();
@@ -589,6 +589,8 @@ void MenuInicial() {
 			cout << string(8,'\n');
 			//MenuListagens();
 			break;
+		case 6:
+			return;
 	}
 }
 
