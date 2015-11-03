@@ -1,20 +1,21 @@
 #include "Campeonato.h"
 
 
-vector<Atleta*> Campeonato::getAtletas() {
-	return atletas;
-}
-
-vector<Desporto*> Campeonato::getDesportos() {
-	return desportos;
-}
 
 vector<Equipa*> Campeonato::getEquipas() {
 	return equipas;
 }
 
+vector<Atleta*> Campeonato::getAtletas() {
+	return atletas;
+}
+
 vector<Modalidade*> Campeonato::getModalidades() {
 	return modalidades;
+}
+
+vector<Desporto*> Campeonato::getDesportos() {
+	return desportos;
 }
 
 vector<Infrastrutura*> Campeonato::getInfrastruturas() {
@@ -24,152 +25,68 @@ vector<Infrastrutura*> Campeonato::getInfrastruturas() {
 
 // Procura uma equipa com um nome especifico no vetor equipas
 Equipa* Campeonato::findEquipa(string nomeEquipa) {
-	//vector<Equipa>::iterator it;
 	Equipa *equi;
 
-	for( unsigned int i = 0; i < equipas.size(); i++ ) {
+	for( unsigned int i = 0; i < equipas.size(); i++ )
 		if( equipas[i]->getNome() == nomeEquipa )
 			equi = equipas[i];
-	}
 
 	return equi;
-
 }
 
 
+// Procura um atleta com um nome especifico no vetor atletas
+Atleta* Campeonato::findAtleta(string nomeAtleta) {
+	Atleta *atl;
 
-// Carraga a informação das infrastruturas do ficheiro infrastruturas.txt
-void Campeonato::loadInfrastruturas() {
-	string nome_infrastrutura, cidade_infrastrutura;
-	string trash;
-	Infrastrutura *infra;
+	for( unsigned int i = 0; i < atletas.size(); i++ )
+		if( atletas[i]->getNome() == nomeAtleta )
+			atl = atletas[i];
 
-	ifstream fileinfra;
-	fileinfra.open(file_infrastruturas);
-
-	if ( fileinfra.is_open() ) {
-
-		while ( !fileinfra.eof() ) {
-			getline(fileinfra, nome_infrastrutura);
-			getline(fileinfra, cidade_infrastrutura);
-			getline(fileinfra, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
-			infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
-			infrastruturas.push_back(infra);
-		}
-
-		fileinfra.close();
-	}
+	return atl;
 }
 
 
-// Guarda a infrastrutura no ficheiro infrastruturas.txt
-void Campeonato::saveInfrastrutura() {
-	ofstream fileinfra;
-	fileinfra.open(file_infrastruturas);
+// Procura uma modalidade com um nome especifico no vetor modalidades
+Modalidade* Campeonato::findModalidade(string nomeModalidade) {
+	Modalidade *mod;
 
-	//guarda apenas a primeira infrastrutura
-	fileinfra << infrastruturas[0]->getNome() << endl;
-	fileinfra << infrastruturas[0]->getCidade();
+	for( unsigned int i = 0; i < modalidades.size(); i++ )
+		if( modalidades[i]->getNome() == nomeModalidade )
+			mod = modalidades[i];
 
-	//guarda as restantes infrastruturas
-	for ( unsigned int i = 1; i < infrastruturas.size(); i++ ) {
-		fileinfra << endl << endl;
-		fileinfra << infrastruturas[i]->getNome() << endl;
-		fileinfra << infrastruturas[i]->getCidade();
-	}
-
-	fileinfra.close();
+	return mod;
 }
 
 
-// Adiciona a infrastrutura no vetor e guarda no ficheiro
-void Campeonato::addInfrastrutura(Infrastrutura *infra) {
-	infrastruturas.push_back(infra);
-	saveInfrastrutura();
-}
-
-
-// Carrega a informação dos desportos do ficheiro desportos.txt
-void Campeonato::loadDesportos() {
-	string nome_desp, nome_mod;
+// Procura um desporto com um nome especifico no vetor desportos
+Desporto* Campeonato::findDesporto(string nomeDesporto) {
 	Desporto *desp;
 
-	ifstream filedesp;
-	filedesp.open(file_desportos);
+	for( unsigned int i = 0; i < desportos.size(); i++ )
+		if( desportos[i]->getNome() == nomeDesporto )
+			desp = desportos[i];
 
-	if ( filedesp.is_open() ) {
-
-		while ( !filedesp.eof() ) {
-
-			getline(filedesp, nome_desp);
-
-			desp = new Desporto(nome_desp);
-
-			vector<string> mods;
-			while ( true ) {
-				getline(filedesp, nome_mod);
-
-				if ( nome_mod != "" ) {
-					nome_mod.erase(nome_mod.begin());
-					mods.push_back(nome_mod);
-				}
-				else
-					break;
-			}
-
-			for ( unsigned int j = 0; j < mods.size(); j++ ) {
-				string modalidade_string = mods[j];
-				Modalidade *modal = new Modalidade(modalidade_string);
-				desp->pushModalidade(*modal);
-			}
-
-			mods.clear();
-			desportos.push_back(desp);
-		}
-
-		filedesp.close();
-	}
+	return desp;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
 
-// Guarda o desporto no ficheiro desportos.txt
-void Campeonato::saveDesporto() {
-	ofstream filedesp;
-	filedesp.open(file_desportos);
+int Campeonato::findModalidadeIndex(string nomeModalidade) {
+	int index;
 
-	//guarda apenas o primeiro desporto
-	filedesp << desportos[0]->getNome();
+	for( unsigned int i = 0; i < modalidades.size(); i++ )
+		if( modalidades[i]->getNome() == nomeModalidade )
+			index = i;
 
-	//guarda as modalidades do primeiro desporto
-	for( unsigned int i = 0; i < desportos[0]->getModalidades().size(); i++ ) {
-		filedesp << endl;
-		filedesp << " " << desportos[0]->getModalidades()[i].getNome();
-	}
-
-	filedesp << endl;
-
-	//guarda os restantes desportos
-	for ( unsigned int j = 1; j < desportos.size(); j++ ) {
-		filedesp << endl;
-		filedesp << desportos[j]->getNome();
-
-		for( unsigned int i = 0; i < desportos[j]->getModalidades().size(); i++ ) {
-			filedesp << endl;
-			filedesp << " " << desportos[j]->getModalidades()[i].getNome();
-		}
-
-		filedesp << endl;
-	}
-
-	filedesp.close();
+	return index;
 }
 
-
-// Adiciona o desporto no vetor e guarda no ficheiro
-void Campeonato::addDesporto(Desporto *desp) {
-	desportos.push_back(desp);
-	saveDesporto();
+//
+void Campeonato::changeModalidade(int index, Modalidade *mod) {
+	modalidades[index] = mod;
 }
+
 
 
 // Carrega a informação das equipas do ficheiro equipas.txt
@@ -275,12 +192,13 @@ void Campeonato::loadAtletas() {
 			getline(fileatl, nome_equipa);
 			getline(fileatl, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
 
-			nome_equipa.erase(nome_equipa.begin());
 			int idadeAtleta_int = atoi(idade_atleta.c_str());
 			float pesoAtleta_float = atof(peso_atleta.c_str());
 			float estaturaAtleta_float = atof(estatura_atleta.c_str());
 
-			Equipa *equi = new Equipa(nome_equipa); // nao pode ser equipa nova, reestruturar
+			nome_equipa.erase(nome_equipa.begin());
+
+			Equipa *equi = findEquipa(nome_equipa);
 			atl = new Atleta(nome_atleta, idadeAtleta_int, pesoAtleta_float, estaturaAtleta_float);
 			atl->setEquipa(equi);
 			atletas.push_back(atl);
@@ -324,6 +242,7 @@ void Campeonato::addAtleta(Atleta *atl) {
 }
 
 
+// Carrega a informação das modalidades do ficheiro modalidades.txt
 void Campeonato::loadModalidades() {
 	string nome_mod, nome_atl;
 	Modalidade *modal;
@@ -403,6 +322,140 @@ void Campeonato::saveModalidade() {
 void Campeonato::addModalidade(Modalidade *modal) {
 	modalidades.push_back(modal);
 	saveModalidade();
+}
+
+
+// Carrega a informação dos desportos do ficheiro desportos.txt
+void Campeonato::loadDesportos() {
+	string nome_desp, nome_mod;
+	Desporto *desp;
+
+	ifstream filedesp;
+	filedesp.open(file_desportos);
+
+	if ( filedesp.is_open() ) {
+
+		while ( !filedesp.eof() ) {
+
+			getline(filedesp, nome_desp);
+
+			desp = new Desporto(nome_desp);
+
+			vector<string> mods;
+			while ( true ) {
+				getline(filedesp, nome_mod);
+
+				if ( nome_mod != "" ) {
+					nome_mod.erase(nome_mod.begin());
+					mods.push_back(nome_mod);
+				}
+				else
+					break;
+			}
+
+			for ( unsigned int j = 0; j < mods.size(); j++ ) {
+				string modalidade_string = mods[j];
+				Modalidade *modal = new Modalidade(modalidade_string);
+				desp->pushModalidade(modal);
+			}
+
+			mods.clear();
+			desportos.push_back(desp);
+		}
+
+		filedesp.close();
+	}
+}
+
+
+// Guarda o desporto no ficheiro desportos.txt
+void Campeonato::saveDesporto() {
+	ofstream filedesp;
+	filedesp.open(file_desportos);
+
+	//guarda apenas o primeiro desporto
+	filedesp << desportos[0]->getNome();
+
+	//guarda as modalidades do primeiro desporto
+	for( unsigned int i = 0; i < desportos[0]->getModalidades().size(); i++ ) {
+		filedesp << endl;
+		filedesp << " " << desportos[0]->getModalidades()[i]->getNome();
+	}
+
+	filedesp << endl;
+
+	//guarda os restantes desportos
+	for ( unsigned int j = 1; j < desportos.size(); j++ ) {
+		filedesp << endl;
+		filedesp << desportos[j]->getNome();
+
+		for( unsigned int i = 0; i < desportos[j]->getModalidades().size(); i++ ) {
+			filedesp << endl;
+			filedesp << " " << desportos[j]->getModalidades()[i]->getNome();
+		}
+
+		filedesp << endl;
+	}
+
+	filedesp.close();
+}
+
+
+// Adiciona o desporto no vetor e guarda no ficheiro
+void Campeonato::addDesporto(Desporto *desp) {
+	desportos.push_back(desp);
+	saveDesporto();
+}
+
+
+// Carraga a informação das infrastruturas do ficheiro infrastruturas.txt
+void Campeonato::loadInfrastruturas() {
+	string nome_infrastrutura, cidade_infrastrutura;
+	string trash;
+	Infrastrutura *infra;
+
+	ifstream fileinfra;
+	fileinfra.open(file_infrastruturas);
+
+	if ( fileinfra.is_open() ) {
+
+		while ( !fileinfra.eof() ) {
+			getline(fileinfra, nome_infrastrutura);
+			getline(fileinfra, cidade_infrastrutura);
+			getline(fileinfra, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
+			infra = new Infrastrutura(nome_infrastrutura, cidade_infrastrutura);
+			infrastruturas.push_back(infra);
+		}
+
+		fileinfra.close();
+	}
+}
+
+
+// Guarda a infrastrutura no ficheiro infrastruturas.txt
+void Campeonato::saveInfrastrutura() {
+	ofstream fileinfra;
+	fileinfra.open(file_infrastruturas);
+
+	//guarda apenas a primeira infrastrutura
+	fileinfra << infrastruturas[0]->getNome() << endl;
+	fileinfra << infrastruturas[0]->getCidade();
+
+	//guarda as restantes infrastruturas
+	for ( unsigned int i = 1; i < infrastruturas.size(); i++ ) {
+		fileinfra << endl << endl;
+		fileinfra << infrastruturas[i]->getNome() << endl;
+		fileinfra << infrastruturas[i]->getCidade();
+	}
+
+	fileinfra.close();
+}
+
+
+// Adiciona a infrastrutura no vetor e guarda no ficheiro
+void Campeonato::addInfrastrutura(Infrastrutura *infra) {
+	infrastruturas.push_back(infra);
+	saveInfrastrutura();
 }
 
 

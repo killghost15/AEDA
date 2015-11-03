@@ -28,13 +28,22 @@ class Campeonato {
 	vector<Infrastrutura*> infrastruturas;
 public:
 	// Metodos get
-	vector<Atleta*> getAtletas();
-	vector<Desporto*> getDesportos();
 	vector<Equipa*> getEquipas();
+	vector<Atleta*> getAtletas();
 	vector<Modalidade*> getModalidades();
+	vector<Desporto*> getDesportos();
 	vector<Infrastrutura*> getInfrastruturas();
 	// Metodos find
 	Equipa* findEquipa(string nomeEquipa);
+	Atleta* findAtleta(string nomeAtleta);
+	Modalidade* findModalidade(string nomeModalidade);
+	Desporto* findDesporto(string nomeDesporto);
+
+
+	int findModalidadeIndex(string nomeModalidade);
+	void changeModalidade(int index, Modalidade *mod);
+
+
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();

@@ -107,12 +107,55 @@ void AdicionarDesporto() {
 	for ( unsigned int j = 0; j < mods.size(); j++ ) {
 		string modalidade_string = mods[j];
 		Modalidade *modal = new Modalidade(modalidade_string);
-		desp->pushModalidade(*modal);
+		desp->pushModalidade(modal);
 		campeonato.addModalidade(modal);
 	}
 
 	campeonato.addDesporto(desp);
 	cout << endl << " Desporto e modalidades adicionados com sucesso!";
+}
+
+
+// Apresenta o form para adicionar atletas à modalidade
+void AdicionarAtletasModalidade() {
+	string nome_modalidade, nome_atleta;
+	unsigned int num_atletas;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Em que modalidade pretende adicionar atletas: ";
+	getline(cin, nome_modalidade);
+	// TODO: check if modalidade exists/ error if it does
+	cout << " Quantos atletas pretende adicionar: ";
+	cin >> num_atletas;
+	cout << endl;
+
+	Atleta *atl;
+	vector<Atleta*> athletes;
+
+	//form para todos os atletas a adicionar na modalidade
+	for ( unsigned int i = 0; i < num_atletas; i++ ) {
+		cin.clear();
+		cin.sync();
+		cout << " Nome do Atleta " << i+1 << ": ";
+		getline(cin, nome_atleta);
+
+		atl = campeonato.findAtleta(nome_atleta);
+		athletes.push_back(atl);
+	}
+
+	Modalidade *mod;
+	mod = campeonato.findModalidade(nome_modalidade);
+	int index = campeonato.findModalidadeIndex(nome_modalidade);
+
+	for ( unsigned int j = 0; j < athletes.size(); j++ ) {
+		mod->pushAtleta(athletes[j]);
+	}
+
+	campeonato.changeModalidade(index, mod);
+	campeonato.saveModalidade();
+
 }
 
 
@@ -153,7 +196,9 @@ void MenuDesportosModalidades() {
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//
+			AdicionarAtletasModalidade();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 4:
 			cout << string(8,'\n');
@@ -225,6 +270,9 @@ void AdicionarEquipa() {
 		equi->pushDesporto(desporto_string);
 	}
 
+	// adiciona a equipa ao vector e guarda no ficheiro
+	campeonato.addEquipa(equi);
+
 	//criaçao do objeto da classe atleta para adicionar ao campeonato
 	Atleta *atl;
 
@@ -238,7 +286,6 @@ void AdicionarEquipa() {
 		campeonato.addAtleta(atl);
 	}
 
-	campeonato.addEquipa(equi);
 	cout << " Equipa e atletas adicionados com sucesso!";
 }
 
