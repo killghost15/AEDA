@@ -20,3 +20,8 @@ vector<Atleta*> Modalidade::getAtletas() {
 void Modalidade::pushAtleta(Atleta *atl) {
 	atletas.push_back(atl);
 }
+
+
+void Modalidade::eraseAtleta(int index) {
+	atletas.erase(atletas.begin()+index);
+}

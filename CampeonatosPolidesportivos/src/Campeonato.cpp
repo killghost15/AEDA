@@ -110,28 +110,8 @@ void Campeonato::eraseAtletaModalidade(string nomeModalidade, string nomeAtleta)
 		if( modalidades[i]->getNome() == nomeModalidade ) {
 			vector<Atleta*> athletes = modalidades[i]->getAtletas();
 			for ( unsigned int j = 0; j < athletes.size(); j++ )
-				if ( athletes[j]->getNome() == nomeAtleta ){
-
-					if (athletes.size()==1){
-						athletes.pop_back();
-						break;
-					}
-					for (unsigned int k=j; k<= athletes.size()-1;){
-						if (k== athletes.size()-1){
-						athletes.pop_back();
-						break;
-						}
-						athletes[k]= athletes[k+1];
-						k++;
-
-					/*	for (unsigned int g=0; g<athletes.size();g++)
-							cout <<""<<athletes[g]; */
-
-					}
-
-
-				}
-
+				if ( athletes[j]->getNome() == nomeAtleta )
+					modalidades[i]->eraseAtleta(j);
 		}
 }
 

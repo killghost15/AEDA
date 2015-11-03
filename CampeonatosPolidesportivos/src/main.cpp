@@ -320,6 +320,7 @@ void RetirarAtletasModalidade() {
 	cin >> num_atletas;
 	cout << endl;
 
+	cout << campeonato.getModalidades().size() << endl;
 	//form para todos os atletas a retirar na modalidade
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
@@ -330,7 +331,8 @@ void RetirarAtletasModalidade() {
 		campeonato.eraseAtletaModalidade(nome_modalidade, nome_atleta);
 	}
 
-	cout << campeonato.getModalidades()[ campeonato.findModalidadeIndex(nome_modalidade)]->getAtletas()[1]->getNome();
+	cout << campeonato.getModalidades().size();
+	//cout << campeonato.getModalidades()[campeonato.findModalidadeIndex(nome_modalidade)]->getAtletas()[1]->getNome();
 	campeonato.saveModalidade();
 
 	cout << endl << " Atletas retirados à modalidade com sucesso!";
@@ -612,14 +614,16 @@ bool file_isEmpty( const char* filename ) {
 
 int main() {
 	// Elimina o ficheiro se nao tiver nada
-	if ( file_isEmpty(file_infrastruturas) == true )
-		remove(file_infrastruturas);
-	if ( file_isEmpty(file_desportos) == true )
-		remove(file_desportos);
 	if ( file_isEmpty(file_equipas) == true )
 		remove(file_equipas);
+	if ( file_isEmpty(file_atletas) == true )
+		remove(file_atletas);
 	if ( file_isEmpty(file_modalidades) == true )
 		remove(file_modalidades);
+	if ( file_isEmpty(file_desportos) == true )
+		remove(file_desportos);
+	if ( file_isEmpty(file_infrastruturas) == true )
+		remove(file_infrastruturas);
 
 	// Carrega a informação para os respetivos vetores
 	campeonato.loadEquipas();
