@@ -19,6 +19,7 @@ public:
 	vector<Atleta*> getAtletas();
 	// outros metodos
 	void pushAtleta(Atleta *atl);
+	void eraseAtleta(Atleta *atl);
 };
 
 

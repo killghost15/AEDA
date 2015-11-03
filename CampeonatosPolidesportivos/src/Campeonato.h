@@ -41,6 +41,7 @@ public:
 	Infrastrutura* findInfrastrutura(string nomeInfrastrutura);
 	// Metodos erase
 	void eraseInfrastrutura(string nomeInfrastrutura);
+	void eraseAtletaModalidade(string nomeModalidade, string nomeAtleta);
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();

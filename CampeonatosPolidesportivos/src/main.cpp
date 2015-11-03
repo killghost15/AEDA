@@ -246,6 +246,8 @@ void AdicionarDesporto() {
 	//criaçao do objeto da classe desporto para adicionar ao campeonato
 	Desporto *desp = new Desporto(nome_desporto);
 
+	campeonato.addDesporto(desp);
+
 	for ( unsigned int j = 0; j < mods.size(); j++ ) {
 		string modalidade_string = mods[j];
 		Modalidade *modal = new Modalidade(modalidade_string);
@@ -253,7 +255,6 @@ void AdicionarDesporto() {
 		campeonato.addModalidade(modal);
 	}
 
-	campeonato.addDesporto(desp);
 	cout << endl << " Desporto e modalidades adicionados com sucesso!";
 }
 
@@ -269,6 +270,7 @@ void AdicionarAtletasModalidade() {
 	cout << " Em que modalidade pretende adicionar atletas: ";
 	getline(cin, nome_modalidade);
 	// TODO: check if modalidade exists/ error if it does
+	// TODO: verificar se a modalidade está nos desportos da equipa do atleta
 	cout << " Quantos atletas pretende adicionar: ";
 	cin >> num_atletas;
 	cout << endl;
@@ -303,6 +305,38 @@ void AdicionarAtletasModalidade() {
 }
 
 
+// Retira um numero especifico de atletas da modalidade
+void RetirarAtletasModalidade() {
+	string nome_modalidade, nome_atleta;
+	unsigned int num_atletas;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " A que modalidade pretende retirar atletas: ";
+	getline(cin, nome_modalidade);
+	// TODO: check if modalidade exists/ error if it does
+	cout << " Quantos atletas pretende retirar: ";
+	cin >> num_atletas;
+	cout << endl;
+
+	//form para todos os atletas a retirar na modalidade
+	for ( unsigned int i = 0; i < num_atletas; i++ ) {
+		cin.clear();
+		cin.sync();
+		cout << " Nome do Atleta " << i+1 << ": ";
+		getline(cin, nome_atleta);
+
+		campeonato.eraseAtletaModalidade(nome_modalidade, nome_atleta);
+	}
+
+	cout << campeonato.getModalidades()[0]->getAtletas()[1]->getNome();
+	campeonato.saveModalidade();
+
+	cout << endl << " Atletas retirados à modalidade com sucesso!";
+}
+
+
 // Menu de Manutenção dos Desportos e Modalidades, bem como dos atletas de cada modalidade
 void MenuDesportosModalidades() {
 	int escolha_desportos;
@@ -313,15 +347,15 @@ void MenuDesportosModalidades() {
 	cout << "- 1. Adicionar Desporto                       -" << endl;
 	cout << "- 2. Apagar Desporto                          -" << endl;
 	cout << "- 3. Adicionar Atletas à Modalidade           -" << endl;
-	cout << "- 3. Retirar Atletas à Modalidade             -" << endl;
-	cout << "- 4. Voltar ao Menu Principal                 -" << endl;
+	cout << "- 4. Retirar Atletas à Modalidade             -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                 -" << endl;
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_desportos;
 
-	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4 ) {
+	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5 ) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuDesportosModalidades();
@@ -345,6 +379,12 @@ void MenuDesportosModalidades() {
 			MenuInicial();
 			break;
 		case 4:
+			cout << string(8,'\n');
+			RetirarAtletasModalidade();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 5:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;

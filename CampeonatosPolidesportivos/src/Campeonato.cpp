@@ -103,6 +103,21 @@ void Campeonato::eraseInfrastrutura(string nomeInfrastrutura) {
 }
 
 
+// Retira o atleta com um nome especifico do vetor atletas da modalidade nomeModalidade do vetor modalidades
+void Campeonato::eraseAtletaModalidade(string nomeModalidade, string nomeAtleta) {
+
+	for( unsigned int i = 0; i < modalidades.size(); i++ )
+		if( modalidades[i]->getNome() == nomeModalidade ) {
+			vector<Atleta*> athletes = modalidades[i]->getAtletas();
+			for ( unsigned int j = 0; j < athletes.size(); j++ )
+				if ( athletes[j]->getNome() == nomeAtleta )
+					modalidades[i]->getAtletas().erase(modalidades[i]->getAtletas().begin()+j);
+					//cout << modalidades[i]->getAtletas()[1]->getNome();
+		}
+
+}
+
+
 /**
  *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
  */
