@@ -25,3 +25,9 @@ void Modalidade::pushAtleta(Atleta *atl) {
 void Modalidade::eraseAtleta(int index) {
 	atletas.erase(atletas.begin()+index);
 }
+
+
+void Modalidade::eraseAtleta2(int index) {
+	atletas[index] = atletas.back();
+	atletas.pop_back();
+}

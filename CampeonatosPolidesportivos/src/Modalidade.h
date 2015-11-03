@@ -20,6 +20,7 @@ public:
 	// outros metodos
 	void pushAtleta(Atleta *atl);
 	void eraseAtleta(int index);
+	void eraseAtleta2(int index);
 };
 
 

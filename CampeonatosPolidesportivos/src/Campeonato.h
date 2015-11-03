@@ -42,6 +42,8 @@ public:
 	// Metodos erase
 	void eraseInfrastrutura(string nomeInfrastrutura);
 	void eraseAtletaModalidade(string nomeModalidade, string nomeAtleta);
+	void eraseAtleta(string nomeAtleta);
+	void eraseEquipa(string nomeEquipa);
 	// Metodos sobre Infrastruturas
 	void loadInfrastruturas();
 	void saveInfrastrutura();
@@ -65,6 +67,9 @@ public:
 	// Metodos para adicionar atletas a uma modalidade
 	int findModalidadeIndex(string nomeModalidade);
 	void changeModalidade(int index, Modalidade *mod);
+	//
+	int findAtletaIndex(string nomeAtleta);
+	void changeEquipa(int index, Equipa *equi);
 };
 
 

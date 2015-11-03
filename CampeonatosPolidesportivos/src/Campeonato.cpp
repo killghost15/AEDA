@@ -116,6 +116,72 @@ void Campeonato::eraseAtletaModalidade(string nomeModalidade, string nomeAtleta)
 }
 
 
+// Apaga o atleta com um nome especifico do vetor atletas
+void Campeonato::eraseAtleta(string nomeAtleta) {
+
+	//apaga o atleta do vetor de atletas
+	for( unsigned int i = 0; i < atletas.size(); i++ )
+		if( atletas[i]->getNome() == nomeAtleta )
+			atletas.erase(atletas.begin()+i);
+
+	//apaga o atleta do vetor atletas de todas as modalidades a que pertence
+	for ( unsigned int j = 0; j < modalidades.size(); j++ ) {
+		vector<Atleta*> athletes = modalidades[j]->getAtletas();
+		for ( unsigned int k = 0; k < athletes.size(); k++ )
+			if ( athletes[k]->getNome() == nomeAtleta )
+				modalidades[j]->eraseAtleta(k);
+	}
+
+}
+
+
+// Apaga a equipa com um nome especifico do vetor equipas
+void Campeonato::eraseEquipa(string nomeEquipa) {
+
+	//apaga a equipa do vetor equipas
+	for( unsigned int w = 0; w < equipas.size(); w++ )
+		if( equipas[w]->getNome() == nomeEquipa )
+			equipas.erase(equipas.begin()+w);
+
+	//apaga os atletas da equipa
+	for( unsigned int i = 0; i < atletas.size(); i++ )
+		if( atletas[i]->getEquipa()->getNome() == nomeEquipa )
+			atletas.erase(atletas.begin()+i);
+
+	//apaga todos os atletas pertencentes à equipa do vetor atletas de todas as modalidades a que pertencem
+	for ( unsigned int j = 0; j < modalidades.size(); j++ ) {
+		vector<Atleta*> athletes = modalidades[j]->getAtletas();
+		for ( unsigned int k = 0; k < athletes.size(); k++ )
+			if ( athletes[k]->getEquipa()->getNome() == nomeEquipa )
+				modalidades[j]->eraseAtleta2(k);	//eraseAtleta() nao serve aqui
+	}
+
+}
+
+
+/**
+ *  METODOS PARA ADICIONAR MUDAR UM ATLETA DE EQUIPA
+ */
+
+
+// Procura o indice de um atleta com um nome especifico no vetor atletas
+int Campeonato::findAtletaIndex(string nomeAtleta) {
+	int index;
+
+	for( unsigned int i = 0; i < atletas.size(); i++ )
+		if( atletas[i]->getNome() == nomeAtleta )
+			index = i;
+
+	return index;
+}
+
+
+// Troca a equipa no indice index no vetor modalidades pela modalidade mod
+void Campeonato::changeEquipa(int index, Equipa *equi) {
+	atletas[index]->setEquipa(equi);
+}
+
+
 /**
  *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
  */

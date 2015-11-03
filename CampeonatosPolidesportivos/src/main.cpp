@@ -158,6 +158,76 @@ void AdicionarAtletasEquipa() {
 }
 
 
+// Expulsa um atleta com um nome especifico do campeonato
+void RetirarAtleta() {
+	string nome_atleta;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Qual o nome do atleta que pretende expulsar: ";
+	getline(cin, nome_atleta);
+	// TODO: check if atleta exists/ error if it does
+	cout << endl;
+
+	campeonato.eraseAtleta(nome_atleta);
+
+	campeonato.saveAtleta();
+	campeonato.saveModalidade();
+
+	cout << endl << " Atleta expulso do campeonato com sucesso!";
+}
+
+
+// Apaga uma equipa com um nome especifico do campeonato
+void RetirarEquipa() {
+	string nome_equipa;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Qual o nome da equipa que pretende apagar: ";
+	getline(cin, nome_equipa);
+	// TODO: check if equipa exists/ error if it does
+	cout << endl;
+
+	campeonato.eraseEquipa(nome_equipa);
+
+	campeonato.saveEquipa();
+	campeonato.saveAtleta();
+	campeonato.saveModalidade();
+
+	cout << " Equipa apagada do campeonato com sucesso!";
+}
+
+
+// Muda um atleta com um nome especifico de equipa
+void MudarAtletaEquipa() {
+	string nome_atleta, nome_equipa;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Qual o nome do atleta que pretende mudar de equipa: ";
+	getline(cin, nome_atleta);
+	// TODO: check if atleta exists/ error if it does
+	cout << endl;
+	cout << " Qual o nome da equipa para a qual pretende mudar: ";
+	getline(cin, nome_equipa);
+	// TODO: check if equipa exists/ error if it does
+	cout << endl;
+
+	Equipa *equi = campeonato.findEquipa(nome_equipa);
+
+	int index_atleta = campeonato.findAtletaIndex(nome_atleta);
+	campeonato.changeEquipa(index_atleta, equi);
+
+	campeonato.saveAtleta();
+
+	cout << " Atleta mudou de equipa com sucesso!";
+}
+
+
 // Menu de Manutenção das Equipas e respetivos Atletas
 void MenuEquipasAtletas() {
 	int escolha_equipas;
@@ -168,15 +238,16 @@ void MenuEquipasAtletas() {
 	cout << "- 1. Adicionar Equipa                         -" << endl;
 	cout << "- 2. Apagar Equipa                            -" << endl;
 	cout << "- 3. Adicionar Atletas à Equipa               -" << endl;
-	cout << "- 4. Retirar Atletas à Equipa                 -" << endl;
-	cout << "- 5. Voltar ao Menu Principal                 -" << endl;
+	cout << "- 4. Expulsar um Atleta do Campeonato         -" << endl;
+	cout << "- 5. Mudar Equipa de um Atleta                -" << endl;
+	cout << "- 6. Voltar ao Menu Principal                 -" << endl;
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_equipas;
 
-	if ( escolha_equipas != 1 && escolha_equipas != 2 && escolha_equipas != 3 && escolha_equipas != 4  && escolha_equipas != 5 ) {
+	if ( escolha_equipas != 1 && escolha_equipas != 2 && escolha_equipas != 3 && escolha_equipas != 4  && escolha_equipas != 5  && escolha_equipas != 6) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuEquipasAtletas();
@@ -191,7 +262,9 @@ void MenuEquipasAtletas() {
 			break;
 		case 2:
 			cout << string(8,'\n');
-			//
+			RetirarEquipa();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 3:
 			cout << string(8,'\n');
@@ -201,9 +274,17 @@ void MenuEquipasAtletas() {
 			break;
 		case 4:
 			cout << string(8,'\n');
-			//
+			RetirarAtleta();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 5:
+			cout << string(8,'\n');
+			MudarAtletaEquipa();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 6:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
@@ -320,7 +401,6 @@ void RetirarAtletasModalidade() {
 	cin >> num_atletas;
 	cout << endl;
 
-	cout << campeonato.getModalidades().size() << endl;
 	//form para todos os atletas a retirar na modalidade
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
@@ -331,8 +411,6 @@ void RetirarAtletasModalidade() {
 		campeonato.eraseAtletaModalidade(nome_modalidade, nome_atleta);
 	}
 
-	cout << campeonato.getModalidades().size();
-	//cout << campeonato.getModalidades()[campeonato.findModalidadeIndex(nome_modalidade)]->getAtletas()[1]->getNome();
 	campeonato.saveModalidade();
 
 	cout << endl << " Atletas retirados à modalidade com sucesso!";
