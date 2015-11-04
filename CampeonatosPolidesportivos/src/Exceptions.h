@@ -8,6 +8,10 @@
 using namespace std;
 
 
+/**
+ *  EXCEÇÕES JÁEXISTENTE
+ */
+
 class EquipaJaExistente: public exception {
 	string nomeEquipa;
 public:
@@ -16,13 +20,81 @@ public:
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << " Essa equipa já existe, por favor introduza outro nome." << endl;
+		cout << " A equipa " << nomeEquipa << " já existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";
 	}
 };
 
+
+class AtletaJaExistente: public exception {
+	string nomeAtleta;
+public:
+	AtletaJaExistente(string nameAthlete) : nomeAtleta(nameAthlete) {}
+	virtual ~AtletaJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " O atleta " << nomeAtleta << " já existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class ModalidadeJaExistente: public exception {
+	string nomeModalidade;
+public:
+	ModalidadeJaExistente(string nameModality) : nomeModalidade(nameModality) {}
+	virtual ~ModalidadeJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A modalidade " << nomeModalidade << " já existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class DesportoJaExistente: public exception {
+	string nomeDesporto;
+public:
+	DesportoJaExistente(string nameSport) : nomeDesporto(nameSport) {}
+	virtual ~DesportoJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " O desporto " << nomeDesporto << " já existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class InfrastruturaJaExistente: public exception {
+	string nomeInfrastrutura;
+public:
+	InfrastruturaJaExistente(string nameInfrastructure) : nomeInfrastrutura(nameInfrastructure) {}
+	virtual ~InfrastruturaJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A infrastrutura " << nomeInfrastrutura << " já existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+/**
+ *  EXCEÇOES INEXISTENTE
+ */
 
 class EquipaInexistente: public exception {
 	string nomeEquipa;
@@ -56,15 +128,15 @@ public:
 };
 
 
-class DesportoJaExistente: public exception {
-	string nomeDesporto;
+class ModalidadeInexistente: public exception {
+	string nomeModalidade;
 public:
-	DesportoJaExistente(string nameSport) : nomeDesporto(nameSport) {}
-	virtual ~DesportoJaExistente() throw() {}
+	ModalidadeInexistente(string nameModality) : nomeModalidade(nameModality) {}
+	virtual ~ModalidadeInexistente() throw() {}
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << " Esse desporto já existe, por favor introduza outro nome." << endl;
+		cout << " A modalidade " << nomeModalidade << " não existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";
@@ -87,6 +159,26 @@ public:
 	}
 };
 
+
+class InfrastruturaInexistente: public exception {
+	string nomeInfrastrutura;
+public:
+	InfrastruturaInexistente(string nameInfrastructure) : nomeInfrastrutura(nameInfrastructure) {}
+	virtual ~InfrastruturaInexistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A infrastrutura " << nomeInfrastrutura << " não existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+/**
+ *  EXCEÇÕES NUMINVALIDO
+ */
 
 class NumDesportosInvalido: public exception {
 	int numDesportosMax;
@@ -112,6 +204,37 @@ public:
 	virtual const char* what() const throw() {
 		cout << endl;
 		cout << " Número de atletas inválido (tem de ser maior que 1)." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class NumModalidadesInvalido: public exception {
+public:
+	NumModalidadesInvalido() {}
+	virtual ~NumModalidadesInvalido() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " Número de modalidades inválido (tem de ser maior que 1)." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+// EXCEÇÃO IDADEINVALIDA
+class IdadeInvalida: public exception {
+public:
+	IdadeInvalida() {}
+	virtual ~IdadeInvalida() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " Idade inválida (tem de ser maior que 18)." << endl;
 		cout << endl;
 
 		return "";

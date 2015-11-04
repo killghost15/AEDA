@@ -107,10 +107,35 @@ void AdicionarEquipa() {
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
 		cin.sync();
-		cout << " Nome do Atleta " << i+1 << ": ";
-		getline(cin, nome_atleta);
-		cout << " Idade do Atleta " << i+1 << ": ";
-		cin >> idade_atleta;
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Nome do Atleta " << i+1 << ": ";
+				getline(cin, nome_atleta);
+				if( campeonato.existsAtleta(nome_atleta) == true )
+					throw AtletaJaExistente(nome_atleta);
+				else
+					finish = false;
+			} catch (AtletaJaExistente &e) {
+				e.what();
+			}
+		}
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Idade do Atleta " << i+1 << ": ";
+				cin >> idade_atleta;
+				if( idade_atleta < 18 )
+					throw IdadeInvalida();
+				else
+					finish = false;
+			} catch (IdadeInvalida &e) {
+				e.what();
+			}
+		}
+
 		cout << " Peso do Atleta " << i+1 << ": ";
 		cin >> peso_atleta;
 		cout << " Estatura do Atleta " << i+1 << ": ";
@@ -172,8 +197,6 @@ void RetirarEquipa() {
 		}
 	}
 
-
-	// TODO: check if equipa exists/ error if it does
 	cout << endl;
 
 	campeonato.eraseEquipa(nome_equipa);
@@ -191,16 +214,39 @@ void AdicionarAtletasEquipa() {
 	string nome_equipa, nome_atleta;
 	float peso_atleta, estatura_atleta;
 	unsigned int num_atletas, idade_atleta;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Em que equipa pretende adicionar atletas: ";
-	getline(cin, nome_equipa);
-	// TODO: check if equipa exists/ error if it does
-	cout << " Quantos atletas pretende adicionar: ";
-	cin >> num_atletas;
-	cout << endl;
+	finish = true;
+	while(finish) {
+		try {
+			cout << " Em que equipa pretende adicionar atletas: ";
+			getline(cin, nome_equipa);
+			if( campeonato.existsEquipa(nome_equipa) == false )
+				throw EquipaInexistente(nome_equipa);
+			else
+				finish = false;
+		} catch (EquipaInexistente &e) {
+			e.what();
+		}
+	}
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Quantos atletas pretende adicionar: ";
+			cin >> num_atletas;
+			if( num_atletas < 1)
+				throw NumAtletasInvalido();
+			else
+				finish = false;
+			cout << endl;
+		} catch (NumAtletasInvalido &e) {
+			e.what();
+		}
+	}
 
 	vector<Atleta*> athletes;
 
@@ -208,10 +254,35 @@ void AdicionarAtletasEquipa() {
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
 		cin.sync();
-		cout << " Nome do Atleta " << i+1 << ": ";
-		getline(cin, nome_atleta);
-		cout << " Idade do Atleta " << i+1 << ": ";
-		cin >> idade_atleta;
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Nome do Atleta " << i+1 << ": ";
+				getline(cin, nome_atleta);
+				if( campeonato.existsAtleta(nome_atleta) == true )
+					throw AtletaJaExistente(nome_atleta);
+				else
+					finish = false;
+			} catch (AtletaJaExistente &e) {
+				e.what();
+			}
+		}
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Idade do Atleta " << i+1 << ": ";
+				cin >> idade_atleta;
+				if( idade_atleta < 18 )
+					throw IdadeInvalida();
+				else
+					finish = false;
+			} catch (IdadeInvalida &e) {
+				e.what();
+			}
+		}
+
 		cout << " Peso do Atleta " << i+1 << ": ";
 		cin >> peso_atleta;
 		cout << " Estatura do Atleta " << i+1 << ": ";
@@ -245,13 +316,25 @@ void AdicionarAtletasEquipa() {
 // Expulsa um atleta com um nome especifico do campeonato
 void RetirarAtleta() {
 	string nome_atleta;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Qual o nome do atleta que pretende expulsar: ";
-	getline(cin, nome_atleta);
-	// TODO: check if atleta exists/ error if it does
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Qual o nome do atleta que pretende expulsar: ";
+			getline(cin, nome_atleta);
+			if( campeonato.existsAtleta(nome_atleta) == false )
+				throw AtletaInexistente(nome_atleta);
+			else
+				finish = false;
+		} catch (AtletaInexistente &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 
 	campeonato.eraseAtleta(nome_atleta);
@@ -266,17 +349,41 @@ void RetirarAtleta() {
 // Muda um atleta com um nome especifico de equipa
 void MudarAtletaEquipa() {
 	string nome_atleta, nome_equipa;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Qual o nome do atleta que pretende mudar de equipa: ";
-	getline(cin, nome_atleta);
-	// TODO: check if atleta exists/ error if it does
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Qual o nome do atleta que pretende mudar de equipa: ";
+			getline(cin, nome_atleta);
+			if( campeonato.existsAtleta(nome_atleta) == false )
+				throw AtletaInexistente(nome_atleta);
+			else
+				finish = false;
+		} catch (AtletaInexistente &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
-	cout << " Qual o nome da equipa para a qual pretende mudar: ";
-	getline(cin, nome_equipa);
-	// TODO: check if equipa exists/ error if it does
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Qual o nome da equipa para a qual pretende mudar: ";
+			getline(cin, nome_equipa);
+			if( campeonato.existsEquipa(nome_equipa) == false )
+				throw EquipaInexistente(nome_equipa);
+			else
+				finish = false;
+		} catch (EquipaInexistente &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 
 	Equipa *equi = campeonato.findEquipa(nome_equipa);
@@ -363,15 +470,39 @@ void MenuEquipasAtletas() {
 void AdicionarDesporto() {
 	string nome_desporto, nome_modalidade;
 	unsigned int num_modalidades;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Nome do desporto: ";
-	getline(cin, nome_desporto);
-	// TODO: check if desporto exists/ error if it does
-	cout << " Quantos modalidades tem o desporto: ";
-	cin >> num_modalidades;
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Nome do desporto: ";
+			getline(cin, nome_desporto);
+			if( campeonato.existsDesporto(nome_desporto) == true )
+				throw DesportoJaExistente(nome_desporto);
+			else
+				finish = false;
+		} catch (DesportoJaExistente &e) {
+			e.what();
+		}
+	}
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Quantos modalidades tem o desporto: ";
+			cin >> num_modalidades;
+			if( num_modalidades < 1 )
+				throw NumModalidadesInvalido();
+			else
+				finish = false;
+		} catch (NumModalidadesInvalido &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 
 	vector<string> mods;
@@ -380,8 +511,20 @@ void AdicionarDesporto() {
 	for ( unsigned int i = 0; i < num_modalidades; i++ ) {
 		cin.clear();
 		cin.sync();
-		cout << " Nome da Modalidade " << i+1 << ": ";
-		getline(cin, nome_modalidade);
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Nome da Modalidade " << i+1 << ": ";
+				getline(cin, nome_modalidade);
+				if( campeonato.existsModalidade(nome_modalidade) == true )
+					throw ModalidadeJaExistente(nome_modalidade);
+				else
+					finish = false;
+			} catch (ModalidadeJaExistente &e) {
+				e.what();
+			}
+		}
 
 		mods.push_back(nome_modalidade);
 	}
@@ -405,13 +548,25 @@ void AdicionarDesporto() {
 // Apaga um desporto com um nome especifico e respetivas modalidades do campeonato
 void RetirarDesporto() {
 	string nome_desporto;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Qual o nome do desporto que pretende apagar: ";
-	getline(cin, nome_desporto);
-	// TODO: check if equipa exists/ error if it does
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Qual o nome do desporto que pretende apagar: ";
+			getline(cin, nome_desporto);
+			if( campeonato.existsDesporto(nome_desporto) == false )
+				throw DesportoInexistente(nome_desporto);
+			else
+				finish = false;
+		} catch (DesportoInexistente &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 
 	campeonato.eraseDesporto(nome_desporto);
@@ -427,16 +582,41 @@ void RetirarDesporto() {
 void AdicionarAtletasModalidade() {
 	string nome_modalidade, nome_atleta;
 	unsigned int num_atletas;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Em que modalidade pretende adicionar atletas: ";
-	getline(cin, nome_modalidade);
-	// TODO: check if modalidade exists/ error if it does
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Em que modalidade pretende adicionar atletas: ";
+			getline(cin, nome_modalidade);
+			if( campeonato.existsModalidade(nome_modalidade) == false )
+				throw ModalidadeInexistente(nome_modalidade);
+			else
+				finish = false;
+		} catch (ModalidadeInexistente &e) {
+			e.what();
+		}
+	}
+
 	// TODO: verificar se a modalidade está nos desportos da equipa do atleta
-	cout << " Quantos atletas pretende adicionar: ";
-	cin >> num_atletas;
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Quantos atletas pretende adicionar: ";
+			cin >> num_atletas;
+			if( num_atletas < 1 )
+				throw NumAtletasInvalido();
+			else
+				finish = false;
+		} catch (NumAtletasInvalido &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 
 	Atleta *atl;
@@ -446,8 +626,20 @@ void AdicionarAtletasModalidade() {
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
 		cin.sync();
-		cout << " Nome do Atleta " << i+1 << ": ";
-		getline(cin, nome_atleta);
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Nome do Atleta " << i+1 << ": ";
+				getline(cin, nome_atleta);
+				if( campeonato.existsModalidade(nome_atleta) == false )
+					throw AtletaInexistente(nome_atleta);
+				else
+					finish = false;
+			} catch (AtletaInexistente &e) {
+				e.what();
+			}
+		}
 
 		atl = campeonato.findAtleta(nome_atleta);
 		athletes.push_back(atl);
@@ -473,23 +665,59 @@ void AdicionarAtletasModalidade() {
 void RetirarAtletasModalidade() {
 	string nome_modalidade, nome_atleta;
 	unsigned int num_atletas;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " A que modalidade pretende retirar atletas: ";
-	getline(cin, nome_modalidade);
-	// TODO: check if modalidade exists/ error if it does
-	cout << " Quantos atletas pretende retirar: ";
-	cin >> num_atletas;
+	finish = true;
+	while (finish) {
+		try {
+			cout << " A que modalidade pretende retirar atletas: ";
+			getline(cin, nome_modalidade);
+			if( campeonato.existsModalidade(nome_modalidade) == false )
+				throw ModalidadeInexistente(nome_modalidade);
+			else
+				finish = false;
+		} catch (ModalidadeInexistente &e) {
+			e.what();
+		}
+	}
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Quantos atletas pretende retirar: ";
+			cin >> num_atletas;
+			if( num_atletas < 1 )
+				throw NumAtletasInvalido();
+			else
+				finish = false;
+		} catch (NumAtletasInvalido &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 
 	//form para todos os atletas a retirar na modalidade
 	for ( unsigned int i = 0; i < num_atletas; i++ ) {
 		cin.clear();
 		cin.sync();
-		cout << " Nome do Atleta " << i+1 << ": ";
-		getline(cin, nome_atleta);
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Nome do Atleta " << i+1 << ": ";
+				getline(cin, nome_atleta);
+				if( campeonato.existsAtleta(nome_atleta) == false )
+					throw AtletaInexistente(nome_atleta);
+				else
+					finish = false;
+			} catch (AtletaInexistente &e) {
+				e.what();
+			}
+		}
 
 		campeonato.eraseAtletaModalidade(nome_modalidade, nome_atleta);
 	}
@@ -565,12 +793,25 @@ void MenuDesportosModalidades() {
 // Apresenta o form para a adição da infrastrutura ao campeonato
 void AdicionarInfrastrutura() {
 	string nome_infrastrutura, cidade_infrastrutura;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Nome da Infrastrutura: ";
-	getline(cin, nome_infrastrutura);
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Nome da Infrastrutura: ";
+			getline(cin, nome_infrastrutura);
+			if( campeonato.existsInfrastrutura(nome_infrastrutura) == true )
+				throw InfrastruturaJaExistente(nome_infrastrutura);
+			else
+				finish = false;
+		} catch (InfrastruturaJaExistente &e) {
+			e.what();
+		}
+	}
+
 	cout << " Cidade da Infrastrutura: ";
 	getline(cin, cidade_infrastrutura);
 	cout << endl;
@@ -585,12 +826,23 @@ void AdicionarInfrastrutura() {
 // Apresenta o form para a adição da infrastrutura ao campeonato
 void ApagarInfrastrutura() {
 	string nome_infrastrutura;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Nome da Infrastrutura a apagar: ";
-	getline(cin, nome_infrastrutura);
+	while (finish) {
+		try {
+			cout << " Nome da Infrastrutura a apagar: ";
+			getline(cin, nome_infrastrutura);
+			if( campeonato.existsInfrastrutura(nome_infrastrutura) == false )
+				throw InfrastruturaInexistente(nome_infrastrutura);
+			else
+				finish = false;
+		} catch (InfrastruturaInexistente &e) {
+			e.what();
+		}
+	}
 
 	campeonato.eraseInfrastrutura(nome_infrastrutura);
 	campeonato.saveInfrastrutura();
