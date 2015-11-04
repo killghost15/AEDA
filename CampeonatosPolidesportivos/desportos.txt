@@ -3,3 +3,10 @@ basquetebol
 
 nataçao
  100m
+
+Corrida
+ 100m
+ 200m
+ 400m
+ 5000m
+ Maratona

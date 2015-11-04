@@ -125,7 +125,7 @@ void Campeonato::eraseAtleta(string nomeAtleta) {
 			atletas.erase(atletas.begin()+i);
 
 	//apaga o atleta do vetor atletas de todas as modalidades a que pertence
-	for ( unsigned int j = 0; j < modalidades.size(); j++ ) {
+	for( unsigned int j = 0; j < modalidades.size(); j++ ) {
 		vector<Atleta*> athletes = modalidades[j]->getAtletas();
 		for ( unsigned int k = 0; k < athletes.size(); k++ )
 			if ( athletes[k]->getNome() == nomeAtleta )
@@ -149,13 +149,38 @@ void Campeonato::eraseEquipa(string nomeEquipa) {
 			atletas.erase(atletas.begin()+i);
 
 	//apaga todos os atletas pertencentes à equipa do vetor atletas de todas as modalidades a que pertencem
-	for ( unsigned int j = 0; j < modalidades.size(); j++ ) {
+	for( unsigned int j = 0; j < modalidades.size(); j++ ) {
 		vector<Atleta*> athletes = modalidades[j]->getAtletas();
-		for ( unsigned int k = 0; k < athletes.size(); k++ )
+		for( unsigned int k = 0; k < athletes.size(); k++ )
 			if ( athletes[k]->getEquipa()->getNome() == nomeEquipa )
 				modalidades[j]->eraseAtleta2(k);	//eraseAtleta() nao serve aqui
 	}
 
+}
+
+
+// Apaga o desporto com um nome especifico do vetor desportos
+void Campeonato::eraseDesporto(string nomeDesporto) {
+
+	//apaga as modalidades do desporto do vetor de modalidades
+	for( unsigned int i = 0; i < desportos.size(); i++ )
+		if( desportos[i]->getNome() == nomeDesporto ) {
+			for( unsigned int j = 0; j < desportos[i]->getModalidades().size(); j++ ) {
+				string mod_nome = desportos[i]->getModalidades()[j]->getNome();
+				for( unsigned int k = 0; k < modalidades.size(); k++ )
+					if( modalidades[k]->getNome() == mod_nome ) {
+						modalidades[k] = modalidades.back();
+						modalidades.pop_back();
+					}
+			}
+			desportos.erase(desportos.begin()+i);
+		}
+
+	//apaga o desporto do vetor desportos
+	/*for( unsigned int w = 0; w < desportos.size(); w++ ) {
+		if( desportos[w]->getNome() == nomeDesporto )
+			modalidades[w]->eraseAtleta(k);
+	}*/
 }
 
 

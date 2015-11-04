@@ -4,6 +4,7 @@
 
 #include "Campeonato.h"
 #include "Infrastrutura.h"
+#include "Exceptions.h"
 
 using namespace std;
 
@@ -102,7 +103,29 @@ void AdicionarEquipa() {
 }
 
 
-// Apresenta o form para adicionar atletas à equipa //////////////////////////
+// Apaga uma equipa com um nome especifico e respetivos atletas do campeonato
+void RetirarEquipa() {
+	string nome_equipa;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Qual o nome da equipa que pretende apagar: ";
+	getline(cin, nome_equipa);
+	// TODO: check if equipa exists/ error if it does
+	cout << endl;
+
+	campeonato.eraseEquipa(nome_equipa);
+
+	campeonato.saveEquipa();
+	campeonato.saveAtleta();
+	campeonato.saveModalidade();
+
+	cout << " Equipa apagada do campeonato com sucesso!";
+}
+
+
+// Apresenta o form para adicionar atletas à equipa
 void AdicionarAtletasEquipa() {
 	string nome_equipa, nome_atleta;
 	float peso_atleta, estatura_atleta;
@@ -176,28 +199,6 @@ void RetirarAtleta() {
 	campeonato.saveModalidade();
 
 	cout << endl << " Atleta expulso do campeonato com sucesso!";
-}
-
-
-// Apaga uma equipa com um nome especifico do campeonato
-void RetirarEquipa() {
-	string nome_equipa;
-
-	cin.clear();
-	cin.sync();
-
-	cout << " Qual o nome da equipa que pretende apagar: ";
-	getline(cin, nome_equipa);
-	// TODO: check if equipa exists/ error if it does
-	cout << endl;
-
-	campeonato.eraseEquipa(nome_equipa);
-
-	campeonato.saveEquipa();
-	campeonato.saveAtleta();
-	campeonato.saveModalidade();
-
-	cout << " Equipa apagada do campeonato com sucesso!";
 }
 
 
@@ -327,8 +328,6 @@ void AdicionarDesporto() {
 	//criaçao do objeto da classe desporto para adicionar ao campeonato
 	Desporto *desp = new Desporto(nome_desporto);
 
-	campeonato.addDesporto(desp);
-
 	for ( unsigned int j = 0; j < mods.size(); j++ ) {
 		string modalidade_string = mods[j];
 		Modalidade *modal = new Modalidade(modalidade_string);
@@ -336,7 +335,30 @@ void AdicionarDesporto() {
 		campeonato.addModalidade(modal);
 	}
 
+	campeonato.addDesporto(desp);
+
 	cout << endl << " Desporto e modalidades adicionados com sucesso!";
+}
+
+
+// Apaga um desporto com um nome especifico e respetivas modalidades do campeonato
+void RetirarDesporto() {
+	string nome_desporto;
+
+	cin.clear();
+	cin.sync();
+
+	cout << " Qual o nome do desporto que pretende apagar: ";
+	getline(cin, nome_desporto);
+	// TODO: check if equipa exists/ error if it does
+	cout << endl;
+
+	campeonato.eraseDesporto(nome_desporto);
+
+	campeonato.saveModalidade();
+	campeonato.saveDesporto();
+
+	cout << " Equipa apagada do campeonato com sucesso!";
 }
 
 
@@ -450,7 +472,9 @@ void MenuDesportosModalidades() {
 			break;
 		case 2:
 			cout << string(8,'\n');
-			//
+			RetirarDesporto();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 3:
 			cout << string(8,'\n');
@@ -637,6 +661,7 @@ void MenuInicial() {
 	cout << "- 4. Manutenção de Infrastruturas            -" << endl;
 	cout << "- 5. Listagens                               -" << endl;
 	cout << "- 6. Terminar o programa                     -" << endl;
+	cout << "-                                            -" << endl;
 	cout << "----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
