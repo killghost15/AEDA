@@ -12,6 +12,7 @@ using namespace std;
 class Modalidade {
 	string nome;
 	vector<Atleta*> atletas;
+	vector <int> classificacao;
 public:
 	Modalidade(string name);
 	// metodos get
@@ -21,6 +22,7 @@ public:
 	void pushAtleta(Atleta *atl);
 	void eraseAtleta(int index);
 	void eraseAtleta2(int index);
+	void pushClassifica(int num);;
 };
 
 

@@ -78,6 +78,10 @@ public:
 	// Metodos para mudar um atleta de equipa
 	int findAtletaIndex(string nomeAtleta);
 	void changeEquipa(int index, Equipa *equi);
+	//classificacao de uma modalidade
+	void classifica(string nomeModalidade);
+	void saveclassifica();
+	void loadclassifica();
 };
 
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdlib>
 
 #include "Campeonato.h"
 #include "Infrastrutura.h"
@@ -724,7 +725,15 @@ void RetirarAtletasModalidade() {
 
 	cout << endl << " Atletas retirados à modalidade com sucesso!";
 }
+void lancaclassificacoes(){
+	string nome;
+	cout << "Qual a modalidade que já terminou e pretende publicar os resultados ?";
+	cin >> nome;
+	campeonato.classifica(nome);
 
+
+
+}
 
 // Menu de Manutenção dos Desportos e Modalidades, bem como dos atletas de cada modalidade
 void MenuDesportosModalidades() {
@@ -737,14 +746,15 @@ void MenuDesportosModalidades() {
 	cout << "- 2. Apagar Desporto                          -" << endl;
 	cout << "- 3. Adicionar Atletas à Modalidade           -" << endl;
 	cout << "- 4. Retirar Atletas à Modalidade             -" << endl;
-	cout << "- 5. Voltar ao Menu Principal                 -" << endl;
+	cout << "- 5. Lançar classificação de uma modalidade   -" << endl;
+	cout << "- 6. Voltar ao Menu Principal                 -" << endl;
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_desportos;
 
-	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5 ) {
+	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5 && escolha_desportos !=6) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuDesportosModalidades();
@@ -777,6 +787,12 @@ void MenuDesportosModalidades() {
 			break;
 		case 5:
 			cout << string(8,'\n');
+			lancaclassificacoes();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 6:
+			cout << string(8, '\n');
 			MenuInicial();
 			break;
 	}
@@ -948,6 +964,11 @@ void MenuListagens() {
 			cout << string(8,'\n');
 			//
 			break;
+
+		case 7:
+			cout <<string(8,'\n');
+			MenuInicial();
+			break;
 	}
 }
 
@@ -1001,7 +1022,7 @@ void MenuInicial() {
 			break;
 		case 5:
 			cout << string(8,'\n');
-			//MenuListagens();
+			MenuListagens();
 			break;
 		case 6:
 			return;

@@ -282,6 +282,20 @@ void Campeonato::changeEquipa(int index, Equipa *equi) {
 /**
  *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
  */
+void Campeonato::classifica(string nomeModalidade){
+	int posicao;
+	vector<Atleta*>atl=findModalidade(nomeModalidade)->getAtletas();
+	for (unsigned int i=0; i < atl.size();i++){
+		cout << atl[i]->getNome() << " ,posição em que terminou (resposta: 1- ganhou, e seguintes) ?";
+		cin >> posicao;
+		findModalidade(nomeModalidade)->pushClassifica(posicao);
+
+
+
+	}
+
+
+}
 
 
 // Procura o indice de uma modalidade com um nome especifico no vetor modalidades
