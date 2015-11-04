@@ -242,6 +242,24 @@ public:
 };
 
 
+// EXCEÇÃO MODALIDADEINVALIDA
+class ModalidadeInvalida: public exception {
+	string nome_modalidade, nome_atleta;
+public:
+	ModalidadeInvalida(string nameModality, string nameAthlete) : nome_modalidade(nameModality), nome_atleta(nameAthlete) {}
+	virtual ~ModalidadeInvalida() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " O atleta " << nome_atleta << " não se pode inscrever na modalidade " << nome_modalidade << "." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+
 
 
 #endif

@@ -148,6 +148,24 @@ bool Campeonato::existsInfrastrutura(string nomeInfrastrutura) {
 }
 
 
+// Retorna true se a modalidade estiver nos desportos em que o atleta se pode inscrever
+bool Campeonato::CanAtletaEnterModalidade(string nomeModalidade, string nomeAtleta) {
+	vector<string> sports = findAtleta(nomeAtleta)->getEquipa()->getDesportos();
+
+	for( unsigned int i = 0; i < sports.size(); i++ )
+		for( unsigned int j = 0; j < desportos.size(); j++ )
+			if( desportos[j]->getNome() == sports[i] ) {
+				vector<Modalidade*> mods = desportos[j]->getModalidades();
+				for( unsigned int k = 0; k < mods.size(); k++ )
+					if( mods[k]->getNome() == nomeModalidade )
+						return true;
+			}
+
+	return false;
+
+}
+
+
 /**
  *  METODOS PARA ELIMINAR OBJETOS COM UM DETERMINADO NOME DOS VETORES
  */

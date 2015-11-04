@@ -45,6 +45,7 @@ public:
 	bool existsModalidade(string nomeModalidade);
 	bool existsDesporto(string nomeDesporto);
 	bool existsInfrastrutura(string nomeInfrastrutura);
+	bool CanAtletaEnterModalidade(string nomeModalidade, string nomeAtleta);
 	// Metodos erase
 	void eraseInfrastrutura(string nomeInfrastrutura);
 	void eraseAtletaModalidade(string nomeModalidade, string nomeAtleta);

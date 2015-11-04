@@ -2,7 +2,8 @@ basquetebol
  basquetebol
 
 nataçao
- 100m
+ Bruços
+ Costas
 
 Corrida
  100m
