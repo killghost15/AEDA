@@ -89,6 +89,66 @@ Infrastrutura* Campeonato::findInfrastrutura(string nomeInfrastrutura) {
 
 
 /**
+ *  METODOS PARA SABER SE UM OBJETO COM UM DETERMINADO NOME EXISTE
+ */
+
+
+// Retorna true se uma equipa com um nome especifico existe, false otherwise
+bool Campeonato::existsEquipa(string nomeEquipa) {
+
+	for( unsigned int i = 0; i < equipas.size(); i++ )
+		if( equipas[i]->getNome() == nomeEquipa )
+			return true;
+
+	return false;
+}
+
+
+// Retorna true se um atleta com um nome especifico existe, false otherwise
+bool Campeonato::existsAtleta(string nomeAtleta) {
+
+	for( unsigned int i = 0; i < atletas.size(); i++ )
+		if( atletas[i]->getNome() == nomeAtleta )
+			return true;
+
+	return false;
+}
+
+
+// Retorna true se uma modalidade com um nome especifico existe, false otherwise
+bool Campeonato::existsModalidade(string nomeModalidade) {
+
+	for( unsigned int i = 0; i < modalidades.size(); i++ )
+		if( modalidades[i]->getNome() == nomeModalidade )
+			return true;
+
+	return false;
+}
+
+
+// Retorna true se um desporto com um nome especifico existe, false otherwise
+bool Campeonato::existsDesporto(string nomeDesporto) {
+
+	for( unsigned int i = 0; i < desportos.size(); i++ )
+		if( desportos[i]->getNome() == nomeDesporto )
+			return true;
+
+	return false;
+}
+
+
+// Retorna true se uma infrastrutura com um nome especifico existe, false otherwise
+bool Campeonato::existsInfrastrutura(string nomeInfrastrutura) {
+
+	for( unsigned int i = 0; i < infrastruturas.size(); i++ )
+		if( infrastruturas[i]->getNome() == nomeInfrastrutura )
+			return true;
+
+	return false;
+}
+
+
+/**
  *  METODOS PARA ELIMINAR OBJETOS COM UM DETERMINADO NOME DOS VETORES
  */
 
@@ -175,12 +235,6 @@ void Campeonato::eraseDesporto(string nomeDesporto) {
 			}
 			desportos.erase(desportos.begin()+i);
 		}
-
-	//apaga o desporto do vetor desportos
-	/*for( unsigned int w = 0; w < desportos.size(); w++ ) {
-		if( desportos[w]->getNome() == nomeDesporto )
-			modalidades[w]->eraseAtleta(k);
-	}*/
 }
 
 

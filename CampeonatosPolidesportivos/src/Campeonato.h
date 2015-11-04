@@ -39,6 +39,12 @@ public:
 	Modalidade* findModalidade(string nomeModalidade);
 	Desporto* findDesporto(string nomeDesporto);
 	Infrastrutura* findInfrastrutura(string nomeInfrastrutura);
+	// Metodos exists
+	bool existsEquipa(string nomeEquipa);
+	bool existsAtleta(string nomeAtleta);
+	bool existsModalidade(string nomeModalidade);
+	bool existsDesporto(string nomeDesporto);
+	bool existsInfrastrutura(string nomeInfrastrutura);
 	// Metodos erase
 	void eraseInfrastrutura(string nomeInfrastrutura);
 	void eraseAtletaModalidade(string nomeModalidade, string nomeAtleta);

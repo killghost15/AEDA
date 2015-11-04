@@ -25,16 +25,39 @@ void AdicionarEquipa() {
 	string nome_equipa, nome_desporto, nome_atleta;
 	float peso_atleta, estatura_atleta;
 	unsigned int num_desportos, num_atletas, idade_atleta;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Nome da equipa: ";
-	getline(cin, nome_equipa);
-	// TODO: check if equipa exists/ error if it does
-	cout << " Em quantos desportos a equipa vai participar: ";
-	cin >> num_desportos;
-	cout << endl;
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Nome da equipa: ";
+			getline(cin, nome_equipa);
+			if( campeonato.existsEquipa(nome_equipa) == true )
+				throw EquipaJaExistente(nome_equipa);
+			else
+				finish = false;
+		} catch (EquipaJaExistente &e) {
+			e.what();
+		}
+	}
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Em quantos desportos a equipa vai participar: ";
+			cin >> num_desportos;
+			if( num_desportos < 1 || num_desportos > campeonato.getDesportos().size())
+				throw NumDesportosInvalido(campeonato.getDesportos().size());
+			else
+				finish = false;
+			cout << endl;
+		} catch (NumDesportosInvalido &e) {
+			e.what();
+		}
+	}
 
 	vector<string> sports;
 
@@ -42,17 +65,41 @@ void AdicionarEquipa() {
 	for ( unsigned int i = 0; i < num_desportos; i++ ) {
 		cin.clear();
 		cin.sync();
-		cout << " Nome do Desporto " << i+1 << ": ";
-		getline(cin, nome_desporto);
+
+		finish = true;
+		while (finish) {
+			try {
+				cout << " Nome do Desporto " << i+1 << ": ";
+				getline(cin, nome_desporto);
+				if( campeonato.existsDesporto(nome_desporto) == false )
+					throw DesportoInexistente(nome_desporto);
+				else
+					finish = false;
+			} catch (DesportoInexistente &e) {
+				e.what();
+			}
+		}
 
 		sports.push_back(nome_desporto);
 	}
 
 	cout << endl;
 
-	cout << " Quantos atletas tem a equipa inicialmente: ";
-	cin >> num_atletas;
-	cout << endl;
+
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Quantos atletas tem a equipa inicialmente: ";
+			cin >> num_atletas;
+			if( num_atletas < 1)
+				throw NumAtletasInvalido();
+			else
+				finish = false;
+			cout << endl;
+		} catch (NumAtletasInvalido &e) {
+			e.what();
+		}
+	}
 
 	vector<Atleta*> athletes;
 
@@ -106,12 +153,26 @@ void AdicionarEquipa() {
 // Apaga uma equipa com um nome especifico e respetivos atletas do campeonato
 void RetirarEquipa() {
 	string nome_equipa;
+	bool finish;
 
 	cin.clear();
 	cin.sync();
 
-	cout << " Qual o nome da equipa que pretende apagar: ";
-	getline(cin, nome_equipa);
+	finish = true;
+	while (finish) {
+		try {
+			cout << " Qual o nome da equipa que pretende apagar: ";
+			getline(cin, nome_equipa);
+			if( campeonato.existsEquipa(nome_equipa) == false )
+				throw EquipaInexistente(nome_equipa);
+			else
+				finish = false;
+		} catch (EquipaInexistente &e) {
+			e.what();
+		}
+	}
+
+
 	// TODO: check if equipa exists/ error if it does
 	cout << endl;
 

@@ -16,7 +16,7 @@ public:
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << "Essa equipa já existe, por favor introduza outro nome." << endl;
+		cout << " Essa equipa já existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";
@@ -32,7 +32,7 @@ public:
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << "Essa equipa não existe, por favor introduza outro nome." << endl;
+		cout << " A equipa " << nomeEquipa << " não existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";
@@ -48,7 +48,23 @@ public:
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << "Esse atleta não existe, por favor introduza outro nome." << endl;
+		cout << " O atleta " << nomeAtleta << " não existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class DesportoJaExistente: public exception {
+	string nomeDesporto;
+public:
+	DesportoJaExistente(string nameSport) : nomeDesporto(nameSport) {}
+	virtual ~DesportoJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " Esse desporto já existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";
@@ -64,7 +80,38 @@ public:
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << "Esse desporto não existe, por favor introduza outro nome." << endl;
+		cout << " O desporto " << nomeDesporto << " não existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class NumDesportosInvalido: public exception {
+	int numDesportosMax;
+public:
+	NumDesportosInvalido(int numSportsMax) : numDesportosMax(numSportsMax) {}
+	virtual ~NumDesportosInvalido() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " Número de desportos inválido (tem de estar entre 1 e " << numDesportosMax << ")." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class NumAtletasInvalido: public exception {
+public:
+	NumAtletasInvalido() {}
+	virtual ~NumAtletasInvalido() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " Número de atletas inválido (tem de ser maior que 1)." << endl;
 		cout << endl;
 
 		return "";
