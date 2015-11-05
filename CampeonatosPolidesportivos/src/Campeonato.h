@@ -16,6 +16,7 @@
 #define file_equipas "equipas.txt"
 #define file_modalidades "modalidades.txt"
 #define file_infrastruturas "infrastruturas.txt"
+#define file_classificacoes "classificacoes.txt"
 
 using namespace std;
 
@@ -79,7 +80,7 @@ public:
 	int findAtletaIndex(string nomeAtleta);
 	void changeEquipa(int index, Equipa *equi);
 	//classificacao de uma modalidade
-	void classifica(string nomeModalidade);
+	void classifica(string nomeModalidade,string nomeProva);
 	void saveclassifica();
 	void loadclassifica();
 };

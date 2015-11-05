@@ -3,8 +3,9 @@
 
 
 #include <iostream>
-#include <vector>
-#include "Atleta.h"
+
+
+#include "Prova.h"
 
 using namespace std;
 
@@ -12,7 +13,8 @@ using namespace std;
 class Modalidade {
 	string nome;
 	vector<Atleta*> atletas;
-	vector <int> classificacao;
+	vector<Prova*> Provas;
+
 public:
 	Modalidade(string name);
 	// metodos get
@@ -23,6 +25,10 @@ public:
 	void eraseAtleta(int index);
 	void eraseAtleta2(int index);
 	void pushClassifica(int num);;
+	vector <Prova*> getProvas();
+	//int getPosicao();
+	void CriarProva(string nomeProva, int dia, int mes, int ano);
+	void EliminaProva(string nomeProva);
 };
 
 

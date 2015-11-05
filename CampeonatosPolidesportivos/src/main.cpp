@@ -725,11 +725,36 @@ void RetirarAtletasModalidade() {
 
 	cout << endl << " Atletas retirados à modalidade com sucesso!";
 }
-void lancaclassificacoes(){
+void CriaProva(){
+	int dia,mes,ano;
 	string nome;
-	cout << "Qual a modalidade que já terminou e pretende publicar os resultados ?";
+	string prova;
+	cout << "Qual a modalidade a que pertence a prova ?";
 	cin >> nome;
-	campeonato.classifica(nome);
+	cout <<"Qual o nome da prova ?";
+	cin >>prova;
+	cout << "Data da prova, (dia mes ano):";
+	cin >> dia >> mes >> ano;
+	campeonato.findModalidade(nome)->CriarProva(prova,dia,mes,ano);
+
+	/*for (unsigned int i =0; i<campeonato.findModalidade(nome)->getProvas().size();i++ ){
+		cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome();
+		cout <<endl;
+	}*/
+
+
+
+}
+
+
+void EliminaProva(){
+	string nome;
+	string prova;
+	cout << "Qual a modalidade a que pertence a prova ? ";
+	cin >> nome;
+	cout << "Qual o nome da prova que quer eliminar ?";
+	cin >> prova;
+	campeonato.findModalidade(nome)->EliminaProva(prova);
 
 
 
@@ -746,15 +771,16 @@ void MenuDesportosModalidades() {
 	cout << "- 2. Apagar Desporto                          -" << endl;
 	cout << "- 3. Adicionar Atletas à Modalidade           -" << endl;
 	cout << "- 4. Retirar Atletas à Modalidade             -" << endl;
-	cout << "- 5. Lançar classificação de uma modalidade   -" << endl;
-	cout << "- 6. Voltar ao Menu Principal                 -" << endl;
+	cout << "- 5. Criar Prova                              -" << endl;
+	cout << "- 6. Eliminar Prova                           -" << endl;
+	cout << "- 7. Voltar ao Menu Principal                 -" << endl;
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_desportos;
 
-	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5 && escolha_desportos !=6) {
+	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5 && escolha_desportos !=6 && escolha_desportos !=7) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuDesportosModalidades();
@@ -787,11 +813,18 @@ void MenuDesportosModalidades() {
 			break;
 		case 5:
 			cout << string(8,'\n');
-			lancaclassificacoes();
+			CriaProva();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
 		case 6:
+			cout << string(8,'\n');
+			EliminaProva();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+
+		case 7:
 			cout << string(8, '\n');
 			MenuInicial();
 			break;

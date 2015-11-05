@@ -282,20 +282,70 @@ void Campeonato::changeEquipa(int index, Equipa *equi) {
 /**
  *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
  */
-void Campeonato::classifica(string nomeModalidade){
+
+// classificacoes das modalidades
+void Campeonato::classifica(string nomeModalidade, string NomeProva){
 	int posicao;
 	vector<Atleta*>atl=findModalidade(nomeModalidade)->getAtletas();
 	for (unsigned int i=0; i < atl.size();i++){
 		cout << atl[i]->getNome() << " ,posição em que terminou (resposta: 1- ganhou, e seguintes) ?";
 		cin >> posicao;
-		findModalidade(nomeModalidade)->pushClassifica(posicao);
-
+		for (unsigned int j=0; j< findModalidade(nomeModalidade)->getProvas().size();){
+		if (findModalidade(nomeModalidade)->getProvas()[j]->getNome()==NomeProva){
+			findModalidade(nomeModalidade)->getProvas()[j]->pushClassifica(posicao);
+			break;
+		}
+		j++;
+		if (j==findModalidade(nomeModalidade)->getProvas().size()-1){
+			cout << "prova inexistente";
+			return;
+		}
+		}
 
 
 	}
 
 
 }
+
+void Campeonato::saveclassifica() {
+	ofstream fileclass;
+	fileclass.open(file_classificacoes);
+
+	//guarda apenas a primeira modalidade e a primeira prova
+	fileclass << modalidades[0]->getNome();
+	fileclass <<modalidades[0]->getProvas()[0]->getNome();
+
+	//guarda as classificacoes da primeira prova
+	for( unsigned int i = 0; i < modalidades[0]->getProvas().size(); i++ ) {
+		fileclass << endl;
+		fileclass << " " << modalidades[0]->getProvas()[i]->getNome();
+		fileclass << endl;
+		for (unsigned int v=0; v< modalidades[0]->getProvas()[i]->getClassificacoes().size();v++)
+		fileclass << modalidades[0]->getProvas()[i]->getClassificacoes()[v];
+	}
+
+	fileclass << endl;
+
+	//guarda as restantes modalidades e as provas de cada
+	for ( unsigned int j = 1; j < modalidades.size(); j++ ) {
+		fileclass << endl;
+		fileclass << modalidades[j]->getNome();
+		for(unsigned int k=0; k < modalidades[j]->getProvas().size();k++){
+		fileclass <<modalidades[j]->getProvas()[k]->getNome();
+		fileclass <<endl;
+
+		for( unsigned int l = 0; l < modalidades[j]->getProvas()[k]->getClassificacoes().size(); l++ ) {
+			fileclass << " " << modalidades[j]->getProvas()[k]->getClassificacoes()[l];
+			fileclass <<endl;
+		}
+		}
+		fileclass << endl;
+	}
+
+	fileclass.close();
+}
+
 
 
 // Procura o indice de uma modalidade com um nome especifico no vetor modalidades
