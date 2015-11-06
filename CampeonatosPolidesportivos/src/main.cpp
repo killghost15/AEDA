@@ -1096,8 +1096,63 @@ void MenuListagens() {
 /**
  *  MENU INICIAL
  */
+void MenuCalendario(){
+	string nome;
+	int dia,mes,ano;
+	cout << "Data (dia mes ano) ?";
+	cin >> dia >> mes >> ano;
+	cin.ignore();
+	cout << "Que modalidade deseja ver a calendarização de provas ";
+	getline(cin,nome);
+	cout << campeonato.findModalidade(nome)->getNome() << endl;
+	cout <<endl;
+	cout << "provas que já passaram: ";
+	for (unsigned int i=0; i< campeonato.findModalidade(nome)->getProvas().size();i++ ){
+		if (campeonato.findModalidade(nome)->getProvas()[i]->getAno()< ano)
+		cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+		else if (campeonato.findModalidade(nome)->getProvas()[i]->getAno()==ano){
+			if(campeonato.findModalidade(nome)->getProvas()[i]->getMes() < mes)
+				cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+			else if (campeonato.findModalidade(nome)->getProvas()[i]->getMes()== mes){
+				if (campeonato.findModalidade(nome)->getProvas()[i]->getDia()< dia)
+					cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+
+		}
+		}
 
 
+
+
+}
+	cout << endl;
+	cout << "Provas que ainda não aconteceram ou estão a acontecer:";
+	for (unsigned int i=0; i< campeonato.findModalidade(nome)->getProvas().size();i++ ){
+			if (campeonato.findModalidade(nome)->getProvas()[i]->getAno()> ano)
+			cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+			else if (campeonato.findModalidade(nome)->getProvas()[i]->getAno()==ano){
+				if(campeonato.findModalidade(nome)->getProvas()[i]->getMes() > mes)
+					cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+				else if (campeonato.findModalidade(nome)->getProvas()[i]->getMes()== mes){
+					if (campeonato.findModalidade(nome)->getProvas()[i]->getDia()> dia)
+						cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+					else if (campeonato.findModalidade(nome)->getProvas()[i]->getDia()== dia)
+						cout <<"ESTA A DECORRER HOJE, APRESSE-SE A IR PARA O LOCAL " <<campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
+
+
+			}
+			}
+
+
+
+
+	}
+
+
+
+
+
+
+}
 // Menu Inicial, chama todos os outros Menus mediante a escolha do utilizador
 void MenuInicial() {
 	int escolha_menu;
@@ -1134,7 +1189,7 @@ void MenuInicial() {
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//MenuCalendario();
+			MenuCalendario();
 			break;
 		case 4:
 			cout << string(8,'\n');
