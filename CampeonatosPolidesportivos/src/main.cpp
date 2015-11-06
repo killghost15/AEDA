@@ -729,10 +729,27 @@ void CriaProva(){
 	int dia,mes,ano;
 	string nome;
 	string prova;
+
+	cin.clear();
+	cin.sync();
+
+	exception_finish = true;
+	while (exception_finish){
+		try{
+
 	cout << "Qual a modalidade a que pertence a prova ?";
-	cin >> nome;
-	cout <<"Qual o nome da prova ?";
-	cin >>prova;
+	getline(cin,nome);
+	if (campeonato.existsModalidade(nome)==false)throw ModalidadeInexistente(nome);
+
+	else exception_finish =false;
+	}
+		catch (ModalidadeInexistente &e) {
+					e.what();
+	}
+	}
+	cout <<"Qual o nome da prova ? ";
+	getline(cin,prova);
+	cout << endl;
 	cout << "Data da prova, (dia mes ano):";
 	cin >> dia >> mes >> ano;
 	campeonato.findModalidade(nome)->CriarProva(prova,dia,mes,ano);
@@ -750,8 +767,19 @@ void CriaProva(){
 void EliminaProva(){
 	string nome;
 	string prova;
-	cout << "Qual a modalidade a que pertence a prova ? ";
-	cin >> nome;
+	exception_finish = true;
+		while (exception_finish) {
+			try {
+				cout << " Qual a modalidade a q pretende eliminar provas ? ";
+				getline(cin, nome);
+				if( campeonato.existsModalidade(nome) == false )
+					throw ModalidadeInexistente(nome);
+				else
+					exception_finish = false;
+			} catch (ModalidadeInexistente &e) {
+				e.what();
+			}
+		}
 	cout << "Qual o nome da prova que quer eliminar ?";
 	cin >> prova;
 	campeonato.findModalidade(nome)->EliminaProva(prova);
