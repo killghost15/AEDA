@@ -346,7 +346,13 @@ void Campeonato::saveclassifica() {
 	fileclass.close();
 }
 
+void Campeonato::AtribuiInfrastrutura(string nomeModalidade,string nomeProva, string Infrastrutura){
+	for(unsigned int i=0;i<findModalidade(nomeModalidade)->getProvas().size();i++){
+	if(findModalidade(nomeModalidade)->getProvas()[i]->getNome()==nomeProva)
+		findModalidade(nomeModalidade)->getProvas()[i]->setInfrastrutura(Infrastrutura);
+	}
 
+}
 
 // Procura o indice de uma modalidade com um nome especifico no vetor modalidades
 int Campeonato::findModalidadeIndex(string nomeModalidade) {

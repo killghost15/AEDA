@@ -83,6 +83,7 @@ public:
 	void classifica(string nomeModalidade,string nomeProva);
 	void saveclassifica();
 	void loadclassifica();
+	void AtribuiInfrastrutura(string nomeModalidade, string nomeProva, string infrastrutura);
 };
 
 

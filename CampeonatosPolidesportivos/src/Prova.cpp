@@ -13,4 +13,5 @@ Prova::Prova(string name, int day, int month, int year){
 	dia=day;
 	mes=month;
 	ano=year;
+	infrastrutura="vazio";
 }

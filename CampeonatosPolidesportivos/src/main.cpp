@@ -922,7 +922,51 @@ void ApagarInfrastrutura() {
 
 	cout << " Infrastrutura apagada com sucesso!";
 }
+void Atribuirinfrastrutura(){
+	string nome;
+	string nomeProva;
+	string nomeinfrastrutura;
+	cout << "Nome da modalidade ?";
+	getline(cin,nome);
+	cout << "Nome da prova ?";
+	getline(cin,nomeProva);
 
+	while (exception_finish) {
+			try {
+				cout<< "Nome da infrastrutura necessária ?";
+				getline(cin, nomeinfrastrutura);
+				if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
+					throw InfrastruturaInexistente(nomeinfrastrutura);
+				else
+					exception_finish = false;
+			} catch (InfrastruturaInexistente &e) {
+				e.what();
+			}
+		}
+campeonato.AtribuiInfrastrutura(nome,nomeProva,nomeinfrastrutura);
+}
+
+void  Retirarinfrastrutura(){
+	string nome;
+		string nomeProva, nomeinfrastrutura;
+		cout << "Nome da modalidade ?";
+		getline(cin,nome);
+		cout << "Nome da prova ?";
+		getline(cin,nomeProva);
+		while (exception_finish) {
+					try {
+						cout<< "Nome da infrastrutura que já não é necessária ?";
+						getline(cin, nomeinfrastrutura);
+						if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
+							throw InfrastruturaInexistente(nomeinfrastrutura);
+						else
+							exception_finish = false;
+					} catch (InfrastruturaInexistente &e) {
+						e.what();
+					}
+				}
+		campeonato.AtribuiInfrastrutura(nome,nomeProva,"vazio");
+}
 
 // Menu de Manutenção das Infrastruturas do campeonato
 void MenuInfrastruturas() {
@@ -933,14 +977,16 @@ void MenuInfrastruturas() {
 	cout << "-                                            -" << endl;
 	cout << "- 1. Adicionar Infrastrutura                 -" << endl;
 	cout << "- 2. Apagar Infrastrutura                    -" << endl;
-	cout << "- 3. Voltar ao Menu Principal                -" << endl;
+	cout <<"-  3. Atribuir infrastrutura                  -" << endl;
+	cout <<"-  4. Retirar infrastrutura da prova          -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                -" << endl;
 	cout << "-                                            -" << endl;
 	cout << "----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_infrastruturas;
 
-	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 ) {
+	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 && escolha_infrastruturas !=4 && escolha_infrastruturas !=5) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInfrastruturas();
@@ -960,6 +1006,19 @@ void MenuInfrastruturas() {
 			MenuInicial();
 			break;
 		case 3:
+			cout <<string(8,'\n');
+			Atribuirinfrastrutura();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 4:
+			cout <<string(8,'\n');
+			Retirarinfrastrutura();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+
+		case 5:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
