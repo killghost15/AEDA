@@ -1029,6 +1029,32 @@ void MenuInfrastruturas() {
 /**
  *  MENUS RELACIONADOS COM AS LISTAGENS
  */
+void MenuAtletas(){
+	string resposta1,modalidade;
+	int num;
+	for (unsigned int i=0; i< campeonato.getModalidades().size();i++){
+		cout <<"Modalidade:" << campeonato.getModalidades()[i]->getNome()<<endl;
+		for (unsigned int j=0; j <campeonato.getModalidades()[i]->getAtletas().size();j++){
+			cout << j+1 <<":" << campeonato.getModalidades()[i]->getAtletas()[j]->getNome() << endl;
+		}
+		cout <<endl;
+	}
+	cout << "deseja ver as informações de algum atleta ? (s,n)";
+	cin >>resposta1;
+	bool coisa= true;
+	while (coisa){
+	if (resposta1 == "s"){
+		cout << "Qual modalidade ?";
+		cin >>modalidade;
+		cout << "Qual o numero da lista é o atleta ?";
+		cin >> num;
+		campeonato.findModalidade(modalidade)->getAtletas()[num-1]->info();
+		coisa =false;
+	}
+	else if (resposta1=="n") coisa=false;
+	else cout <<"introduza uma opção correta, s ou n!";
+	}
+}
 
 
 // Menu das Listagens, efetua a listagem de toda a informação que o utilizador quiser
@@ -1062,7 +1088,9 @@ void MenuListagens() {
 	switch (escolha_listagens) {
 		case 1:
 			cout << string(8,'\n');
-			//
+			MenuAtletas();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 2:
 			cout << string(8,'\n');
