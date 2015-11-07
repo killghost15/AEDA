@@ -22,11 +22,8 @@ public:
 	Equipa* getEquipa();
 	// Metodo set
 	void setEquipa(Equipa *equi);
-	 void info(){
-		cout << "nome:" << getNome() << endl;
-		cout << "idade" << getIdade() << endl;
-		cout << "peso"<<peso << endl;
-		cout << "altura" << estatura << endl;	}
+	// Metodo info
+	void info();
 };
 
 

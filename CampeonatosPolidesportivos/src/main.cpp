@@ -595,8 +595,6 @@ void AdicionarAtletasModalidade() {
 		}
 	}
 
-	// TODO: verificar se a modalidade está nos desportos da equipa do atleta
-
 	exception_finish = true;
 	while (exception_finish) {
 		try {
@@ -735,18 +733,18 @@ void CriaProva(){
 
 	exception_finish = true;
 	while (exception_finish){
-		try{
+		try {
+			cout << "Qual a modalidade a que pertence a prova ?";
+			getline(cin,nome);
+			if (campeonato.existsModalidade(nome)==false)
+				throw ModalidadeInexistente(nome);
+			else
+				exception_finish =false;
+		} catch (ModalidadeInexistente &e) {
+			e.what();
+		}
+	}
 
-	cout << "Qual a modalidade a que pertence a prova ?";
-	getline(cin,nome);
-	if (campeonato.existsModalidade(nome)==false)throw ModalidadeInexistente(nome);
-
-	else exception_finish =false;
-	}
-		catch (ModalidadeInexistente &e) {
-					e.what();
-	}
-	}
 	cout <<"Qual o nome da prova ? ";
 	getline(cin,prova);
 	cout << endl;
@@ -759,34 +757,32 @@ void CriaProva(){
 		cout <<endl;
 	}*/
 
-
-
 }
 
 
 void EliminaProva(){
 	string nome;
 	string prova;
+
 	exception_finish = true;
-		while (exception_finish) {
-			try {
-				cout << " Qual a modalidade a q pretende eliminar provas ? ";
-				getline(cin, nome);
-				if( campeonato.existsModalidade(nome) == false )
-					throw ModalidadeInexistente(nome);
-				else
-					exception_finish = false;
-			} catch (ModalidadeInexistente &e) {
-				e.what();
-			}
+	while (exception_finish) {
+		try {
+			cout << " Qual a modalidade a q pretende eliminar provas ? ";
+			getline(cin, nome);
+			if( campeonato.existsModalidade(nome) == false )
+				throw ModalidadeInexistente(nome);
+			else
+				exception_finish = false;
+		} catch (ModalidadeInexistente &e) {
+			e.what();
 		}
+	}
+
 	cout << "Qual o nome da prova que quer eliminar ?";
 	cin >> prova;
 	campeonato.findModalidade(nome)->EliminaProva(prova);
-
-
-
 }
+
 
 // Menu de Manutenção dos Desportos e Modalidades, bem como dos atletas de cada modalidade
 void MenuDesportosModalidades() {
@@ -861,7 +857,7 @@ void MenuDesportosModalidades() {
 
 
 /**
- *  MENUS RELACIONADOS COM INFRASTRUTURAS
+ *  MENUS RELACIONADOS COM INFRASTRUTURAS E FUNCIONARIOS
  */
 
 
@@ -897,13 +893,14 @@ void AdicionarInfrastrutura() {
 }
 
 
-// Apresenta o form para a adição da infrastrutura ao campeonato
+// Apresenta o form para apagar a infrastrutura ao campeonato
 void ApagarInfrastrutura() {
 	string nome_infrastrutura;
 
 	cin.clear();
 	cin.sync();
 
+	exception_finish = true;
 	while (exception_finish) {
 		try {
 			cout << " Nome da Infrastrutura a apagar: ";
@@ -920,8 +917,10 @@ void ApagarInfrastrutura() {
 	campeonato.eraseInfrastrutura(nome_infrastrutura);
 	campeonato.saveInfrastrutura();
 
-	cout << " Infrastrutura apagada com sucesso!";
+	cout << endl << " Infrastrutura apagada com sucesso!";
 }
+
+
 void Atribuirinfrastrutura(){
 	string nome;
 	string nomeProva;
@@ -931,62 +930,134 @@ void Atribuirinfrastrutura(){
 	cout << "Nome da prova ?";
 	getline(cin,nomeProva);
 
+	exception_finish = true;
 	while (exception_finish) {
-			try {
-				cout<< "Nome da infrastrutura necessária ?";
-				getline(cin, nomeinfrastrutura);
-				if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
-					throw InfrastruturaInexistente(nomeinfrastrutura);
-				else
-					exception_finish = false;
-			} catch (InfrastruturaInexistente &e) {
-				e.what();
-			}
+		try {
+			cout<< "Nome da infrastrutura necessária ?";
+			getline(cin, nomeinfrastrutura);
+			if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
+				throw InfrastruturaInexistente(nomeinfrastrutura);
+			else
+				exception_finish = false;
+		} catch (InfrastruturaInexistente &e) {
+			e.what();
 		}
-campeonato.AtribuiInfrastrutura(nome,nomeProva,nomeinfrastrutura);
+	}
+	campeonato.AtribuiInfrastrutura(nome,nomeProva,nomeinfrastrutura);
 }
+
 
 void  Retirarinfrastrutura(){
 	string nome;
-		string nomeProva, nomeinfrastrutura;
-		cout << "Nome da modalidade ?";
-		getline(cin,nome);
-		cout << "Nome da prova ?";
-		getline(cin,nomeProva);
-		while (exception_finish) {
-					try {
-						cout<< "Nome da infrastrutura que já não é necessária ?";
-						getline(cin, nomeinfrastrutura);
-						if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
-							throw InfrastruturaInexistente(nomeinfrastrutura);
-						else
-							exception_finish = false;
-					} catch (InfrastruturaInexistente &e) {
-						e.what();
-					}
-				}
-		campeonato.AtribuiInfrastrutura(nome,nomeProva,"vazio");
+	string nomeProva, nomeinfrastrutura;
+	cout << "Nome da modalidade ?";
+	getline(cin,nome);
+	cout << "Nome da prova ?";
+	getline(cin,nomeProva);
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout<< "Nome da infrastrutura que já não é necessária ?";
+			getline(cin, nomeinfrastrutura);
+			if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
+				throw InfrastruturaInexistente(nomeinfrastrutura);
+			else
+				exception_finish = false;
+		} catch (InfrastruturaInexistente &e) {
+			e.what();
+		}
+	}
+	campeonato.AtribuiInfrastrutura(nome,nomeProva,"vazio");
 }
+
+
+// Apresenta o form para a adição de um funcionário ao campeonato
+void AdicionarFuncionario() {
+	string nome_funcionario;
+	int idade_funcionario;
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cin.clear();
+			cin.sync();
+			cout << " Nome do Funcionario: ";
+			getline(cin, nome_funcionario);
+			if( campeonato.existsFuncionario(nome_funcionario) == true )
+				throw FuncionarioJaExistente(nome_funcionario);
+			else {
+
+				cout << " Idade do Funcionario: ";
+				cin >> idade_funcionario;
+				if( idade_funcionario < 18 )
+					throw IdadeInvalida();
+				else
+					exception_finish = false;
+			}
+		} catch (FuncionarioJaExistente &e) {
+			e.what();
+		} catch (IdadeInvalida &e) {
+			e.what();
+		}
+	}
+
+	Funcionario *func = new Funcionario(nome_funcionario, idade_funcionario, 0);
+	campeonato.addFuncionario(func);
+
+	cout << endl << " Funcionario adicionado com sucesso!";
+}
+
+
+// Apresenta o form para despedir o funcionario do campeonato
+void ApagarFuncionario() {
+	string nome_funcionario;
+
+	cin.clear();
+	cin.sync();
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout << " Nome do Funcionario a despedir: ";
+			getline(cin, nome_funcionario);
+			if( campeonato.existsFuncionario(nome_funcionario) == false )
+				throw FuncionarioInexistente(nome_funcionario);
+			else
+				exception_finish = false;
+		} catch (FuncionarioInexistente &e) {
+			e.what();
+		}
+	}
+
+	campeonato.eraseFuncionario(nome_funcionario);
+	campeonato.saveFuncionario();
+
+	cout << endl << " Funcionario despedido com sucesso!";
+}
+
 
 // Menu de Manutenção das Infrastruturas do campeonato
 void MenuInfrastruturas() {
 	int escolha_infrastruturas;
 
 	cout << "----------------------------------------------" << endl;
-	cout << "-            ** Infrastruturas **            -" << endl;
+	cout << "-     ** Infrastruturas e Funcionários**     -" << endl;
 	cout << "-                                            -" << endl;
 	cout << "- 1. Adicionar Infrastrutura                 -" << endl;
 	cout << "- 2. Apagar Infrastrutura                    -" << endl;
-	cout <<"-  3. Atribuir infrastrutura                  -" << endl;
-	cout <<"-  4. Retirar infrastrutura da prova          -" << endl;
-	cout << "- 5. Voltar ao Menu Principal                -" << endl;
+	cout << "- 3. Atribuir Infrastrutura                  -" << endl;
+	cout << "- 4. Retirar Infrastrutura da prova          -" << endl;
+	cout << "- 5. Adicionar Funcionario                   -" << endl;
+	cout << "- 6. Despedir Funcionario                    -" << endl;
+	cout << "- 7. Voltar ao Menu Principal                -" << endl;
 	cout << "-                                            -" << endl;
 	cout << "----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_infrastruturas;
 
-	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 && escolha_infrastruturas !=4 && escolha_infrastruturas !=5) {
+	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 && escolha_infrastruturas != 4 && escolha_infrastruturas != 5 && escolha_infrastruturas != 6 && escolha_infrastruturas != 7) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInfrastruturas();
@@ -1017,8 +1088,19 @@ void MenuInfrastruturas() {
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
-
 		case 5:
+			cout <<string(8,'\n');
+			AdicionarFuncionario();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 6:
+			cout <<string(8,'\n');
+			ApagarFuncionario();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 7:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
@@ -1185,17 +1267,17 @@ void MenuCalendario(){
 void MenuInicial() {
 	int escolha_menu;
 
-	cout << "--------------------------------------------------" << endl;
-	cout << "-           *** Menu Principal ***               -" << endl;
-	cout << "-                                                -" << endl;
-	cout << "- 1. Manutenção de Equipas e Atletas             -" << endl;
-	cout << "- 2. Manutenção de Desportos,Modalidades e Provas-" << endl;
-	cout << "- 3. Manutenção do Calendário das provas         -" << endl;
-	cout << "- 4. Manutenção de Infrastruturas                -" << endl;
-	cout << "- 5. Listagens                                   -" << endl;
-	cout << "- 6. Terminar o programa                         -" << endl;
-	cout << "-                                                -" << endl;
-	cout << "--------------------------------------------------" << endl;
+	cout << "----------------------------------------------------" << endl;
+	cout << "-            *** Menu Principal ***                -" << endl;
+	cout << "-                                                  -" << endl;
+	cout << "- 1. Manutenção de Equipas e Atletas               -" << endl;
+	cout << "- 2. Manutenção de Desportos, Modalidades e Provas -" << endl;
+	cout << "- 3. Manutenção do Calendário das provas           -" << endl;
+	cout << "- 4. Manutenção de Infrastruturas e Funcionários   -" << endl;
+	cout << "- 5. Listagens                                     -" << endl;
+	cout << "- 6. Terminar o programa                           -" << endl;
+	cout << "-                                                  -" << endl;
+	cout << "----------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
@@ -1260,6 +1342,8 @@ int main() {
 		remove(file_desportos);
 	if ( file_isEmpty(file_infrastruturas) == true )
 		remove(file_infrastruturas);
+	if ( file_isEmpty(file_funcionarios) == true )
+		remove(file_funcionarios);
 
 	// Carrega a informação para os respetivos vetores
 	campeonato.loadEquipas();
@@ -1267,6 +1351,7 @@ int main() {
 	campeonato.loadModalidades();
 	campeonato.loadDesportos();
 	campeonato.loadInfrastruturas();
+	campeonato.loadFuncionarios();
 
 	// Chama o Menu Inicial
 	MenuInicial();

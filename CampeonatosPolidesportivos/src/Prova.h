@@ -18,26 +18,25 @@ public:
 	Prova();
 
 	vector<int> getClassificacoes();
-void pushClassifica(int num);
-string getInfrastrutura(){
-	return infrastrutura;
-}
-void setInfrastrutura(string nome){
-	infrastrutura=nome;
-}
-string getNome(){
-	return nome;
-
-};
-int getAno(){
-	return ano;
-};
-int getMes(){
-	return mes;
-};
-int getDia(){
-	return dia;
-};
+	void pushClassifica(int num);
+	string getInfrastrutura() {
+		return infrastrutura;
+	}
+	void setInfrastrutura(string nome) {
+		infrastrutura=nome;
+	}
+	string getNome() {
+		return nome;
+	};
+	int getAno() {
+		return ano;
+	};
+	int getMes() {
+		return mes;
+	};
+	int getDia() {
+		return dia;
+	};
 
 };
 

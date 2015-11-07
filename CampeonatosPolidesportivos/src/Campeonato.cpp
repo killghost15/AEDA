@@ -22,6 +22,10 @@ vector<Infrastrutura*> Campeonato::getInfrastruturas() {
 	return infrastruturas;
 }
 
+vector<Funcionario*> Campeonato::getFuncionarios() {
+	return funcionarios;
+}
+
 
 /**
  *  METODOS DE PROCURA DE OBJETOS COM DETERMINADO NOME NOS VETORES
@@ -88,6 +92,18 @@ Infrastrutura* Campeonato::findInfrastrutura(string nomeInfrastrutura) {
 }
 
 
+// Procura um funcionario com um nome especifico no vetor funcionarios
+Funcionario* Campeonato::findFuncionario(string nomeFuncionario) {
+	Funcionario *func;
+
+	for( unsigned int i = 0; i < funcionarios.size(); i++ )
+		if( funcionarios[i]->getNome() == nomeFuncionario )
+			func = funcionarios[i];
+
+	return func;
+}
+
+
 /**
  *  METODOS PARA SABER SE UM OBJETO COM UM DETERMINADO NOME EXISTE
  */
@@ -148,6 +164,17 @@ bool Campeonato::existsInfrastrutura(string nomeInfrastrutura) {
 }
 
 
+// Retorna true se um funcionario com um nome especifico existe, false otherwise
+bool Campeonato::existsFuncionario(string nomeFuncionario) {
+
+	for( unsigned int i = 0; i < funcionarios.size(); i++ )
+		if( funcionarios[i]->getNome() == nomeFuncionario )
+			return true;
+
+	return false;
+}
+
+
 // Retorna true se a modalidade estiver nos desportos em que o atleta se pode inscrever
 bool Campeonato::CanAtletaEnterModalidade(string nomeModalidade, string nomeAtleta) {
 	vector<string> sports = findAtleta(nomeAtleta)->getEquipa()->getDesportos();
@@ -171,13 +198,21 @@ bool Campeonato::CanAtletaEnterModalidade(string nomeModalidade, string nomeAtle
  */
 
 
+// Apaga o funcionario com um nome especifico do vetor funcionarios
+void Campeonato::eraseFuncionario(string nomeFuncionario) {
+
+	for( unsigned int i = 0; i < funcionarios.size(); i++ )
+		if( funcionarios[i]->getNome() == nomeFuncionario )
+			funcionarios.erase(funcionarios.begin()+i);
+}
+
+
 // Apaga a infrastrutura com um nome especifico do vetor infrastruturas
 void Campeonato::eraseInfrastrutura(string nomeInfrastrutura) {
-	vector<Infrastrutura*>::iterator it;
 
-	for( it = infrastruturas.begin(); it != infrastruturas.end(); it++ )
-		if( (*it)->getNome() == nomeInfrastrutura )
-			infrastruturas.erase(it);
+	for( unsigned int i = 0; i < infrastruturas.size(); i++ )
+		if( infrastruturas[i]->getNome() == nomeInfrastrutura )
+			infrastruturas.erase(infrastruturas.begin()+i);
 }
 
 
@@ -746,4 +781,61 @@ void Campeonato::addInfrastrutura(Infrastrutura *infra) {
 	saveInfrastrutura();
 }
 
+
+// Carrega a informação dos funcionarios do ficheiro funcionarios.txt
+void Campeonato::loadFuncionarios() {
+	string nome_funcionario, idade_funcionario, anos_trabalho;
+	string trash;
+	Funcionario *func;
+
+	ifstream filefunc;
+	filefunc.open(file_funcionarios);
+
+	if ( filefunc.is_open() ) {
+
+		while ( !filefunc.eof() ) {
+			getline(filefunc, nome_funcionario);
+			getline(filefunc, idade_funcionario);
+			getline(filefunc, anos_trabalho);
+			getline(filefunc, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
+
+			int idadeFuncionario_int = atoi(idade_funcionario.c_str());
+			float anosTrabalho_int = atof(anos_trabalho.c_str());
+
+			func = new Funcionario(nome_funcionario, idadeFuncionario_int, anosTrabalho_int);
+			funcionarios.push_back(func);
+		}
+
+		filefunc.close();
+	}
+}
+
+
+// Guarda o funcionario no ficheiro funcionarios.txt
+void Campeonato::saveFuncionario() {
+	ofstream filefunc;
+	filefunc.open(file_funcionarios);
+
+	//guarda apenas o primeiro funcionario
+	filefunc << funcionarios[0]->getNome() << endl;
+	filefunc << funcionarios[0]->getIdade() << endl;
+	filefunc << funcionarios[0]->getAnosTrabalho();
+
+	//guarda os restantes funcionarios
+	for ( unsigned int i = 1; i < funcionarios.size(); i++ ) {
+		filefunc << endl << endl;
+		filefunc << funcionarios[i]->getNome() << endl;
+		filefunc << funcionarios[i]->getIdade() << endl;
+		filefunc << funcionarios[i]->getAnosTrabalho();
+	}
+
+	filefunc.close();
+}
+
+
+// Adiciona o funcionario no vetor e guarda no ficheiro
+void Campeonato::addFuncionario(Funcionario *func) {
+	funcionarios.push_back(func);
+	saveFuncionario();
+}
 

@@ -92,6 +92,22 @@ public:
 };
 
 
+class FuncionarioJaExistente: public exception {
+	string nomeFuncionario;
+public:
+	FuncionarioJaExistente(string nameWorker) : nomeFuncionario(nameWorker) {}
+	virtual ~FuncionarioJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " O funcionario " << nomeFuncionario << " já existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
 /**
  *  EXCEÇOES INEXISTENTE
  */
@@ -169,6 +185,22 @@ public:
 	virtual const char* what() const throw() {
 		cout << endl;
 		cout << " A infrastrutura " << nomeInfrastrutura << " não existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class FuncionarioInexistente: public exception {
+	string nomeFuncionario;
+public:
+	FuncionarioInexistente(string nameWorker) : nomeFuncionario(nameWorker) {}
+	virtual ~FuncionarioInexistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " O funcionário " << nomeFuncionario << " não existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";

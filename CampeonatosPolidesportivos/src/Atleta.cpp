@@ -27,3 +27,11 @@ Equipa* Atleta::getEquipa() {
 void Atleta::setEquipa(Equipa *equi) {
 	equipa = equi;
 }
+
+
+void Atleta::info(){
+	cout << "Nome: " << getNome() << endl;
+	cout << "Idade: " << getIdade() << endl;
+	cout << "Peso: "<< peso << endl;
+	cout << "Altura: " << estatura << endl;
+}
