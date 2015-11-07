@@ -1185,17 +1185,17 @@ void MenuCalendario(){
 void MenuInicial() {
 	int escolha_menu;
 
-	cout << "----------------------------------------------" << endl;
-	cout << "-           *** Menu Principal ***           -" << endl;
-	cout << "-                                            -" << endl;
-	cout << "- 1. Manutenção de Equipas e Atletas         -" << endl;
-	cout << "- 2. Manutenção de Desportos e Modalidades   -" << endl;
-	cout << "- 3. Manutenção do Calendário das provas     -" << endl;
-	cout << "- 4. Manutenção de Infrastruturas            -" << endl;
-	cout << "- 5. Listagens                               -" << endl;
-	cout << "- 6. Terminar o programa                     -" << endl;
-	cout << "-                                            -" << endl;
-	cout << "----------------------------------------------" << endl;
+	cout << "--------------------------------------------------" << endl;
+	cout << "-           *** Menu Principal ***               -" << endl;
+	cout << "-                                                -" << endl;
+	cout << "- 1. Manutenção de Equipas e Atletas             -" << endl;
+	cout << "- 2. Manutenção de Desportos,Modalidades e Provas-" << endl;
+	cout << "- 3. Manutenção do Calendário das provas         -" << endl;
+	cout << "- 4. Manutenção de Infrastruturas                -" << endl;
+	cout << "- 5. Listagens                                   -" << endl;
+	cout << "- 6. Terminar o programa                         -" << endl;
+	cout << "-                                                -" << endl;
+	cout << "--------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
