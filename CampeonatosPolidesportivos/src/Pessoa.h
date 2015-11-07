@@ -15,6 +15,7 @@ public:
 	// Metodos get
 	string getNome() const;
 	unsigned int getIdade() const;
+	virtual void info() =0;
 };
 
 

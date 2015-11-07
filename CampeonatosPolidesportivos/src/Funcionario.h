@@ -13,6 +13,11 @@ class Funcionario: public Pessoa {
 	int anos_trabalho;
 public:
 	Funcionario(string name, unsigned int age, int work_years);
+	 void info(){
+			cout << "nome:" << getNome() << endl;
+			cout << "idade" << getIdade() << endl;
+			cout << "anos de serviço: "<<anos_trabalho << endl;
+				}
 };
 
 
