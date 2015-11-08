@@ -10,6 +10,7 @@
 #include "Desporto.h"
 #include "Infrastrutura.h"
 #include "Funcionario.h"
+#include "Prova.h"
 
 
 #define file_atletas "atletas.txt"
@@ -29,6 +30,7 @@ class Campeonato {
 	vector<Desporto*> desportos;
 	vector<Equipa*> equipas;
 	vector<Modalidade*> modalidades;
+	vector<Prova*> provas;
 	vector<Infrastrutura*> infrastruturas;
 	vector<Funcionario*> funcionarios;
 public:
@@ -36,6 +38,7 @@ public:
 	vector<Equipa*> getEquipas();
 	vector<Atleta*> getAtletas();
 	vector<Modalidade*> getModalidades();
+	vector<Prova*> getProvas();
 	vector<Desporto*> getDesportos();
 	vector<Infrastrutura*> getInfrastruturas();
 	vector<Funcionario*> getFuncionarios();
@@ -43,6 +46,7 @@ public:
 	Equipa* findEquipa(string nomeEquipa);
 	Atleta* findAtleta(string nomeAtleta);
 	Modalidade* findModalidade(string nomeModalidade);
+	Prova* findProva(string nomeProva);
 	Desporto* findDesporto(string nomeDesporto);
 	Infrastrutura* findInfrastrutura(string nomeInfrastrutura);
 	Funcionario* findFuncionario(string nomeFuncionario);
@@ -50,6 +54,7 @@ public:
 	bool existsEquipa(string nomeEquipa);
 	bool existsAtleta(string nomeAtleta);
 	bool existsModalidade(string nomeModalidade);
+	bool existsProva(string nomeProva);
 	bool existsDesporto(string nomeDesporto);
 	bool existsInfrastrutura(string nomeInfrastrutura);
 	bool existsFuncionario(string nomeFuncionario);
@@ -58,7 +63,8 @@ public:
 	void eraseAtletaModalidade(string nomeModalidade, string nomeAtleta);
 	void eraseEquipa(string nomeEquipa);
 	void eraseAtleta(string nomeAtleta);
-	void eraseDesporto(string nomeEquipa);
+	void eraseDesporto(string nomeDesporto);
+	void eraseProva(string nomeProva);
 	void eraseInfrastrutura(string nomeInfrastrutura);
 	void eraseFuncionario(string nomeFuncionario);
 	// Metodos sobre Funcionarios
@@ -81,10 +87,14 @@ public:
 	void loadAtletas();
 	void saveAtleta();
 	void addAtleta(Atleta *atl);
-	// Metodos sobre Atletas
+	// Metodos sobre Modalidades
 	void loadModalidades();
 	void saveModalidade();
 	void addModalidade(Modalidade *modal);
+	// Metodos sobre Modalidades
+	void loadProvas();
+	void saveProva();
+	void addProva(Prova *prova);
 	// Metodos para adicionar atletas a uma modalidade
 	int findModalidadeIndex(string nomeModalidade);
 	void changeModalidade(int index, Modalidade *mod);

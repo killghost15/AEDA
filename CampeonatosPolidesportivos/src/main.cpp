@@ -723,65 +723,6 @@ void RetirarAtletasModalidade() {
 
 	cout << endl << " Atletas retirados à modalidade com sucesso!";
 }
-void CriaProva(){
-	int dia,mes,ano;
-	string nome;
-	string prova;
-
-	cin.clear();
-	cin.sync();
-
-	exception_finish = true;
-	while (exception_finish){
-		try {
-			cout << "Qual a modalidade a que pertence a prova ?";
-			getline(cin,nome);
-			if (campeonato.existsModalidade(nome)==false)
-				throw ModalidadeInexistente(nome);
-			else
-				exception_finish =false;
-		} catch (ModalidadeInexistente &e) {
-			e.what();
-		}
-	}
-
-	cout <<"Qual o nome da prova ? ";
-	getline(cin,prova);
-	cout << endl;
-	cout << "Data da prova, (dia mes ano):";
-	cin >> dia >> mes >> ano;
-	campeonato.findModalidade(nome)->CriarProva(prova,dia,mes,ano);
-
-	/*for (unsigned int i =0; i<campeonato.findModalidade(nome)->getProvas().size();i++ ){
-		cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome();
-		cout <<endl;
-	}*/
-
-}
-
-
-void EliminaProva(){
-	string nome;
-	string prova;
-
-	exception_finish = true;
-	while (exception_finish) {
-		try {
-			cout << " Qual a modalidade a q pretende eliminar provas ? ";
-			getline(cin, nome);
-			if( campeonato.existsModalidade(nome) == false )
-				throw ModalidadeInexistente(nome);
-			else
-				exception_finish = false;
-		} catch (ModalidadeInexistente &e) {
-			e.what();
-		}
-	}
-
-	cout << "Qual o nome da prova que quer eliminar ?";
-	cin >> prova;
-	campeonato.findModalidade(nome)->EliminaProva(prova);
-}
 
 
 // Menu de Manutenção dos Desportos e Modalidades, bem como dos atletas de cada modalidade
@@ -795,16 +736,14 @@ void MenuDesportosModalidades() {
 	cout << "- 2. Apagar Desporto                          -" << endl;
 	cout << "- 3. Adicionar Atletas à Modalidade           -" << endl;
 	cout << "- 4. Retirar Atletas à Modalidade             -" << endl;
-	cout << "- 5. Criar Prova                              -" << endl;
-	cout << "- 6. Eliminar Prova                           -" << endl;
-	cout << "- 7. Voltar ao Menu Principal                 -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                 -" << endl;
 	cout << "-                                             -" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_desportos;
 
-	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5 && escolha_desportos !=6 && escolha_desportos !=7) {
+	if ( escolha_desportos != 1 && escolha_desportos != 2 && escolha_desportos != 3 && escolha_desportos != 4  && escolha_desportos != 5) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuDesportosModalidades();
@@ -836,19 +775,156 @@ void MenuDesportosModalidades() {
 			MenuInicial();
 			break;
 		case 5:
-			cout << string(8,'\n');
-			CriaProva();
-			cout << string(8,'\n');
+			cout << string(8, '\n');
 			MenuInicial();
 			break;
-		case 6:
-			cout << string(8,'\n');
-			EliminaProva();
-			cout << string(8,'\n');
-			MenuInicial();
-			break;
+	}
+}
 
-		case 7:
+
+/**
+ *  MENUS RELACIONADOS COM PROVAS
+ */
+
+
+void CriarProva(){
+	int dia, mes, ano;
+	string nome_modalidade, nome_infrastrutura;
+	string nome_prova;
+
+	cin.clear();
+	cin.sync();
+
+	exception_finish = true;
+	while (exception_finish){
+		try {
+			cout << " Qual a modalidade a que pertence a prova? ";
+			getline(cin, nome_modalidade);
+			if (campeonato.existsModalidade(nome_modalidade) == false)
+				throw ModalidadeInexistente(nome_modalidade);
+			else
+				exception_finish = false;
+		} catch (ModalidadeInexistente &e) {
+			e.what();
+		}
+	}
+
+	exception_finish = true;
+	while (exception_finish){
+		try {
+			cout << " Em que infrastrutura se vai desenrolar a prova? ";
+			getline(cin, nome_infrastrutura);
+			if (campeonato.existsInfrastrutura(nome_infrastrutura) == false)
+				throw InfrastruturaInexistente(nome_infrastrutura);
+			else
+				exception_finish = false;
+		} catch (InfrastruturaInexistente &e) {
+			e.what();
+		}
+	}
+
+	cout << " Qual o nome da prova? ";
+	getline(cin, nome_prova);
+	cout << endl;
+	cout << " Data da prova (dia mes ano): ";
+	cin >> dia >> mes >> ano;
+	//campeonato.findModalidade(nome)->CriarProva(prova,dia,mes,ano);
+
+	/*for (unsigned int i =0; i<campeonato.findModalidade(nome)->getProvas().size();i++ ){
+		cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome();
+		cout <<endl;
+	}*/
+
+	Modalidade *mod = campeonato.findModalidade(nome_modalidade);
+	Infrastrutura *infra = campeonato.findInfrastrutura(nome_infrastrutura);
+
+	//criaçao do objeto da classe prova para adicionar à modalidade
+	Prova *prova;
+
+	prova = new Prova(nome_prova, dia, mes, ano);
+	prova->setModalidade(mod);
+	prova->setInfrastrutura(infra);
+
+	campeonato.addProva(prova);
+
+	cout << " Prova adicionada à modalidade com sucesso!";
+
+}
+
+
+/*void EliminarProva(){
+	string nome;
+	string prova;
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout << " Qual a modalidade a q pretende eliminar provas? ";
+			getline(cin, nome);
+			if( campeonato.existsModalidade(nome) == false )
+				throw ModalidadeInexistente(nome);
+			else
+				exception_finish = false;
+		} catch (ModalidadeInexistente &e) {
+			e.what();
+		}
+	}
+
+	cout << " Qual o nome da prova que quer eliminar? ";
+	cin >> prova;
+	campeonato.findModalidade(nome)->EliminaProva(prova);
+}*/
+
+
+void MenuProvas() {
+	int escolha_provas;
+
+	cout << "------------------------------------------------" << endl;
+	cout << "-                 ** Provas **                 -" << endl;
+	cout << "-                                              -" << endl;
+	cout << "- 1. Criar Prova                               -" << endl;
+	cout << "- 2. Eliminar Prova                            -" << endl;
+	cout << "- 3. Lançar classificações de uma prova        -" << endl;
+	cout << "- 4. Mudar infrastrutura de uma prova          -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                  -" << endl;
+	cout << "-                                              -" << endl;
+	cout << "------------------------------------------------" << endl;
+
+	cout << " O que pretende fazer? ";
+	cin >> escolha_provas;
+
+	if ( escolha_provas != 1 && escolha_provas != 2 && escolha_provas != 3 && escolha_provas != 4  && escolha_provas != 5) {
+		cout << " Por favor, faça uma escolha adequada.";
+		cout << string(8,'\n');
+		MenuProvas();
+	}
+
+	switch (escolha_provas) {
+		case 1:
+			cout << string(8,'\n');
+			CriarProva();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 2:
+			cout << string(8,'\n');
+			//EliminarProva();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 3:
+			cout << string(8,'\n');
+			//ClassificacaoProva();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 4:
+			cout << string(8,'\n');
+			//MudarInfrastrutura();
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+		case 5:
 			cout << string(8, '\n');
 			MenuInicial();
 			break;
@@ -921,7 +997,7 @@ void ApagarInfrastrutura() {
 }
 
 
-void Atribuirinfrastrutura(){
+/*void Atribuirinfrastrutura(){
 	string nome;
 	string nomeProva;
 	string nomeinfrastrutura;
@@ -969,7 +1045,7 @@ void  Retirarinfrastrutura(){
 		}
 	}
 	campeonato.AtribuiInfrastrutura(nome,nomeProva,"vazio");
-}
+}*/
 
 
 // Apresenta o form para a adição de um funcionário ao campeonato
@@ -1046,18 +1122,16 @@ void MenuInfrastruturas() {
 	cout << "-                                            -" << endl;
 	cout << "- 1. Adicionar Infrastrutura                 -" << endl;
 	cout << "- 2. Apagar Infrastrutura                    -" << endl;
-	cout << "- 3. Atribuir Infrastrutura                  -" << endl;
-	cout << "- 4. Retirar Infrastrutura da prova          -" << endl;
-	cout << "- 5. Adicionar Funcionario                   -" << endl;
-	cout << "- 6. Despedir Funcionario                    -" << endl;
-	cout << "- 7. Voltar ao Menu Principal                -" << endl;
+	cout << "- 3. Adicionar Funcionario                   -" << endl;
+	cout << "- 4. Despedir Funcionario                    -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                -" << endl;
 	cout << "-                                            -" << endl;
 	cout << "----------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_infrastruturas;
 
-	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 && escolha_infrastruturas != 4 && escolha_infrastruturas != 5 && escolha_infrastruturas != 6 && escolha_infrastruturas != 7) {
+	if ( escolha_infrastruturas != 1 && escolha_infrastruturas != 2 && escolha_infrastruturas != 3 && escolha_infrastruturas != 4 && escolha_infrastruturas != 5) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInfrastruturas();
@@ -1078,29 +1152,17 @@ void MenuInfrastruturas() {
 			break;
 		case 3:
 			cout <<string(8,'\n');
-			Atribuirinfrastrutura();
+			AdicionarFuncionario();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
 		case 4:
 			cout <<string(8,'\n');
-			Retirarinfrastrutura();
-			cout << string(8,'\n');
-			MenuInicial();
-			break;
-		case 5:
-			cout <<string(8,'\n');
-			AdicionarFuncionario();
-			cout << string(8,'\n');
-			MenuInicial();
-			break;
-		case 6:
-			cout <<string(8,'\n');
 			ApagarFuncionario();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
-		case 7:
+		case 5:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
@@ -1206,7 +1268,7 @@ void MenuListagens() {
 /**
  *  MENU INICIAL
  */
-void MenuCalendario(){
+/*void MenuCalendario(){
 	string nome;
 	int dia,mes,ano;
 	cout << "Data (dia mes ano) ?";
@@ -1226,13 +1288,8 @@ void MenuCalendario(){
 			else if (campeonato.findModalidade(nome)->getProvas()[i]->getMes()== mes){
 				if (campeonato.findModalidade(nome)->getProvas()[i]->getDia()< dia)
 					cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
-
 		}
 		}
-
-
-
-
 }
 	cout << endl;
 	cout << "Provas que ainda não aconteceram ou estão a acontecer:";
@@ -1247,22 +1304,12 @@ void MenuCalendario(){
 						cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
 					else if (campeonato.findModalidade(nome)->getProvas()[i]->getDia()== dia)
 						cout <<"ESTA A DECORRER HOJE, APRESSE-SE A IR PARA O LOCAL " <<campeonato.findModalidade(nome)->getProvas()[i]->getNome()<< " "<<campeonato.findModalidade(nome)->getProvas()[i]->getDia() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getMes() <<"/"<<campeonato.findModalidade(nome)->getProvas()[i]->getAno()<<endl;
-
-
 			}
 			}
-
-
-
-
 	}
+}*/
 
 
-
-
-
-
-}
 // Menu Inicial, chama todos os outros Menus mediante a escolha do utilizador
 void MenuInicial() {
 	int escolha_menu;
@@ -1272,17 +1319,18 @@ void MenuInicial() {
 	cout << "-                                                  -" << endl;
 	cout << "- 1. Manutenção de Equipas e Atletas               -" << endl;
 	cout << "- 2. Manutenção de Desportos, Modalidades e Provas -" << endl;
-	cout << "- 3. Manutenção do Calendário das provas           -" << endl;
-	cout << "- 4. Manutenção de Infrastruturas e Funcionários   -" << endl;
-	cout << "- 5. Listagens                                     -" << endl;
-	cout << "- 6. Terminar o programa                           -" << endl;
+	cout << "- 3. Manutenção do Calendário                      -" << endl;
+	cout << "- 4. Manutenção das Provas                         -" << endl;
+	cout << "- 5. Manutenção de Infrastruturas e Funcionários   -" << endl;
+	cout << "- 6. Listagens                                     -" << endl;
+	cout << "- 7. Terminar o programa                           -" << endl;
 	cout << "-                                                  -" << endl;
 	cout << "----------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
 
-	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6) {
+	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6 && escolha_menu != 7) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInicial();
@@ -1299,17 +1347,21 @@ void MenuInicial() {
 			break;
 		case 3:
 			cout << string(8,'\n');
-			MenuCalendario();
+			//MenuCalendario();
 			break;
 		case 4:
 			cout << string(8,'\n');
-			MenuInfrastruturas();
+			MenuProvas();
 			break;
 		case 5:
 			cout << string(8,'\n');
-			MenuListagens();
+			MenuInfrastruturas();
 			break;
 		case 6:
+			cout << string(8,'\n');
+			MenuListagens();
+			break;
+		case 7:
 			return;
 	}
 }
@@ -1344,6 +1396,8 @@ int main() {
 		remove(file_infrastruturas);
 	if ( file_isEmpty(file_funcionarios) == true )
 		remove(file_funcionarios);
+	if ( file_isEmpty(file_provas) == true )
+		remove(file_provas);
 
 	// Carrega a informação para os respetivos vetores
 	campeonato.loadEquipas();
@@ -1352,6 +1406,7 @@ int main() {
 	campeonato.loadDesportos();
 	campeonato.loadInfrastruturas();
 	campeonato.loadFuncionarios();
+	campeonato.loadProvas();
 
 	// Chama o Menu Inicial
 	MenuInicial();

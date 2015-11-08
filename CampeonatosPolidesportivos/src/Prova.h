@@ -8,6 +8,7 @@
 
 #include "Atleta.h"
 #include "Modalidade.h"
+#include "Infrastrutura.h"
 
 using namespace std;
 
@@ -15,10 +16,10 @@ using namespace std;
 class Prova {
 	string nome;
 	int ano, mes, dia;
-	Modalidade* modalidade;
+	Modalidade *modalidade;
 	map<Atleta*, int> classificacoes_atletas;
 	//vector<Atleta*> atletas;
-	string infrastrutura;
+	Infrastrutura *infrastrutura;
 public:
 	Prova();
 	Prova(string name, int day, int month, int year);
@@ -29,9 +30,10 @@ public:
 	int getDia() const;
 	Modalidade* getModalidade();
 	map<Atleta*, int> getClassificacoesAtletas();
-	string getInfrastrutura();
+	Infrastrutura* getInfrastrutura();
 	// Metodo set
-	void setInfrastrutura(string nome);
+	void setModalidade(Modalidade *mod);
+	void setInfrastrutura(Infrastrutura *infra);
 };
 
 

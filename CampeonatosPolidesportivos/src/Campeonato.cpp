@@ -336,11 +336,7 @@ void Campeonato::classifica(string nomeModalidade, string NomeProva){
 			return;
 		}
 		}
-
-
 	}
-
-
 }
 
 void Campeonato::saveclassifica() {
@@ -379,7 +375,7 @@ void Campeonato::saveclassifica() {
 	}
 
 	fileclass.close();
-}*/
+}
 
 void Campeonato::AtribuiInfrastrutura(string nomeModalidade,string nomeProva, string Infrastrutura){
 	for(unsigned int i=0;i<findModalidade(nomeModalidade)->getProvas().size();i++){
@@ -387,7 +383,7 @@ void Campeonato::AtribuiInfrastrutura(string nomeModalidade,string nomeProva, st
 		findModalidade(nomeModalidade)->getProvas()[i]->setInfrastrutura(Infrastrutura);
 	}
 
-}
+}*/
 
 // Procura o indice de uma modalidade com um nome especifico no vetor modalidades
 int Campeonato::findModalidadeIndex(string nomeModalidade) {
@@ -647,6 +643,78 @@ void Campeonato::addModalidade(Modalidade *modal) {
 	saveModalidade();
 }
 
+//////////////////////////
+// Carrega a informação das provas do ficheiro provas.txt
+void Campeonato::loadProvas() {
+	string nome_prova, nome_modalidade, nome_infrastrutura;
+	string ano, mes, dia;
+	Prova *prova;
+
+	ifstream fileprova;
+	fileprova.open(file_provas);
+
+	if ( fileprova.is_open() ) {
+
+		while ( !fileprova.eof() ) {
+
+			getline(fileprova, nome_prova);
+			getline(fileprova, ano);
+			getline(fileprova, mes);
+			getline(fileprova, dia);
+
+			int ano_int = atoi(ano.c_str());
+			int mes_int = atoi(mes.c_str());
+			int dia_int = atoi(dia.c_str());
+
+			prova = new Prova(nome_prova, ano_int, mes_int, dia_int);
+
+			Modalidade *modal = findModalidade(nome_modalidade);
+			Infrastrutura *infra = findInfrastrutura(nome_infrastrutura);
+			prova->setModalidade(modal);
+			prova->setInfrastrutura(infra);
+
+			provas.push_back(prova);
+		}
+
+		fileprova.close();
+	}
+}
+
+
+// Guarda a prova no ficheiro provas.txt
+void Campeonato::saveProva() {
+	ofstream fileprova;
+	fileprova.open(file_provas);
+
+	//guarda apenas a primeira prova
+	fileprova << provas[0]->getNome() << endl;
+	fileprova << provas[0]->getAno() << endl;
+	fileprova << provas[0]->getMes() << endl;
+	fileprova << provas[0]->getDia() << endl;
+	fileprova << " " << provas[0]->getModalidade()->getNome() << endl;
+	fileprova << " " << provas[0]->getInfrastrutura()->getNome();
+
+	//guarda as restantes provas
+	for ( unsigned int i = 1; i < provas.size(); i++ ) {
+		fileprova << endl << endl;
+		fileprova << provas[i]->getNome() << endl;
+		fileprova << provas[i]->getAno() << endl;
+		fileprova << provas[i]->getMes() << endl;
+		fileprova << provas[i]->getDia() << endl;
+		fileprova << " " << provas[i]->getModalidade()->getNome() << endl;
+		fileprova << " " << provas[i]->getInfrastrutura()->getNome();
+	}
+
+	fileprova.close();
+}
+
+
+// Adiciona a modalidade no vetor e guarda no ficheiro
+void Campeonato::addProva(Prova *prova) {
+	provas.push_back(prova);
+	saveProva();
+}
+/////////////////////////
 
 // Carrega a informação dos desportos do ficheiro desportos.txt
 void Campeonato::loadDesportos() {

@@ -7,7 +7,6 @@ Prova::Prova(string name, int day, int month, int year){
 	dia = day;
 	mes = month;
 	ano = year;
-	infrastrutura = "vazio";
 }
 
 
@@ -41,13 +40,18 @@ map<Atleta*, int> Prova::getClassificacoesAtletas(){
 }
 
 
-string Prova::getInfrastrutura() {
+Infrastrutura* Prova::getInfrastrutura() {
 	return infrastrutura;
 }
 
 
-void Prova::setInfrastrutura(string nome) {
-	infrastrutura = nome;
+void Prova::setModalidade(Modalidade *mod) {
+	modalidade = mod;
+}
+
+
+void Prova::setInfrastrutura(Infrastrutura *infra) {
+	infrastrutura = infra;
 }
 
 
