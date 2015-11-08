@@ -317,7 +317,7 @@ void Campeonato::changeEquipa(int index, Equipa *equi) {
 /**
  *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
  */
-
+/*
 // classificacoes das modalidades
 void Campeonato::classifica(string nomeModalidade, string NomeProva){
 	int posicao;
@@ -379,7 +379,7 @@ void Campeonato::saveclassifica() {
 	}
 
 	fileclass.close();
-}
+}*/
 
 void Campeonato::AtribuiInfrastrutura(string nomeModalidade,string nomeProva, string Infrastrutura){
 	for(unsigned int i=0;i<findModalidade(nomeModalidade)->getProvas().size();i++){

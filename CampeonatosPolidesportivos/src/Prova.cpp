@@ -1,17 +1,49 @@
 #include "Prova.h"
 
 
-vector<int> Prova::getClassificacoes(){
-	return classificacao;
+
+Prova::Prova(string name, int day, int month, int year){
+	nome = name;
+	dia = day;
+	mes = month;
+	ano = year;
+	infrastrutura = "vazio";
 }
 
-void Prova::pushClassifica(int num){
-	classificacao.push_back(num);
+
+string Prova::getNome() const {
+	return nome;
 }
-Prova::Prova(string name, int day, int month, int year){
-	nome= name;
-	dia=day;
-	mes=month;
-	ano=year;
-	infrastrutura="vazio";
+
+
+int Prova::getAno() const {
+	return ano;
 }
+
+
+int Prova::getMes() const {
+	return mes;
+}
+
+
+int Prova::getDia() const {
+	return dia;
+}
+
+
+Modalidade* Prova::getModalidade() {
+	return modalidade;
+}
+
+
+map<Atleta*, int> Prova::getClassificacoesAtletas(){
+	return classificacoes_atletas;
+}
+
+
+string Prova::getInfrastrutura() {
+	return infrastrutura;
+}
+
+
+

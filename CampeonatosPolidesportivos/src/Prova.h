@@ -4,40 +4,36 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+
 #include "Atleta.h"
+#include "Modalidade.h"
+
 using namespace std;
 
 
 class Prova {
-	vector <int> classificacao;
 	string nome;
-	int ano,mes,dia;
+	int ano, mes, dia;
+	Modalidade* modalidade;
+	map<Atleta*, int> classificacoes_atletas;
+	//vector<Atleta*> atletas;
 	string infrastrutura;
 public:
-	Prova(string name, int day, int month, int year);
 	Prova();
-
-	vector<int> getClassificacoes();
-	void pushClassifica(int num);
-	string getInfrastrutura() {
-		return infrastrutura;
-	}
+	Prova(string name, int day, int month, int year);
+	// Metodos get
+	string getNome() const;
+	int getAno() const;
+	int getMes() const;
+	int getDia() const;
+	Modalidade* getModalidade();
+	map<Atleta*, int> getClassificacoesAtletas();
+	string getInfrastrutura();
+	// Metodo set
 	void setInfrastrutura(string nome) {
 		infrastrutura=nome;
 	}
-	string getNome() {
-		return nome;
-	};
-	int getAno() {
-		return ano;
-	};
-	int getMes() {
-		return mes;
-	};
-	int getDia() {
-		return dia;
-	};
-
 };
 
 

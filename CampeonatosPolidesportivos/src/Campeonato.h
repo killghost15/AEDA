@@ -16,8 +16,9 @@
 #define file_desportos "desportos.txt"
 #define file_equipas "equipas.txt"
 #define file_modalidades "modalidades.txt"
+#define file_provas "provas.txt"
 #define file_infrastruturas "infrastruturas.txt"
-#define file_classificacoes "classificacoes.txt"
+//#define file_classificacoes "classificacoes.txt"
 #define file_funcionarios "funcionarios.txt"
 
 using namespace std;
