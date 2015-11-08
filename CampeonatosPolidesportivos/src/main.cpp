@@ -1303,31 +1303,95 @@ void MenuListagemAtletas() {
 			cout << " Introduza uma opção correta, s ou n!";
 	}
 }
+void listagemdeClassifica(){
+	vector <int>classificacao;
+	vector <Atleta*>atletas;
+	string nome;
+
+	cout << "Qual a modalidade que pretende ver a classificação ?";
+	cin >>nome;
+	for (unsigned int i=0;i <campeonato.getProvas().size();i++){
+		if(campeonato.getProvas()[i]->getModalidade()->getNome()==nome){
+			cout <<campeonato.getProvas()[i]->getNome() <<":" <<endl;
+			for (map<Atleta*, int>::iterator it=campeonato.getProvas()[i]->getClassificacoesAtletas().begin() ; it != campeonato.getProvas()[i]->getClassificacoesAtletas().end();it++){
+			atletas.push_back(it->first);
+			classificacao.push_back(it->second);
+			}
+			// ordenação insertionsort
+			for (unsigned int p = 1; p < atletas.size(); p++)
+			{
+			Atleta* tmp = atletas[p];
+			int tmp2 = classificacao[p];
+			int j;
+			for (j = p; j > 0 && tmp2 < classificacao[j-1]; j--){
+			atletas[j] = atletas[j-1];
+			classificacao[j]=classificacao[j-1];
+			}
+			atletas[j] = tmp;
+			classificacao[j]=tmp2;
+			}
+			for (unsigned int k=0;k < atletas.size();k++){
+				cout << k+1 << ":" << atletas[k]->getNome()  <<endl;
+			}
 
 
+		}
+		classificacao.clear();
+		atletas.clear();
+
+	}
+	bool coisa=true;
+	while(coisa){
+	string resposta;
+				cout << "Deseja voltar ao menuInicial (s ou n)?";
+				cin >> resposta;
+				if (resposta == "s") coisa =false;
+				else if (resposta== "n") {listagemdeClassifica();coisa =false;}
+				else cout << "Introduza uma opção valida!";
+	}
+
+}
+void listadefuncionarios(){
+	vector<Funcionario*>v= campeonato.getFuncionarios();
+	for(unsigned int j=v.size()-1; j>0; j--)
+	{
+	bool troca=false;
+	for(unsigned int i = 0; i<j; i++)
+	if(v[i+1]->getAnosTrabalho() < v[i]->getAnosTrabalho()) {
+	swap(v[i],v[i+1]);
+	troca = true;
+	}
+	if (!troca) break;
+	}
+
+
+	for (unsigned int i=0; i< v.size();i++){
+		cout <<v[i]->getNome()<<":"<<v[i]->getAnosTrabalho()<<endl;
+	}
+
+
+
+}
 // Menu das Listagens, efetua a listagem de toda a informação que o utilizador quiser
 void MenuListagens() {
 	int escolha_listagens;
 
-	cout << "---------------------------------------------" << endl;
-	cout << "-             *** Listagens ***             -" << endl;
-	cout << "-                                           -" << endl;
-	cout << "- O que pretende listar?                    -" << endl;
-	cout << "-                                           -" << endl;
-	cout << "- 1. Atletas                                -" << endl;
-	cout << "- 2. Equipas                                -" << endl;
-	cout << "- 3. Desportos                              -" << endl;
-	cout << "- 4. Modalidades                            -" << endl;
-	cout << "- 5. Funcionários                           -" << endl;
-	cout << "- 6. Infrastruturas                         -" << endl;
-	cout << "- 7. Voltar ao Menu Principal               -" << endl;
-	cout << "-                                           -" << endl;
-	cout << "---------------------------------------------" << endl;
+	cout << "------------------------------------------------------------" << endl;
+	cout << "-             *** Listagens ***                            -" << endl;
+	cout << "-                                                          -" << endl;
+	cout << "- O que pretende listar?                                   -" << endl;
+	cout << "-                                                          -" << endl;
+	cout << "- 1. Atletas                                               -" << endl;
+	cout << "- 2. Classificação das provas de uma modalidade            -" << endl;
+	cout << "- 3. Listagem de Funcionários ordenados por anos de serviço-" << endl;
+	cout << "- 4. Voltar ao Menu Principal                              -" << endl;
+	cout << "-                                                          -" << endl;
+	cout << "------------------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_listagens;
 
-	if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5 && escolha_listagens != 6  && escolha_listagens != 7 ) {
+	if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 ) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInicial();
@@ -1342,28 +1406,21 @@ void MenuListagens() {
 			break;
 		case 2:
 			cout << string(8,'\n');
-			//
+			listagemdeClassifica();
+			cout << string(8,'\n');
+			MenuInicial();
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//
-			break;
-		case 4:
-			cout << string(8,'\n');
-			//
-			break;
-		case 5:
-			cout << string(8,'\n');
-			//
-			break;
-		case 6:
-			cout << string(8,'\n');
-			//
-			break;
-		case 7:
+			listadefuncionarios();
 			cout <<string(8,'\n');
 			MenuInicial();
 			break;
+		case 4:
+			cout << string(8,'\n');
+			MenuInicial();
+			break;
+
 	}
 }
 
