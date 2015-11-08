@@ -14,6 +14,10 @@ vector<Modalidade*> Campeonato::getModalidades() {
 	return modalidades;
 }
 
+vector<Prova*> Campeonato::getProvas() {
+	return provas;
+}
+
 vector<Desporto*> Campeonato::getDesportos() {
 	return desportos;
 }
@@ -136,6 +140,17 @@ bool Campeonato::existsModalidade(string nomeModalidade) {
 
 	for( unsigned int i = 0; i < modalidades.size(); i++ )
 		if( modalidades[i]->getNome() == nomeModalidade )
+			return true;
+
+	return false;
+}
+
+
+// Retorna true se uma prova com um nome especifico existe, false otherwise
+bool Campeonato::existsProva(string nomeProva) {
+
+	for( unsigned int i = 0; i < provas.size(); i++ )
+		if( provas[i]->getNome() == nomeProva )
 			return true;
 
 	return false;
@@ -288,6 +303,15 @@ void Campeonato::eraseDesporto(string nomeDesporto) {
 			}
 			desportos.erase(desportos.begin()+i);
 		}
+}
+
+
+// Apaga a prova com um nome especifico do vetor provas
+void Campeonato::eraseProva(string nomeProva) {
+
+	for( unsigned int i = 0; i < provas.size(); i++ )
+		if( provas[i]->getNome() == nomeProva )
+			provas.erase(provas.begin()+i);
 }
 
 
@@ -648,6 +672,7 @@ void Campeonato::addModalidade(Modalidade *modal) {
 void Campeonato::loadProvas() {
 	string nome_prova, nome_modalidade, nome_infrastrutura;
 	string ano, mes, dia;
+	string trash;
 	Prova *prova;
 
 	ifstream fileprova;
@@ -661,10 +686,16 @@ void Campeonato::loadProvas() {
 			getline(fileprova, ano);
 			getline(fileprova, mes);
 			getline(fileprova, dia);
+			getline(fileprova, nome_modalidade);
+			getline(fileprova, nome_infrastrutura);
+			getline(fileprova, trash);
 
 			int ano_int = atoi(ano.c_str());
 			int mes_int = atoi(mes.c_str());
 			int dia_int = atoi(dia.c_str());
+
+			nome_modalidade.erase(nome_modalidade.begin());
+			nome_infrastrutura.erase(nome_infrastrutura.begin());
 
 			prova = new Prova(nome_prova, ano_int, mes_int, dia_int);
 

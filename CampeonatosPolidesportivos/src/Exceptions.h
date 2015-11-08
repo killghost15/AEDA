@@ -60,6 +60,22 @@ public:
 };
 
 
+class ProvaJaExistente: public exception {
+	string nomeProva;
+public:
+	ProvaJaExistente(string nameMatch) : nomeProva(nameMatch) {}
+	virtual ~ProvaJaExistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A prova " << nomeProva << " já existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
 class DesportoJaExistente: public exception {
 	string nomeDesporto;
 public:
@@ -153,6 +169,22 @@ public:
 	virtual const char* what() const throw() {
 		cout << endl;
 		cout << " A modalidade " << nomeModalidade << " não existe, por favor introduza outro nome." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+class ProvaInexistente: public exception {
+	string nomeProva;
+public:
+	ProvaInexistente(string nameMatch) : nomeProva(nameMatch) {}
+	virtual ~ProvaInexistente() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A prova " << nomeProva << " não existe, por favor introduza outro nome." << endl;
 		cout << endl;
 
 		return "";

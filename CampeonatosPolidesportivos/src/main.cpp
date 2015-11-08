@@ -823,8 +823,20 @@ void CriarProva(){
 		}
 	}
 
-	cout << " Qual o nome da prova? ";
-	getline(cin, nome_prova);
+	exception_finish = true;
+	while (exception_finish){
+		try {
+			cout << " Qual o nome da prova? ";
+			getline(cin, nome_prova);
+			if (campeonato.existsProva(nome_prova) == true)
+				throw ProvaJaExistente(nome_prova);
+			else
+				exception_finish = false;
+		} catch (ProvaJaExistente &e) {
+			e.what();
+		}
+	}
+
 	cout << endl;
 	cout << " Data da prova (dia mes ano): ";
 	cin >> dia >> mes >> ano;
@@ -852,28 +864,34 @@ void CriarProva(){
 }
 
 
-/*void EliminarProva(){
-	string nome;
-	string prova;
+void EliminarProva(){
+	string nome_prova;
+
+	cin.clear();
+	cin.sync();
 
 	exception_finish = true;
 	while (exception_finish) {
 		try {
-			cout << " Qual a modalidade a q pretende eliminar provas? ";
-			getline(cin, nome);
-			if( campeonato.existsModalidade(nome) == false )
-				throw ModalidadeInexistente(nome);
+			cout << " Qual a prova que pretende eliminar? ";
+			getline(cin, nome_prova);
+			if( campeonato.existsProva(nome_prova) == false ) {
+				cout << campeonato.getProvas().size();
+				throw ProvaInexistente(nome_prova);
+			}
 			else
 				exception_finish = false;
-		} catch (ModalidadeInexistente &e) {
+		} catch (ProvaInexistente &e) {
 			e.what();
 		}
 	}
 
-	cout << " Qual o nome da prova que quer eliminar? ";
-	cin >> prova;
-	campeonato.findModalidade(nome)->EliminaProva(prova);
-}*/
+	campeonato.eraseProva(nome_prova);
+
+	campeonato.saveProva();
+
+	cout << endl << " Prova eliminada da modalidade com sucesso!";
+}
 
 
 void MenuProvas() {
@@ -908,7 +926,7 @@ void MenuProvas() {
 			break;
 		case 2:
 			cout << string(8,'\n');
-			//EliminarProva();
+			EliminarProva();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
