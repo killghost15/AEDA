@@ -55,4 +55,9 @@ void Prova::setInfrastrutura(Infrastrutura *infra) {
 }
 
 
+void Prova::setClassificacoesAtletas(map<Atleta*, int> map) {
+	classificacoes_atletas = map;
+}
+
+
 

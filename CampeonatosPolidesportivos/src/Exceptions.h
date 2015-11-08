@@ -261,13 +261,14 @@ public:
 
 
 class NumAtletasInvalido: public exception {
+	int numAtletas;
 public:
-	NumAtletasInvalido() {}
+	NumAtletasInvalido(int numAthletes) : numAtletas(numAthletes) {}
 	virtual ~NumAtletasInvalido() throw() {}
 
 	virtual const char* what() const throw() {
 		cout << endl;
-		cout << " Número de atletas inválido (tem de ser maior que 1)." << endl;
+		cout << " Número de atletas inválido (tem de ser pelo menos " << numAtletas << ")." << endl;
 		cout << endl;
 
 		return "";

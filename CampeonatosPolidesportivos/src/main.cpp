@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdlib>
+#include <map>
 
 #include "Campeonato.h"
 #include "Infrastrutura.h"
@@ -92,8 +93,8 @@ void AdicionarEquipa() {
 		try {
 			cout << " Quantos atletas tem a equipa inicialmente: ";
 			cin >> num_atletas;
-			if( num_atletas < 1)
-				throw NumAtletasInvalido();
+			if( num_atletas < 1 )
+				throw NumAtletasInvalido(1);
 			else
 				exception_finish = false;
 			cout << endl;
@@ -237,8 +238,8 @@ void AdicionarAtletasEquipa() {
 		try {
 			cout << " Quantos atletas pretende adicionar: ";
 			cin >> num_atletas;
-			if( num_atletas < 1)
-				throw NumAtletasInvalido();
+			if( num_atletas < 1 )
+				throw NumAtletasInvalido(1);
 			else
 				exception_finish = false;
 			cout << endl;
@@ -601,7 +602,7 @@ void AdicionarAtletasModalidade() {
 			cout << " Quantos atletas pretende adicionar: ";
 			cin >> num_atletas;
 			if( num_atletas < 1 )
-				throw NumAtletasInvalido();
+				throw NumAtletasInvalido(1);
 			else
 				exception_finish = false;
 		} catch (NumAtletasInvalido &e) {
@@ -687,7 +688,7 @@ void RetirarAtletasModalidade() {
 			cout << " Quantos atletas pretende retirar: ";
 			cin >> num_atletas;
 			if( num_atletas < 1 )
-				throw NumAtletasInvalido();
+				throw NumAtletasInvalido(1);
 			else
 				exception_finish = false;
 		} catch (NumAtletasInvalido &e) {
@@ -890,6 +891,88 @@ void EliminarProva(){
 }
 
 
+// Lança as classificações de todos os atletas que participaram numa prova
+void LancaClassificacoesProva() {
+	string nome_prova, nome_atleta;
+	unsigned int num_atletas;
+	int classificacao_atleta;
+
+	cin.clear();
+	cin.sync();
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout << " Nome da prova: ";
+			getline(cin, nome_prova);
+			if( campeonato.existsProva(nome_prova) == false )
+				throw ProvaInexistente(nome_prova);
+			else
+				exception_finish = false;
+		} catch (ProvaInexistente &e) {
+			e.what();
+		}
+	}
+
+	cout << endl;
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout << " Quantos atletas participaram na prova: ";
+			cin >> num_atletas;
+			if( num_atletas < 2 )
+				throw NumAtletasInvalido(2);
+			else
+				exception_finish = false;
+			cout << endl;
+		} catch (NumAtletasInvalido &e) {
+			e.what();
+		}
+	}
+
+	cout << endl;
+
+	map<Atleta*, int> points_athletes;
+
+	//form para todos os atletas da prova
+	for ( unsigned int i = 0; i < num_atletas; i++ ) {
+		cin.clear();
+		cin.sync();
+
+		exception_finish = true;
+		while (exception_finish) {
+			try {
+				cout << " Nome do Atleta " << i+1 << ": ";
+				getline(cin, nome_atleta);
+				// TODO: verificar se atleta está na modalidade da prova
+				if( campeonato.existsAtleta(nome_atleta) == false )
+					throw AtletaInexistente(nome_atleta);
+				else
+					exception_finish = false;
+			} catch (AtletaInexistente &e) {
+				e.what();
+			}
+		}
+
+		cout << " Classificação do atleta " << i+1 << " na prova: ";
+		cin >> classificacao_atleta;
+
+		Atleta *atlet = campeonato.findAtleta(nome_atleta);
+		points_athletes.insert(pair<Atleta*, int>(atlet, classificacao_atleta));
+	}
+
+	//criaçao do objeto da classe prova
+	Prova *prova = campeonato.findProva(nome_prova);
+
+	prova->setClassificacoesAtletas(points_athletes);
+
+	campeonato.saveProva();
+
+	cout << " Classificações da prova lançadas com sucesso!";
+}
+
+
 // Muda a infrastrutura de uma prova
 void MudarInfrastruturaProva() {
 	string nome_prova, nome_infrastrutura;
@@ -978,7 +1061,7 @@ void MenuProvas() {
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//ClassificacaoProva();
+			LancaClassificacoesProva();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;

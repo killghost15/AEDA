@@ -33,6 +33,7 @@ public:
 	// Metodo set
 	void setModalidade(Modalidade *mod);
 	void setInfrastrutura(Infrastrutura *infra);
+	void setClassificacoesAtletas(map<Atleta*, int> map);
 };
 
 
