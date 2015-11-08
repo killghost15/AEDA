@@ -18,7 +18,6 @@ class Prova {
 	int ano, mes, dia;
 	Modalidade *modalidade;
 	map<Atleta*, int> classificacoes_atletas;
-	//vector<Atleta*> atletas;
 	Infrastrutura *infrastrutura;
 public:
 	Prova();

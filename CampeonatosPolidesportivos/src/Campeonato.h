@@ -13,24 +13,23 @@
 #include "Prova.h"
 
 
-#define file_atletas "atletas.txt"
-#define file_desportos "desportos.txt"
 #define file_equipas "equipas.txt"
+#define file_atletas "atletas.txt"
 #define file_modalidades "modalidades.txt"
 #define file_provas "provas.txt"
+#define file_desportos "desportos.txt"
 #define file_infrastruturas "infrastruturas.txt"
-//#define file_classificacoes "classificacoes.txt"
 #define file_funcionarios "funcionarios.txt"
 
 using namespace std;
 
 
 class Campeonato {
-	vector<Atleta*> atletas;
-	vector<Desporto*> desportos;
 	vector<Equipa*> equipas;
+	vector<Atleta*> atletas;
 	vector<Modalidade*> modalidades;
 	vector<Prova*> provas;
+	vector<Desporto*> desportos;
 	vector<Infrastrutura*> infrastruturas;
 	vector<Funcionario*> funcionarios;
 public:
@@ -67,18 +66,6 @@ public:
 	void eraseProva(string nomeProva);
 	void eraseInfrastrutura(string nomeInfrastrutura);
 	void eraseFuncionario(string nomeFuncionario);
-	// Metodos sobre Funcionarios
-	void loadFuncionarios();
-	void saveFuncionario();
-	void addFuncionario(Funcionario *func);
-	// Metodos sobre Infrastruturas
-	void loadInfrastruturas();
-	void saveInfrastrutura();
-	void addInfrastrutura(Infrastrutura *infra);
-	// Metodos sobre Desportos
-	void loadDesportos();
-	void saveDesporto();
-	void addDesporto(Desporto *desp);
 	// Metodos sobre Equipas
 	void loadEquipas();
 	void saveEquipa();
@@ -91,16 +78,31 @@ public:
 	void loadModalidades();
 	void saveModalidade();
 	void addModalidade(Modalidade *modal);
-	// Metodos sobre Modalidades
+	// Metodos sobre Provas
 	void loadProvas();
 	void saveProva();
 	void addProva(Prova *prova);
-	// Metodos para adicionar atletas a uma modalidade
-	int findModalidadeIndex(string nomeModalidade);
-	void changeModalidade(int index, Modalidade *mod);
+	// Metodos sobre Desportos
+	void loadDesportos();
+	void saveDesporto();
+	void addDesporto(Desporto *desp);
+	// Metodos sobre Infrastruturas
+	void loadInfrastruturas();
+	void saveInfrastrutura();
+	void addInfrastrutura(Infrastrutura *infra);
+	// Metodos sobre Funcionarios
+	void loadFuncionarios();
+	void saveFuncionario();
+	void addFuncionario(Funcionario *func);
 	// Metodos para mudar um atleta de equipa
 	int findAtletaIndex(string nomeAtleta);
 	void changeEquipa(int index, Equipa *equi);
+	// Metodos para mudar a infrastrutura de uma prova
+	int findProvaIndex(string nomeProva);
+	void changeInfrastrutura(int index, Infrastrutura *infra);
+	// Metodos para adicionar atletas a uma modalidade
+	int findModalidadeIndex(string nomeModalidade);
+	void changeModalidade(int index, Modalidade *mod);
 	//classificacao de uma modalidade
 	void classifica(string nomeModalidade,string nomeProva);
 	void saveclassifica();

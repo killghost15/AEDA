@@ -787,6 +787,7 @@ void MenuDesportosModalidades() {
  */
 
 
+// Apresenta o form para a criação de uma prova de uma modalidade
 void CriarProva(){
 	int dia, mes, ano;
 	string nome_modalidade, nome_infrastrutura;
@@ -840,12 +841,6 @@ void CriarProva(){
 	cout << endl;
 	cout << " Data da prova (dia mes ano): ";
 	cin >> dia >> mes >> ano;
-	//campeonato.findModalidade(nome)->CriarProva(prova,dia,mes,ano);
-
-	/*for (unsigned int i =0; i<campeonato.findModalidade(nome)->getProvas().size();i++ ){
-		cout << campeonato.findModalidade(nome)->getProvas()[i]->getNome();
-		cout <<endl;
-	}*/
 
 	Modalidade *mod = campeonato.findModalidade(nome_modalidade);
 	Infrastrutura *infra = campeonato.findInfrastrutura(nome_infrastrutura);
@@ -864,6 +859,7 @@ void CriarProva(){
 }
 
 
+// Apresenta o form para eliminar uma prova de uma modalidade
 void EliminarProva(){
 	string nome_prova;
 
@@ -891,6 +887,56 @@ void EliminarProva(){
 	campeonato.saveProva();
 
 	cout << endl << " Prova eliminada da modalidade com sucesso!";
+}
+
+
+// Muda a infrastrutura de uma prova
+void MudarInfrastruturaProva() {
+	string nome_prova, nome_infrastrutura;
+
+	cin.clear();
+	cin.sync();
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout << " Qual a prova à qual pretende mudar a infrastrutura: ";
+			getline(cin, nome_prova);
+			if( campeonato.existsProva(nome_prova) == false )
+				throw ProvaInexistente(nome_prova);
+			else
+				exception_finish = false;
+		} catch (ProvaInexistente &e) {
+			e.what();
+		}
+	}
+
+	cout << endl;
+
+	exception_finish = true;
+	while (exception_finish) {
+		try {
+			cout << " Qual o nome nova infrastrutura da prova: ";
+			getline(cin, nome_infrastrutura);
+			if( campeonato.existsInfrastrutura(nome_infrastrutura) == false )
+				throw InfrastruturaInexistente(nome_infrastrutura);
+			else
+				exception_finish = false;
+		} catch (InfrastruturaInexistente &e) {
+			e.what();
+		}
+	}
+
+	cout << endl;
+
+	Infrastrutura *infra = campeonato.findInfrastrutura(nome_infrastrutura);
+
+	int index_prova = campeonato.findProvaIndex(nome_prova);
+	campeonato.changeInfrastrutura(index_prova, infra);
+
+	campeonato.saveProva();
+
+	cout << " Alterou a infrastrutura da prova com sucesso!";
 }
 
 
@@ -938,7 +984,7 @@ void MenuProvas() {
 			break;
 		case 4:
 			cout << string(8,'\n');
-			//MudarInfrastrutura();
+			MudarInfrastruturaProva();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
@@ -1013,57 +1059,6 @@ void ApagarInfrastrutura() {
 
 	cout << endl << " Infrastrutura apagada com sucesso!";
 }
-
-
-/*void Atribuirinfrastrutura(){
-	string nome;
-	string nomeProva;
-	string nomeinfrastrutura;
-	cout << "Nome da modalidade ?";
-	getline(cin,nome);
-	cout << "Nome da prova ?";
-	getline(cin,nomeProva);
-
-	exception_finish = true;
-	while (exception_finish) {
-		try {
-			cout<< "Nome da infrastrutura necessária ?";
-			getline(cin, nomeinfrastrutura);
-			if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
-				throw InfrastruturaInexistente(nomeinfrastrutura);
-			else
-				exception_finish = false;
-		} catch (InfrastruturaInexistente &e) {
-			e.what();
-		}
-	}
-	campeonato.AtribuiInfrastrutura(nome,nomeProva,nomeinfrastrutura);
-}
-
-
-void  Retirarinfrastrutura(){
-	string nome;
-	string nomeProva, nomeinfrastrutura;
-	cout << "Nome da modalidade ?";
-	getline(cin,nome);
-	cout << "Nome da prova ?";
-	getline(cin,nomeProva);
-
-	exception_finish = true;
-	while (exception_finish) {
-		try {
-			cout<< "Nome da infrastrutura que já não é necessária ?";
-			getline(cin, nomeinfrastrutura);
-			if( campeonato.existsInfrastrutura(nomeinfrastrutura) == false )
-				throw InfrastruturaInexistente(nomeinfrastrutura);
-			else
-				exception_finish = false;
-		} catch (InfrastruturaInexistente &e) {
-			e.what();
-		}
-	}
-	campeonato.AtribuiInfrastrutura(nome,nomeProva,"vazio");
-}*/
 
 
 // Apresenta o form para a adição de um funcionário ao campeonato
@@ -1191,30 +1186,38 @@ void MenuInfrastruturas() {
 /**
  *  MENUS RELACIONADOS COM AS LISTAGENS
  */
-void MenuAtletas(){
-	string resposta1,modalidade;
+
+
+// Listagem de Atletas e toda a sua informação
+void MenuListagemAtletas() {
+	string resposta1, modalidade;
 	int num;
-	for (unsigned int i=0; i< campeonato.getModalidades().size();i++){
-		cout <<"Modalidade:" << campeonato.getModalidades()[i]->getNome()<<endl;
-		for (unsigned int j=0; j <campeonato.getModalidades()[i]->getAtletas().size();j++){
-			cout << j+1 <<":" << campeonato.getModalidades()[i]->getAtletas()[j]->getNome() << endl;
+
+	for( unsigned int i = 0; i < campeonato.getModalidades().size(); i++ ) {
+		cout << " Modalidade: " << campeonato.getModalidades()[i]->getNome() << endl;
+		for ( unsigned int j = 0; j < campeonato.getModalidades()[i]->getAtletas().size(); j++) {
+			cout << " " << j+1 <<": " << campeonato.getModalidades()[i]->getAtletas()[j]->getNome() << endl;
 		}
-		cout <<endl;
+		cout << endl;
 	}
-	cout << "deseja ver as informações de algum atleta ? (s,n)";
-	cin >>resposta1;
-	bool coisa= true;
-	while (coisa){
-	if (resposta1 == "s"){
-		cout << "Qual modalidade ?";
-		cin >>modalidade;
-		cout << "Qual o numero da lista é o atleta ?";
-		cin >> num;
-		campeonato.findModalidade(modalidade)->getAtletas()[num-1]->info();
-		coisa =false;
-	}
-	else if (resposta1=="n") coisa=false;
-	else cout <<"introduza uma opção correta, s ou n!";
+
+	cout << " Deseja ver as informações de algum atleta? (s,n) ";
+	cin >> resposta1;
+
+	bool coisa = true;
+	while (coisa) {
+		if (resposta1 == "s"){
+			cout << " Qual modalidade? ";
+			cin >> modalidade;
+			cout << " Qual o número do atleta na lista acima? ";
+			cin >> num;
+			campeonato.findModalidade(modalidade)->getAtletas()[num-1]->info();
+			coisa = false;
+		}
+		else if (resposta1 == "n")
+			coisa = false;
+		else
+			cout << " Introduza uma opção correta, s ou n!";
 	}
 }
 
@@ -1250,7 +1253,7 @@ void MenuListagens() {
 	switch (escolha_listagens) {
 		case 1:
 			cout << string(8,'\n');
-			MenuAtletas();
+			MenuListagemAtletas();
 			cout << string(8,'\n');
 			MenuInicial();
 			break;
@@ -1274,7 +1277,6 @@ void MenuListagens() {
 			cout << string(8,'\n');
 			//
 			break;
-
 		case 7:
 			cout <<string(8,'\n');
 			MenuInicial();
@@ -1283,9 +1285,6 @@ void MenuListagens() {
 }
 
 
-/**
- *  MENU INICIAL
- */
 /*void MenuCalendario(){
 	string nome;
 	int dia,mes,ano;
@@ -1328,6 +1327,11 @@ void MenuListagens() {
 }*/
 
 
+/**
+ *  MENU INICIAL
+ */
+
+
 // Menu Inicial, chama todos os outros Menus mediante a escolha do utilizador
 void MenuInicial() {
 	int escolha_menu;
@@ -1336,9 +1340,9 @@ void MenuInicial() {
 	cout << "-            *** Menu Principal ***                -" << endl;
 	cout << "-                                                  -" << endl;
 	cout << "- 1. Manutenção de Equipas e Atletas               -" << endl;
-	cout << "- 2. Manutenção de Desportos, Modalidades e Provas -" << endl;
-	cout << "- 3. Manutenção do Calendário                      -" << endl;
-	cout << "- 4. Manutenção das Provas                         -" << endl;
+	cout << "- 2. Manutenção de Desportos e Modalidades         -" << endl;
+	cout << "- 3. Manutenção das Provas                         -" << endl;
+	cout << "- 4. Manutenção do Calendário                      -" << endl;
 	cout << "- 5. Manutenção de Infrastruturas e Funcionários   -" << endl;
 	cout << "- 6. Listagens                                     -" << endl;
 	cout << "- 7. Terminar o programa                           -" << endl;
@@ -1365,11 +1369,11 @@ void MenuInicial() {
 			break;
 		case 3:
 			cout << string(8,'\n');
-			//MenuCalendario();
+			MenuProvas();
 			break;
 		case 4:
 			cout << string(8,'\n');
-			MenuProvas();
+			//MenuCalendario();
 			break;
 		case 5:
 			cout << string(8,'\n');

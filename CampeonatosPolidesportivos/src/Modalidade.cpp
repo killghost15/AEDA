@@ -22,11 +22,6 @@ void Modalidade::pushAtleta(Atleta *atl) {
 }
 
 
-/*
-int Modalidade::getPosicao(){
-	return posicao;
-}
-*/
 void Modalidade::eraseAtleta(int index) {
 	atletas.erase(atletas.begin()+index);
 }

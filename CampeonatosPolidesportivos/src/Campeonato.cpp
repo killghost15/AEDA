@@ -72,6 +72,18 @@ Modalidade* Campeonato::findModalidade(string nomeModalidade) {
 }
 
 
+// Procura uma prova com um nome especifico no vetor provas
+Prova* Campeonato::findProva(string nomeProva) {
+	Prova *prova;
+
+	for( unsigned int i = 0; i < provas.size(); i++ )
+		if( provas[i]->getNome() == nomeProva )
+			prova = provas[i];
+
+	return prova;
+}
+
+
 // Procura um desporto com um nome especifico no vetor desportos
 Desporto* Campeonato::findDesporto(string nomeDesporto) {
 	Desporto *desp;
@@ -213,24 +225,6 @@ bool Campeonato::CanAtletaEnterModalidade(string nomeModalidade, string nomeAtle
  */
 
 
-// Apaga o funcionario com um nome especifico do vetor funcionarios
-void Campeonato::eraseFuncionario(string nomeFuncionario) {
-
-	for( unsigned int i = 0; i < funcionarios.size(); i++ )
-		if( funcionarios[i]->getNome() == nomeFuncionario )
-			funcionarios.erase(funcionarios.begin()+i);
-}
-
-
-// Apaga a infrastrutura com um nome especifico do vetor infrastruturas
-void Campeonato::eraseInfrastrutura(string nomeInfrastrutura) {
-
-	for( unsigned int i = 0; i < infrastruturas.size(); i++ )
-		if( infrastruturas[i]->getNome() == nomeInfrastrutura )
-			infrastruturas.erase(infrastruturas.begin()+i);
-}
-
-
 // Retira o atleta com um nome especifico do vetor atletas da modalidade nomeModalidade do vetor modalidades
 void Campeonato::eraseAtletaModalidade(string nomeModalidade, string nomeAtleta) {
 
@@ -241,25 +235,6 @@ void Campeonato::eraseAtletaModalidade(string nomeModalidade, string nomeAtleta)
 				if ( athletes[j]->getNome() == nomeAtleta )
 					modalidades[i]->eraseAtleta(j);
 		}
-}
-
-
-// Apaga o atleta com um nome especifico do vetor atletas
-void Campeonato::eraseAtleta(string nomeAtleta) {
-
-	//apaga o atleta do vetor de atletas
-	for( unsigned int i = 0; i < atletas.size(); i++ )
-		if( atletas[i]->getNome() == nomeAtleta )
-			atletas.erase(atletas.begin()+i);
-
-	//apaga o atleta do vetor atletas de todas as modalidades a que pertence
-	for( unsigned int j = 0; j < modalidades.size(); j++ ) {
-		vector<Atleta*> athletes = modalidades[j]->getAtletas();
-		for ( unsigned int k = 0; k < athletes.size(); k++ )
-			if ( athletes[k]->getNome() == nomeAtleta )
-				modalidades[j]->eraseAtleta(k);
-	}
-
 }
 
 
@@ -282,6 +257,25 @@ void Campeonato::eraseEquipa(string nomeEquipa) {
 		for( unsigned int k = 0; k < athletes.size(); k++ )
 			if ( athletes[k]->getEquipa()->getNome() == nomeEquipa )
 				modalidades[j]->eraseAtleta2(k);	//eraseAtleta() nao serve aqui
+	}
+
+}
+
+
+// Apaga o atleta com um nome especifico do vetor atletas
+void Campeonato::eraseAtleta(string nomeAtleta) {
+
+	//apaga o atleta do vetor de atletas
+	for( unsigned int i = 0; i < atletas.size(); i++ )
+		if( atletas[i]->getNome() == nomeAtleta )
+			atletas.erase(atletas.begin()+i);
+
+	//apaga o atleta do vetor atletas de todas as modalidades a que pertence
+	for( unsigned int j = 0; j < modalidades.size(); j++ ) {
+		vector<Atleta*> athletes = modalidades[j]->getAtletas();
+		for ( unsigned int k = 0; k < athletes.size(); k++ )
+			if ( athletes[k]->getNome() == nomeAtleta )
+				modalidades[j]->eraseAtleta(k);
 	}
 
 }
@@ -315,8 +309,26 @@ void Campeonato::eraseProva(string nomeProva) {
 }
 
 
+// Apaga a infrastrutura com um nome especifico do vetor infrastruturas
+void Campeonato::eraseInfrastrutura(string nomeInfrastrutura) {
+
+	for( unsigned int i = 0; i < infrastruturas.size(); i++ )
+		if( infrastruturas[i]->getNome() == nomeInfrastrutura )
+			infrastruturas.erase(infrastruturas.begin()+i);
+}
+
+
+// Apaga o funcionario com um nome especifico do vetor funcionarios
+void Campeonato::eraseFuncionario(string nomeFuncionario) {
+
+	for( unsigned int i = 0; i < funcionarios.size(); i++ )
+		if( funcionarios[i]->getNome() == nomeFuncionario )
+			funcionarios.erase(funcionarios.begin()+i);
+}
+
+
 /**
- *  METODOS PARA ADICIONAR MUDAR UM ATLETA DE EQUIPA
+ *  METODOS PARA MUDAR UM ATLETA DE EQUIPA
  */
 
 
@@ -339,8 +351,28 @@ void Campeonato::changeEquipa(int index, Equipa *equi) {
 
 
 /**
- *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
+ *  METODOS PARA MUDAR A INFRASTRUTURA DE UMA PROVA
  */
+
+
+// Procura o indice de uma prova com um nome especifico no vetor provas
+int Campeonato::findProvaIndex(string nomeProva) {
+	int index;
+
+	for( unsigned int i = 0; i < provas.size(); i++ )
+		if( provas[i]->getNome() == nomeProva )
+			index = i;
+
+	return index;
+}
+
+
+// Troca a equipa no indice index no vetor modalidades pela modalidade mod
+void Campeonato::changeInfrastrutura(int index, Infrastrutura *infra) {
+	provas[index]->setInfrastrutura(infra);
+}
+
+
 /*
 // classificacoes das modalidades
 void Campeonato::classifica(string nomeModalidade, string NomeProva){
@@ -408,6 +440,12 @@ void Campeonato::AtribuiInfrastrutura(string nomeModalidade,string nomeProva, st
 	}
 
 }*/
+
+
+/**
+ *  METODOS PARA ADICIONAR ATLETAS A UMA MODALIDADE
+ */
+
 
 // Procura o indice de uma modalidade com um nome especifico no vetor modalidades
 int Campeonato::findModalidadeIndex(string nomeModalidade) {

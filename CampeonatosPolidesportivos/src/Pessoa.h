@@ -15,6 +15,7 @@ public:
 	// Metodos get
 	string getNome() const;
 	unsigned int getIdade() const;
+	// Metodo info ---- Pure abstract class
 	virtual void info() =0;
 };
 
