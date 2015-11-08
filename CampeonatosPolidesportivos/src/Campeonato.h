@@ -49,7 +49,6 @@ public:
 	Prova* findProva(string nomeProva);
 	Desporto* findDesporto(string nomeDesporto);
 	Infrastrutura* findInfrastrutura(string nomeInfrastrutura);
-	Funcionario* findFuncionario(string nomeFuncionario);
 	// Metodos exists
 	bool existsEquipa(string nomeEquipa);
 	bool existsAtleta(string nomeAtleta);
@@ -104,11 +103,6 @@ public:
 	// Metodos para adicionar atletas a uma modalidade
 	int findModalidadeIndex(string nomeModalidade);
 	void changeModalidade(int index, Modalidade *mod);
-	//classificacao de uma modalidade
-	void classifica(string nomeModalidade,string nomeProva);
-	void saveclassifica();
-	void loadclassifica();
-	void AtribuiInfrastrutura(string nomeModalidade, string nomeProva, string infrastrutura);
 };
 
 

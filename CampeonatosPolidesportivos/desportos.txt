@@ -1,13 +1,23 @@
-basquetebol
- basquetebol
+Basquetebol
+ Basquetebol
 
-nataçao
+Natação
  Bruços
  Costas
+ Mariposa
+ Freestyle
 
 Corrida
  100m
  200m
  400m
+ 800m
  5000m
  Maratona
+
+Lançamento do peso
+ Lançamento do peso
+
+Halterofilismo
+ Halterofilismo Leves
+ Helterofilismo Pesados

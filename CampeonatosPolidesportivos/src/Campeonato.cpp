@@ -108,18 +108,6 @@ Infrastrutura* Campeonato::findInfrastrutura(string nomeInfrastrutura) {
 }
 
 
-// Procura um funcionario com um nome especifico no vetor funcionarios
-Funcionario* Campeonato::findFuncionario(string nomeFuncionario) {
-	Funcionario *func;
-
-	for( unsigned int i = 0; i < funcionarios.size(); i++ )
-		if( funcionarios[i]->getNome() == nomeFuncionario )
-			func = funcionarios[i];
-
-	return func;
-}
-
-
 /**
  *  METODOS PARA SABER SE UM OBJETO COM UM DETERMINADO NOME EXISTE
  */
@@ -248,8 +236,10 @@ void Campeonato::eraseEquipa(string nomeEquipa) {
 
 	//apaga os atletas da equipa
 	for( unsigned int i = 0; i < atletas.size(); i++ )
-		if( atletas[i]->getEquipa()->getNome() == nomeEquipa )
-			atletas.erase(atletas.begin()+i);
+		if( atletas[i]->getEquipa()->getNome() == nomeEquipa ) {
+			atletas[i] = atletas.back();
+			atletas.pop_back();
+		}
 
 	//apaga todos os atletas pertencentes à equipa do vetor atletas de todas as modalidades a que pertencem
 	for( unsigned int j = 0; j < modalidades.size(); j++ ) {
@@ -371,75 +361,6 @@ int Campeonato::findProvaIndex(string nomeProva) {
 void Campeonato::changeInfrastrutura(int index, Infrastrutura *infra) {
 	provas[index]->setInfrastrutura(infra);
 }
-
-
-/*
-// classificacoes das modalidades
-void Campeonato::classifica(string nomeModalidade, string NomeProva){
-	int posicao;
-	vector<Atleta*>atl=findModalidade(nomeModalidade)->getAtletas();
-	for (unsigned int i=0; i < atl.size();i++){
-		cout << atl[i]->getNome() << " ,posição em que terminou (resposta: 1- ganhou, e seguintes) ?";
-		cin >> posicao;
-		for (unsigned int j=0; j< findModalidade(nomeModalidade)->getProvas().size();){
-		if (findModalidade(nomeModalidade)->getProvas()[j]->getNome()==NomeProva){
-			findModalidade(nomeModalidade)->getProvas()[j]->pushClassifica(posicao);
-			break;
-		}
-		j++;
-		if (j==findModalidade(nomeModalidade)->getProvas().size()-1){
-			cout << "prova inexistente";
-			return;
-		}
-		}
-	}
-}
-
-void Campeonato::saveclassifica() {
-	ofstream fileclass;
-	fileclass.open(file_classificacoes);
-
-	//guarda apenas a primeira modalidade e a primeira prova
-	fileclass << modalidades[0]->getNome();
-	fileclass <<modalidades[0]->getProvas()[0]->getNome();
-
-	//guarda as classificacoes da primeira prova
-	for( unsigned int i = 0; i < modalidades[0]->getProvas().size(); i++ ) {
-		fileclass << endl;
-		fileclass << " " << modalidades[0]->getProvas()[i]->getNome();
-		fileclass << endl;
-		for (unsigned int v=0; v< modalidades[0]->getProvas()[i]->getClassificacoes().size();v++)
-		fileclass << modalidades[0]->getProvas()[i]->getClassificacoes()[v];
-	}
-
-	fileclass << endl;
-
-	//guarda as restantes modalidades e as provas de cada
-	for ( unsigned int j = 1; j < modalidades.size(); j++ ) {
-		fileclass << endl;
-		fileclass << modalidades[j]->getNome();
-		for(unsigned int k=0; k < modalidades[j]->getProvas().size();k++){
-		fileclass <<modalidades[j]->getProvas()[k]->getNome();
-		fileclass <<endl;
-
-		for( unsigned int l = 0; l < modalidades[j]->getProvas()[k]->getClassificacoes().size(); l++ ) {
-			fileclass << " " << modalidades[j]->getProvas()[k]->getClassificacoes()[l];
-			fileclass <<endl;
-		}
-		}
-		fileclass << endl;
-	}
-
-	fileclass.close();
-}
-
-void Campeonato::AtribuiInfrastrutura(string nomeModalidade,string nomeProva, string Infrastrutura){
-	for(unsigned int i=0;i<findModalidade(nomeModalidade)->getProvas().size();i++){
-	if(findModalidade(nomeModalidade)->getProvas()[i]->getNome()==nomeProva)
-		findModalidade(nomeModalidade)->getProvas()[i]->setInfrastrutura(Infrastrutura);
-	}
-
-}*/
 
 
 /**

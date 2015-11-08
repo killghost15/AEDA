@@ -1,3 +1,11 @@
-equipa1
- basquetebol
+Traquinas
+ Basquetebol
  Corrida
+
+Marrecos
+ Natação
+ Lançamento do peso
+
+Fever4ever
+ Basquetebol
+ Halterofilismo
