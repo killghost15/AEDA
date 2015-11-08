@@ -31,9 +31,7 @@ public:
 	map<Atleta*, int> getClassificacoesAtletas();
 	string getInfrastrutura();
 	// Metodo set
-	void setInfrastrutura(string nome) {
-		infrastrutura=nome;
-	}
+	void setInfrastrutura(string nome);
 };
 
 

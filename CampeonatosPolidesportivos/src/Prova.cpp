@@ -46,4 +46,9 @@ string Prova::getInfrastrutura() {
 }
 
 
+void Prova::setInfrastrutura(string nome) {
+	infrastrutura = nome;
+}
+
+
 
