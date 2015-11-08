@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <stdlib.h>
+#include <map>
 
 #include "Desporto.h"
 #include "Infrastrutura.h"

@@ -705,11 +705,11 @@ void Campeonato::addModalidade(Modalidade *modal) {
 	saveModalidade();
 }
 
-//////////////////////////
+////
 // Carrega a informação das provas do ficheiro provas.txt
 void Campeonato::loadProvas() {
-	string nome_prova, nome_modalidade, nome_infrastrutura;
-	string ano, mes, dia;
+	string nome_prova, nome_modalidade, nome_infrastrutura, nome_atleta;
+	string ano, mes, dia, classificacao;
 	string trash;
 	Prova *prova;
 
@@ -726,7 +726,25 @@ void Campeonato::loadProvas() {
 			getline(fileprova, dia);
 			getline(fileprova, nome_modalidade);
 			getline(fileprova, nome_infrastrutura);
-			getline(fileprova, trash);
+
+			Atleta *atl;
+
+			map<Atleta*, int> atl_classi;
+			while ( true ) {
+				getline(fileprova, nome_atleta);
+
+				if ( nome_atleta != "" ) {
+					nome_atleta.erase(nome_atleta.begin());
+					getline(fileprova, classificacao);
+					classificacao.erase(classificacao.begin(), classificacao.begin()+1);
+				}
+				else
+					break;
+
+				int classificacao_int = atoi(classificacao.c_str());
+				atl = findAtleta(nome_atleta);
+				atl_classi.insert(pair<Atleta*, int>(atl, classificacao_int));
+			}
 
 			int ano_int = atoi(ano.c_str());
 			int mes_int = atoi(mes.c_str());
@@ -741,6 +759,7 @@ void Campeonato::loadProvas() {
 			Infrastrutura *infra = findInfrastrutura(nome_infrastrutura);
 			prova->setModalidade(modal);
 			prova->setInfrastrutura(infra);
+			prova->setClassificacoesAtletas(atl_classi);
 
 			provas.push_back(prova);
 		}
@@ -761,17 +780,31 @@ void Campeonato::saveProva() {
 	fileprova << provas[0]->getMes() << endl;
 	fileprova << provas[0]->getDia() << endl;
 	fileprova << " " << provas[0]->getModalidade()->getNome() << endl;
-	fileprova << " " << provas[0]->getInfrastrutura()->getNome();
+	fileprova << " " << provas[0]->getInfrastrutura()->getNome() << endl;
+
+	map<Atleta*, int> atl_classi = provas[0]->getClassificacoesAtletas();
+	map<Atleta*, int>::iterator map_it = atl_classi.begin();
+	for( ; map_it != atl_classi.end(); map_it++ ) {
+		fileprova << " " << map_it->first->getNome() << endl;
+		fileprova << "  " << map_it->second << endl;
+	}
 
 	//guarda as restantes provas
 	for ( unsigned int i = 1; i < provas.size(); i++ ) {
-		fileprova << endl << endl;
+		fileprova << endl;
 		fileprova << provas[i]->getNome() << endl;
 		fileprova << provas[i]->getAno() << endl;
 		fileprova << provas[i]->getMes() << endl;
 		fileprova << provas[i]->getDia() << endl;
 		fileprova << " " << provas[i]->getModalidade()->getNome() << endl;
-		fileprova << " " << provas[i]->getInfrastrutura()->getNome();
+		fileprova << " " << provas[i]->getInfrastrutura()->getNome() << endl;
+
+		atl_classi = provas[i]->getClassificacoesAtletas();
+		map_it = atl_classi.begin();
+		for( ; map_it != atl_classi.end(); map_it++ ) {
+			fileprova << " " << map_it->first->getNome() << endl;
+			fileprova << "  " << map_it->second << endl;
+		}
 	}
 
 	fileprova.close();
@@ -783,7 +816,7 @@ void Campeonato::addProva(Prova *prova) {
 	provas.push_back(prova);
 	saveProva();
 }
-/////////////////////////
+
 
 // Carrega a informação dos desportos do ficheiro desportos.txt
 void Campeonato::loadDesportos() {
