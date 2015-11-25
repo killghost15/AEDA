@@ -103,6 +103,8 @@ public:
 	// Metodos para adicionar atletas a uma modalidade
 	int findModalidadeIndex(string nomeModalidade);
 	void changeModalidade(int index, Modalidade *mod);
+	// Metodos para determinar a data do inicio e do fim do campeonato
+
 };
 
 

@@ -1380,12 +1380,45 @@ void ListaDeFuncionarios() {
 }
 
 
+// Dispinibiliza ao utilizador um conjunto de informações úteis acerca do campeonato
+void InformacoesUteis() {
+	int num_desp = campeonato.getDesportos().size();
+	int num_equi = campeonato.getEquipas().size();
+	int num_atl = campeonato.getAtletas().size();
+
+	cout << "-------------------------------------------------------------" << endl;
+	cout << "-                  ** Informações úteis **                  -" << endl;
+	cout << "-                                                           -" << endl;
+	cout << "- Data do início do Campeonato: " << "asd" << "                                       -" << endl;
+	cout << "- Data do fim do Campeonato: " << "asd" << "                                       -" << endl;
+	cout << "- Número de Desportos: " << num_desp << "                                     -" << endl;
+	cout << "- Número de Equipas: " << num_equi << "                                       -" << endl;
+	cout << "- Número de Atletas: " << num_atl << "                                       -" << endl;
+	cout << "-                                                           -" << endl;
+	cout << "- 1. Voltar ao Menu Principal                               -" << endl;
+	cout << "-                                                           -" << endl;
+	cout << "-------------------------------------------------------------" << endl;
+
+	int escolha_listagens;
+	cin >> escolha_listagens;
+
+	if ( escolha_listagens != 1) {
+		cout << " Por favor, escolha 1 para voltar ao Menu Incial.";
+		cout << string(8,'\n');
+		InformacoesUteis();
+	} else {
+		cout << string(8,'\n');
+		MenuInicial();
+	}
+}
+
+
 // Menu das Listagens, efetua a listagem de toda a informação que o utilizador quiser
 void MenuListagens() {
 	int escolha_listagens;
 
 	cout << "-------------------------------------------------------------" << endl;
-	cout << "-             *** Listagens ***                             -" << endl;
+	cout << "-                     *** Listagens ***                     -" << endl;
 	cout << "-                                                           -" << endl;
 	cout << "- O que pretende listar?                                    -" << endl;
 	cout << "-                                                           -" << endl;
@@ -1492,15 +1525,16 @@ void MenuInicial() {
 	cout << "- 3. Manutenção das Provas                         -" << endl;
 	cout << "- 4. Manutenção do Calendário                      -" << endl;
 	cout << "- 5. Manutenção de Infrastruturas e Funcionários   -" << endl;
-	cout << "- 6. Listagens                                     -" << endl;
-	cout << "- 7. Terminar o programa                           -" << endl;
+	cout << "- 6. Informações úteis                             -" << endl;
+	cout << "- 7. Listagens                                     -" << endl;
+	cout << "- 8. Terminar o programa                           -" << endl;
 	cout << "-                                                  -" << endl;
 	cout << "----------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
 
-	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6 && escolha_menu != 7) {
+	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6 && escolha_menu != 7 && escolha_menu != 8) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInicial();
@@ -1530,9 +1564,13 @@ void MenuInicial() {
 			break;
 		case 6:
 			cout << string(8,'\n');
-			MenuListagens();
+			InformacoesUteis();
 			break;
 		case 7:
+			cout << string(8,'\n');
+			MenuListagens();
+			break;
+		case 8:
 			return;
 	}
 }

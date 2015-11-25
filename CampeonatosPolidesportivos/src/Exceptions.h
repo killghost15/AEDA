@@ -324,7 +324,21 @@ public:
 };
 
 
+// EXCEÇÃO MODALIDADEINVALIDA
+class DataInvalida: public exception {
+	string data;
+public:
+	DataInvalida(string date) : data(date) {}
+	virtual ~DataInvalida() throw() {}
 
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A data " << data << " não é uma data válida." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
 
 
 #endif
