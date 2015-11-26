@@ -2,11 +2,8 @@
 
 
 
-Prova::Prova(string name, int day, int month, int year){
+Prova::Prova(string name){
 	nome = name;
-	dia = day;
-	mes = month;
-	ano = year;
 }
 
 
@@ -14,21 +11,9 @@ string Prova::getNome() const {
 	return nome;
 }
 
-
-int Prova::getAno() const {
-	return ano;
+Data* Prova::getData() {
+	return data;
 }
-
-
-int Prova::getMes() const {
-	return mes;
-}
-
-
-int Prova::getDia() const {
-	return dia;
-}
-
 
 Modalidade* Prova::getModalidade() {
 	return modalidade;
@@ -42,6 +27,11 @@ map<Atleta*, int> Prova::getClassificacoesAtletas(){
 
 Infrastrutura* Prova::getInfrastrutura() {
 	return infrastrutura;
+}
+
+
+void Prova::setData(Data *date) {
+	data = date;
 }
 
 

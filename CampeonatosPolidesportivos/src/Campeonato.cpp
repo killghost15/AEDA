@@ -30,6 +30,76 @@ vector<Funcionario*> Campeonato::getFuncionarios() {
 	return funcionarios;
 }
 
+string Campeonato::getDataInicio() {
+	unsigned int dia_inicio, mes_inicio, ano_inicio;
+	vector<Prova*>::iterator it = provas.begin();
+
+	//if(provas.empty())
+
+	dia_inicio = (*it)->getData()->getDia();
+	mes_inicio = (*it)->getData()->getMes();
+	ano_inicio = (*it)->getData()->getAno();
+	it++;
+
+	for( ; it != provas.end(); it++ ) {
+		if( (*it)->getData()->getAno() < ano_inicio ) {
+			dia_inicio = (*it)->getData()->getDia();
+			mes_inicio = (*it)->getData()->getMes();
+			ano_inicio = (*it)->getData()->getAno();
+		}
+		else if( (*it)->getData()->getAno() == ano_inicio ) {
+			if( (*it)->getData()->getMes() < mes_inicio ) {
+				dia_inicio = (*it)->getData()->getDia();
+				mes_inicio = (*it)->getData()->getMes();
+			}
+			else if( (*it)->getData()->getMes() == mes_inicio ) {
+				if( (*it)->getData()->getDia() < dia_inicio ) {
+					dia_inicio = (*it)->getData()->getDia();
+				}
+			}
+		}
+	}
+
+	stringstream date;
+	date << dia_inicio << "/" << mes_inicio << "/" << ano_inicio;
+
+	return date.str();
+}
+
+string Campeonato::getDataFim() {
+	unsigned int dia_fim, mes_fim, ano_fim;
+	vector<Prova*>::iterator it = provas.begin();
+
+	dia_fim = (*it)->getData()->getDia();
+	mes_fim = (*it)->getData()->getMes();
+	ano_fim = (*it)->getData()->getAno();
+	it++;
+
+	for( ; it != provas.end(); it++ ) {
+		if( (*it)->getData()->getAno() > ano_fim ) {
+			dia_fim = (*it)->getData()->getDia();
+			mes_fim = (*it)->getData()->getMes();
+			ano_fim = (*it)->getData()->getAno();
+		}
+		else if( (*it)->getData()->getAno() == ano_fim ) {
+			if( (*it)->getData()->getMes() > mes_fim ) {
+				dia_fim = (*it)->getData()->getDia();
+				mes_fim = (*it)->getData()->getMes();
+			}
+			else if( (*it)->getData()->getMes() == mes_fim ) {
+				if( (*it)->getData()->getDia() > dia_fim ) {
+					dia_fim = (*it)->getData()->getDia();
+				}
+			}
+		}
+	}
+
+	stringstream date;
+	date << dia_fim << "/" << mes_fim << "/" << ano_fim;
+
+	return date.str();
+}
+
 
 /**
  *  METODOS DE PROCURA DE OBJETOS COM DETERMINADO NOME NOS VETORES
@@ -626,7 +696,7 @@ void Campeonato::addModalidade(Modalidade *modal) {
 	saveModalidade();
 }
 
-////
+
 // Carrega a informação das provas do ficheiro provas.txt
 void Campeonato::loadProvas() {
 	string nome_prova, nome_modalidade, nome_infrastrutura, nome_atleta;
@@ -642,9 +712,9 @@ void Campeonato::loadProvas() {
 		while ( !fileprova.eof() ) {
 
 			getline(fileprova, nome_prova);
-			getline(fileprova, ano);
-			getline(fileprova, mes);
 			getline(fileprova, dia);
+			getline(fileprova, mes);
+			getline(fileprova, ano);
 			getline(fileprova, nome_modalidade);
 			getline(fileprova, nome_infrastrutura);
 
@@ -674,10 +744,12 @@ void Campeonato::loadProvas() {
 			nome_modalidade.erase(nome_modalidade.begin());
 			nome_infrastrutura.erase(nome_infrastrutura.begin());
 
-			prova = new Prova(nome_prova, ano_int, mes_int, dia_int);
+			prova = new Prova(nome_prova);
 
+			Data *date = new Data(dia_int, mes_int, ano_int);
 			Modalidade *modal = findModalidade(nome_modalidade);
 			Infrastrutura *infra = findInfrastrutura(nome_infrastrutura);
+			prova->setData(date);
 			prova->setModalidade(modal);
 			prova->setInfrastrutura(infra);
 			prova->setClassificacoesAtletas(atl_classi);
@@ -697,9 +769,9 @@ void Campeonato::saveProva() {
 
 	//guarda apenas a primeira prova
 	fileprova << provas[0]->getNome() << endl;
-	fileprova << provas[0]->getAno() << endl;
-	fileprova << provas[0]->getMes() << endl;
-	fileprova << provas[0]->getDia() << endl;
+	fileprova << provas[0]->getData()->getAno() << endl;
+	fileprova << provas[0]->getData()->getMes() << endl;
+	fileprova << provas[0]->getData()->getDia() << endl;
 	fileprova << " " << provas[0]->getModalidade()->getNome() << endl;
 	fileprova << " " << provas[0]->getInfrastrutura()->getNome() << endl;
 
@@ -714,9 +786,9 @@ void Campeonato::saveProva() {
 	for ( unsigned int i = 1; i < provas.size(); i++ ) {
 		fileprova << endl;
 		fileprova << provas[i]->getNome() << endl;
-		fileprova << provas[i]->getAno() << endl;
-		fileprova << provas[i]->getMes() << endl;
-		fileprova << provas[i]->getDia() << endl;
+		fileprova << provas[i]->getData()->getAno() << endl;
+		fileprova << provas[i]->getData()->getMes() << endl;
+		fileprova << provas[i]->getData()->getDia() << endl;
 		fileprova << " " << provas[i]->getModalidade()->getNome() << endl;
 		fileprova << " " << provas[i]->getInfrastrutura()->getNome() << endl;
 

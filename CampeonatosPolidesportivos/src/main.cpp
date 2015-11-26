@@ -7,6 +7,7 @@
 #include "Campeonato.h"
 #include "Infrastrutura.h"
 #include "Exceptions.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -790,9 +791,10 @@ void MenuDesportosModalidades() {
 
 // Apresenta o form para a criação de uma prova de uma modalidade
 void CriarProva(){
-	int dia, mes, ano;
+	unsigned int dia_int, mes_int, ano_int;
 	string nome_modalidade, nome_infrastrutura;
 	string nome_prova;
+	string data;
 
 	cin.clear();
 	cin.sync();
@@ -840,16 +842,29 @@ void CriarProva(){
 	}
 
 	cout << endl;
-	cout << " Data da prova (dia mes ano): ";
-	cin >> dia >> mes >> ano;
+	cout << " Data (DD/MM/AAAA)? ";
+	cin >> data;
+	cin.ignore();
+	cout << endl;
 
+	stringstream dia, mes, ano;
+	dia << data[0] << data[1];
+	mes << data[3] << data[4];
+	ano << data[6] << data[7] << data[8] << data[9];
+
+	dia_int = atoi(dia.str().c_str());
+	mes_int = atoi(mes.str().c_str());
+	ano_int = atoi(ano.str().c_str());
+
+	Data *date = new Data(dia_int, mes_int, ano_int);
 	Modalidade *mod = campeonato.findModalidade(nome_modalidade);
 	Infrastrutura *infra = campeonato.findInfrastrutura(nome_infrastrutura);
 
 	//criaçao do objeto da classe prova para adicionar à modalidade
 	Prova *prova;
 
-	prova = new Prova(nome_prova, dia, mes, ano);
+	prova = new Prova(nome_prova);
+	prova->setData(date);
 	prova->setModalidade(mod);
 	prova->setInfrastrutura(infra);
 
@@ -1306,6 +1321,8 @@ void ListaDeAtletas() {
 			cout << " Introduza uma opção correta, s ou n!";
 	}
 }
+
+
 void ListaDeClassificacoes(){
 	vector <int>classificacao;
 	vector <Atleta*>atletas;
@@ -1315,7 +1332,7 @@ void ListaDeClassificacoes(){
 	cin >> nome;
 
 	for (unsigned int i=0;i <campeonato.getProvas().size();i++) {
-		if(campeonato.getProvas()[i]->getModalidade()->getNome()==nome) {
+		if(campeonato.getProvas()[i]->getModalidade()->getNome() == nome) {
 			cout <<campeonato.getProvas()[i]->getNome() <<":" <<endl;
 			for (map<Atleta*, int>::iterator it=campeonato.getProvas()[i]->getClassificacoesAtletas().begin() ; it != campeonato.getProvas()[i]->getClassificacoesAtletas().end();it++){
 			atletas.push_back(it->first);
@@ -1374,7 +1391,7 @@ void ListaDeFuncionarios() {
 	}
 
 	for (unsigned int i=0; i< v.size();i++){
-		cout <<v[i]->getNome()<<":"<<v[i]->getAnosTrabalho()<<endl;
+		cout << v[i]->getNome() << ":" <<v[i]->getAnosTrabalho() << endl;
 	}
 
 }
@@ -1386,18 +1403,18 @@ void InformacoesUteis() {
 	int num_equi = campeonato.getEquipas().size();
 	int num_atl = campeonato.getAtletas().size();
 
-	cout << "-------------------------------------------------------------" << endl;
-	cout << "-                  ** Informações úteis **                  -" << endl;
-	cout << "-                                                           -" << endl;
-	cout << "- Data do início do Campeonato: " << "asd" << "                                       -" << endl;
-	cout << "- Data do fim do Campeonato: " << "asd" << "                                       -" << endl;
-	cout << "- Número de Desportos: " << num_desp << "                                     -" << endl;
-	cout << "- Número de Equipas: " << num_equi << "                                       -" << endl;
-	cout << "- Número de Atletas: " << num_atl << "                                       -" << endl;
-	cout << "-                                                           -" << endl;
-	cout << "- 1. Voltar ao Menu Principal                               -" << endl;
-	cout << "-                                                           -" << endl;
-	cout << "-------------------------------------------------------------" << endl;
+	cout << "-------------------------------------------------------" << endl;
+	cout << "-               ** Informações úteis **               -" << endl;
+	cout << "-                                                     -" << endl;
+	cout << "- Data do início do Campeonato: " << campeonato.getDataInicio() << "             -" << endl;
+	cout << "- Data do fim do Campeonato: " << campeonato.getDataFim() << "               -" << endl;
+	cout << "- Número de Desportos: " << num_desp << "                              -" << endl;
+	cout << "- Número de Equipas: " << num_equi << "                                -" << endl;
+	cout << "- Número de Atletas: " << num_atl << "                                -" << endl;
+	cout << "-                                                     -" << endl;
+	cout << "- 1. Voltar ao Menu Principal                         -" << endl;
+	cout << "-                                                     -" << endl;
+	cout << "-------------------------------------------------------" << endl;
 
 	int escolha_listagens;
 	cin >> escolha_listagens;
@@ -1467,41 +1484,74 @@ void MenuListagens() {
 
 
 void MenuCalendario(){
-	string nome;
-	int dia,mes,ano;
-	cout << " Data (dia mes ano)? ";
-	cin >> dia >> mes >> ano;
+	string nome, data;
+	stringstream dia, mes, ano;
+	unsigned int dia_int, mes_int, ano_int;
+
+	cout << " Data (DD/MM/AAAA)? ";
+	cin >> data;
 	cin.ignore();
-	cout << endl;
-	cout << " Provas que já passaram: ";
+
+	dia << data[0] << data[1];
+	mes << data[3] << data[4];
+	ano << data[6] << data[7] << data[8] << data[9];
+
+	dia_int = atoi(dia.str().c_str());
+	mes_int = atoi(mes.str().c_str());
+	ano_int = atoi(ano.str().c_str());
+
+	try {
+		Data *date = new Data(dia_int, mes_int, ano_int);
+		date->checkData(dia_int, mes_int, ano_int);
+	} catch( DataInvalida &e ) {
+		e.what();
+		MenuCalendario();
+	}
+
+	cout << " Provas que já passaram:" << endl;
 	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
 		Prova *match = campeonato.getProvas()[i];
-		if ( match->getAno() < ano )
-			cout << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
-		else if ( match->getAno() == ano ) {
-			if( match->getMes() < mes )
-				cout << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
-			else if ( match->getMes() == mes ) {
-				if ( match->getDia() < dia )
-					cout << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
+		Data *date = match->getData();
+		if ( date->getAno() < ano_int ) {
+			cout << " - ";
+			cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+		}
+		else if ( date->getAno() == ano_int ) {
+			if( date->getMes() < mes_int ) {
+				cout << " - ";
+				cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+			}
+			else if ( date->getMes() == mes_int ) {
+				if ( date->getDia() < dia_int ) {
+					cout << " - ";
+					cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+				}
 			}
 		}
 	}
 
 	cout << endl;
-	cout << " Provas que ainda não aconteceram ou estão a acontecer: ";
+	cout << " Provas que ainda não aconteceram ou estão a acontecer:" << endl;
 	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
 		Prova *match = campeonato.getProvas()[i];
-		if ( match->getAno() > ano )
-			cout << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
-		else if ( match->getAno() == ano ) {
-			if( match->getMes() > mes )
-				cout << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
-			else if (match->getMes() == mes) {
-				if ( match->getDia() > dia )
-					cout << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
-				else if ( match->getDia() == dia )
-					cout << " ESTA A DECORRER HOJE, APRESSE-SE A IR PARA O LOCAL " << match->getNome() << " " << match->getDia() << "/" << match->getMes() << "/" << match->getAno() << endl;
+		Data *date = match->getData();
+
+		if ( date->getAno() > ano_int ) {
+			cout << " - ";
+			cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+		}
+		else if ( date->getAno() == ano_int ) {
+			if( date->getMes() > mes_int ) {
+				cout << " - ";
+				cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+			}
+			else if ( date->getMes() == mes_int ) {
+				if ( date->getDia() > dia_int ) {
+					cout << " - ";
+					cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+				}
+				else if ( date->getDia() == dia_int )
+					cout << " ESTA A DECORRER HOJE, APRESSE-SE A IR PARA O LOCAL " << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
 			}
 		}
 	}

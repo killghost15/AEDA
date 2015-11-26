@@ -42,6 +42,8 @@ public:
 	vector<Desporto*> getDesportos();
 	vector<Infrastrutura*> getInfrastruturas();
 	vector<Funcionario*> getFuncionarios();
+	string getDataInicio();
+	string getDataFim();
 	// Metodos find
 	Equipa* findEquipa(string nomeEquipa);
 	Atleta* findAtleta(string nomeAtleta);

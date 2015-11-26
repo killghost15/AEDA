@@ -2,9 +2,7 @@
 
 
 Data::Data(unsigned int day, unsigned int month, unsigned int year) {
-	try {
-		checkData(day, month, year)
-	} catch( DataInvalida)
+
 
 	dia = day;
 	mes = month;
@@ -76,7 +74,11 @@ bool Data::checkData(unsigned int day, unsigned int month, unsigned int year) {
 	}
 
 	// lança exceção se a data for invalida
-	if( data_valida == false )
-		throw DataInvalida();
+	if( data_valida == false ) {
+		stringstream ss;
+		ss << day << "/" << month << "/" << year;
+		throw DataInvalida(ss.str());
+	}
 
 }
+
