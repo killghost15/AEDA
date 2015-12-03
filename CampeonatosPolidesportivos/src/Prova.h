@@ -10,6 +10,7 @@
 #include "Modalidade.h"
 #include "Infrastrutura.h"
 #include "Data.h"
+#include "Hora.h"
 
 using namespace std;
 
@@ -17,19 +18,22 @@ using namespace std;
 class Prova {
 	string nome;
 	Data *data;
+	Hora *hora;
 	Modalidade *modalidade;
-	map<Atleta*, int> classificacoes_atletas;
 	Infrastrutura *infrastrutura;
+	map<Atleta*, int> classificacoes_atletas;
 public:
 	Prova(string name);
 	// Metodos get
 	string getNome() const;
 	Data* getData();
+	Hora* getHora();
 	Modalidade* getModalidade();
-	map<Atleta*, int> getClassificacoesAtletas();
 	Infrastrutura* getInfrastrutura();
+	map<Atleta*, int> getClassificacoesAtletas();
 	// Metodo set
 	void setData(Data *date);
+	void setHora(Hora *hour);
 	void setModalidade(Modalidade *mod);
 	void setInfrastrutura(Infrastrutura *infra);
 	void setClassificacoesAtletas(map<Atleta*, int> map);

@@ -2,8 +2,6 @@
 
 
 Data::Data(unsigned int day, unsigned int month, unsigned int year) {
-
-
 	dia = day;
 	mes = month;
 	ano = year;
@@ -21,7 +19,7 @@ unsigned int Data::getAno() const {
 	return ano;
 }
 
-bool Data::checkData(unsigned int day, unsigned int month, unsigned int year) {
+void Data::checkData(unsigned int day, unsigned int month, unsigned int year) {
 	bool data_valida = true;
 
 	if( month > 12 )

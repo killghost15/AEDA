@@ -19,7 +19,7 @@ public:
 	unsigned int getMes() const;
 	unsigned int getAno() const;
 	// Metodo check para verificar se os valores dos membros-dado estão de acordo com o calendario juliano
-	bool checkData(unsigned int day, unsigned int month, unsigned int year);
+	void checkData(unsigned int day, unsigned int month, unsigned int year);
 };
 
 

@@ -34,7 +34,8 @@ string Campeonato::getDataInicio() {
 	unsigned int dia_inicio, mes_inicio, ano_inicio;
 	vector<Prova*>::iterator it = provas.begin();
 
-	//if(provas.empty())
+	if(provas.empty())
+		return "Data a anunciar brevemente!";
 
 	dia_inicio = (*it)->getData()->getDia();
 	mes_inicio = (*it)->getData()->getMes();
@@ -69,6 +70,9 @@ string Campeonato::getDataInicio() {
 string Campeonato::getDataFim() {
 	unsigned int dia_fim, mes_fim, ano_fim;
 	vector<Prova*>::iterator it = provas.begin();
+
+	if(provas.size() < 2)
+		return "Data a anunciar brevemente!";
 
 	dia_fim = (*it)->getData()->getDia();
 	mes_fim = (*it)->getData()->getMes();
@@ -700,7 +704,7 @@ void Campeonato::addModalidade(Modalidade *modal) {
 // Carrega a informação das provas do ficheiro provas.txt
 void Campeonato::loadProvas() {
 	string nome_prova, nome_modalidade, nome_infrastrutura, nome_atleta;
-	string ano, mes, dia, classificacao;
+	string ano, mes, dia, classificacao, hora, minuto;
 	string trash;
 	Prova *prova;
 
@@ -712,9 +716,11 @@ void Campeonato::loadProvas() {
 		while ( !fileprova.eof() ) {
 
 			getline(fileprova, nome_prova);
-			getline(fileprova, dia);
-			getline(fileprova, mes);
 			getline(fileprova, ano);
+			getline(fileprova, mes);
+			getline(fileprova, dia);
+			getline(fileprova, hora);
+			getline(fileprova, minuto);
 			getline(fileprova, nome_modalidade);
 			getline(fileprova, nome_infrastrutura);
 
@@ -740,6 +746,8 @@ void Campeonato::loadProvas() {
 			int ano_int = atoi(ano.c_str());
 			int mes_int = atoi(mes.c_str());
 			int dia_int = atoi(dia.c_str());
+			int hora_int = atoi(hora.c_str());
+			int minuto_int = atoi(minuto.c_str());
 
 			nome_modalidade.erase(nome_modalidade.begin());
 			nome_infrastrutura.erase(nome_infrastrutura.begin());
@@ -747,9 +755,11 @@ void Campeonato::loadProvas() {
 			prova = new Prova(nome_prova);
 
 			Data *date = new Data(dia_int, mes_int, ano_int);
+			Hora *hour = new Hora(hora_int, minuto_int);
 			Modalidade *modal = findModalidade(nome_modalidade);
 			Infrastrutura *infra = findInfrastrutura(nome_infrastrutura);
 			prova->setData(date);
+			prova->setHora(hour);
 			prova->setModalidade(modal);
 			prova->setInfrastrutura(infra);
 			prova->setClassificacoesAtletas(atl_classi);
@@ -761,7 +771,6 @@ void Campeonato::loadProvas() {
 	}
 }
 
-
 // Guarda a prova no ficheiro provas.txt
 void Campeonato::saveProva() {
 	ofstream fileprova;
@@ -772,6 +781,8 @@ void Campeonato::saveProva() {
 	fileprova << provas[0]->getData()->getAno() << endl;
 	fileprova << provas[0]->getData()->getMes() << endl;
 	fileprova << provas[0]->getData()->getDia() << endl;
+	fileprova << provas[0]->getHora()->getHora() << endl;
+	fileprova << provas[0]->getHora()->getMinuto() << endl;
 	fileprova << " " << provas[0]->getModalidade()->getNome() << endl;
 	fileprova << " " << provas[0]->getInfrastrutura()->getNome() << endl;
 
@@ -789,6 +800,8 @@ void Campeonato::saveProva() {
 		fileprova << provas[i]->getData()->getAno() << endl;
 		fileprova << provas[i]->getData()->getMes() << endl;
 		fileprova << provas[i]->getData()->getDia() << endl;
+		fileprova << provas[0]->getHora()->getHora() << endl;
+		fileprova << provas[0]->getHora()->getMinuto() << endl;
 		fileprova << " " << provas[i]->getModalidade()->getNome() << endl;
 		fileprova << " " << provas[i]->getInfrastrutura()->getNome() << endl;
 

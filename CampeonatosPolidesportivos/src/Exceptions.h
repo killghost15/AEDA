@@ -324,7 +324,7 @@ public:
 };
 
 
-// EXCEÇÃO MODALIDADEINVALIDA
+// EXCEÇÃO DATAINVALIDA
 class DataInvalida: public exception {
 	string data;
 public:
@@ -334,6 +334,23 @@ public:
 	virtual const char* what() const throw() {
 		cout << endl;
 		cout << " A data " << data << " não é uma data válida." << endl;
+		cout << endl;
+
+		return "";
+	}
+};
+
+
+// EXCEÇÃO HORAINVALIDA
+class HoraInvalida: public exception {
+	string hora;
+public:
+	HoraInvalida(string hour) : hora(hour) {}
+	virtual ~HoraInvalida() throw() {}
+
+	virtual const char* what() const throw() {
+		cout << endl;
+		cout << " A hora " << hora << " não é uma hora válida." << endl;
 		cout << endl;
 
 		return "";

@@ -791,10 +791,10 @@ void MenuDesportosModalidades() {
 
 // Apresenta o form para a criação de uma prova de uma modalidade
 void CriarProva(){
-	unsigned int dia_int, mes_int, ano_int;
+	unsigned int dia_int, mes_int, ano_int, horas_int, minutos_int;
 	string nome_modalidade, nome_infrastrutura;
 	string nome_prova;
-	string data;
+	string data, hora;
 
 	cin.clear();
 	cin.sync();
@@ -841,22 +841,58 @@ void CriarProva(){
 		}
 	}
 
+	// Input da data (dia, mês e ano) por parte do utilizador
+	exception_finish = true;
+	Data *date;
+	while(exception_finish) {
+		cout << " Data (DD/MM/AAAA)? ";
+		cin >> data;
+		cin.ignore();
+
+		stringstream dia, mes, ano;
+		dia << data[0] << data[1];
+		mes << data[3] << data[4];
+		ano << data[6] << data[7] << data[8] << data[9];
+
+		dia_int = atoi(dia.str().c_str());
+		mes_int = atoi(mes.str().c_str());
+		ano_int = atoi(ano.str().c_str());
+
+		try {
+			date = new Data(dia_int, mes_int, ano_int);
+			date->checkData(dia_int, mes_int, ano_int);
+			exception_finish = false;
+		} catch( DataInvalida &e ) {
+			e.what();
+		}
+	}
+
 	cout << endl;
-	cout << " Data (DD/MM/AAAA)? ";
-	cin >> data;
-	cin.ignore();
-	cout << endl;
 
-	stringstream dia, mes, ano;
-	dia << data[0] << data[1];
-	mes << data[3] << data[4];
-	ano << data[6] << data[7] << data[8] << data[9];
+	// Input da hora (horas e minutos) por parte do utilizador
+	exception_finish = true;
+	Hora *hour;
+	while(exception_finish) {
+		cout << " Hora (HH:MM)? ";
+		cin >> hora;
+		cin.ignore();
 
-	dia_int = atoi(dia.str().c_str());
-	mes_int = atoi(mes.str().c_str());
-	ano_int = atoi(ano.str().c_str());
+		stringstream horas, minutos;
+		horas << hora[0] << hora[1];
+		minutos << hora[3] << hora[4];
 
-	Data *date = new Data(dia_int, mes_int, ano_int);
+		horas_int = atoi(horas.str().c_str());
+		minutos_int = atoi(minutos.str().c_str());
+
+		try {
+			hour = new Hora(horas_int, minutos_int);
+			hour->checkHora(horas_int, minutos_int);
+			exception_finish = false;
+		} catch( HoraInvalida &e ) {
+			e.what();
+		}
+	}
+
 	Modalidade *mod = campeonato.findModalidade(nome_modalidade);
 	Infrastrutura *infra = campeonato.findInfrastrutura(nome_infrastrutura);
 
@@ -865,6 +901,7 @@ void CriarProva(){
 
 	prova = new Prova(nome_prova);
 	prova->setData(date);
+	prova->setHora(hour),
 	prova->setModalidade(mod);
 	prova->setInfrastrutura(infra);
 
@@ -1094,6 +1131,158 @@ void MenuProvas() {
 
 
 /**
+ *  MENU RELACIONADO COM O CALENDÁRIO
+ */
+
+
+void MenuCalendario(){
+	string nome, data, hora;
+	stringstream dia, mes, ano, horas, minutos;
+	unsigned int dia_int, mes_int, ano_int, horas_int, minutos_int;
+
+	// Input da data (dia, mês e ano) por parte do utilizador
+	cout << " Data (DD/MM/AAAA)? ";
+	cin >> data;
+	cin.ignore();
+
+	dia << data[0] << data[1];
+	mes << data[3] << data[4];
+	ano << data[6] << data[7] << data[8] << data[9];
+
+	dia_int = atoi(dia.str().c_str());
+	mes_int = atoi(mes.str().c_str());
+	ano_int = atoi(ano.str().c_str());
+
+	try {
+		Data *date = new Data(dia_int, mes_int, ano_int);
+		date->checkData(dia_int, mes_int, ano_int);
+	} catch( DataInvalida &e ) {
+		e.what();
+		MenuCalendario();
+	}
+
+	// Input da hora (horas e minutos) por parte do utilizador
+	exception_finish = true;
+	while(exception_finish) {
+		cout << " Hora (HH:MM)? ";
+		cin >> hora;
+		cin.ignore();
+
+		horas << hora[0] << hora[1];
+		minutos << hora[3] << hora[4];
+
+		horas_int = atoi(horas.str().c_str());
+		minutos_int = atoi(minutos.str().c_str());
+
+		try {
+			Hora *hour = new Hora(horas_int, minutos_int);
+			hour->checkHora(horas_int, minutos_int);
+			exception_finish = false;
+		} catch( HoraInvalida &e ) {
+			e.what();
+		}
+	}
+
+	// Display das provas que já passaram, mediante a data e horas atuais
+	cout << endl;
+	cout << " Provas que já passaram:" << endl;
+	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
+		Prova *match = campeonato.getProvas()[i];
+		Data *date = match->getData();
+		Hora *hour = match->getHora();
+
+		if ( date->getAno() < ano_int ) {
+			cout << " - ";
+			cout << match->getNome() << endl;
+			cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+			cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+		}
+		else if ( date->getAno() == ano_int ) {
+			if( date->getMes() < mes_int ) {
+				cout << " - ";
+				cout << match->getNome() << endl;
+				cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+				cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+			}
+			else if ( date->getMes() == mes_int ) {
+				if( date->getDia() < dia_int ) {
+					cout << " - ";
+					cout << match->getNome() << endl;
+					cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+					cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+				}
+				else if( date->getDia() == dia_int ) {
+					if( hour->getHora() < horas_int ) {
+						cout << " - ";
+						cout << match->getNome() << endl;
+						cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+						cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+					}
+					else if( hour->getHora() == horas_int ) {
+						if( hour->getMinuto() <= minutos_int ) {
+							cout << " - ";
+							cout << match->getNome() << endl;
+							cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+							cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Display no ecrã das provas que já ainda vão acontecer, mediante a data e horas atuais
+	cout << endl;
+	cout << " Provas que ainda não aconteceram ou estão a acontecer:" << endl;
+	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
+		Prova *match = campeonato.getProvas()[i];
+		Data *date = match->getData();
+		Hora *hour = match->getHora();
+
+		if ( date->getAno() > ano_int ) {
+			cout << " - ";
+			cout << match->getNome() << endl;
+			cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+			cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+		}
+		else if ( date->getAno() == ano_int ) {
+			if( date->getMes() > mes_int ) {
+				cout << " - ";
+				cout << match->getNome() << endl;
+				cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+				cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+			}
+			else if ( date->getMes() == mes_int ) {
+				if ( date->getDia() > dia_int ) {
+					cout << " - ";
+					cout << match->getNome() << endl;
+					cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+					cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+				}
+				else if ( date->getDia() == dia_int ) {
+					if ( hour->getHora() > horas_int ) {
+						cout << " - ";
+						cout << match->getNome() << endl;
+						cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+						cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+					}
+					else if ( hour->getHora() == horas_int ) {
+						if ( hour->getMinuto() > minutos_int ) {
+							cout << " - ";
+							cout << match->getNome() << endl;
+							cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+							cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+
+/**
  *  MENUS RELACIONADOS COM INFRASTRUTURAS E FUNCIONARIOS
  */
 
@@ -1281,6 +1470,44 @@ void MenuInfrastruturas() {
 
 
 /**
+ *  MENU DE INFORMAÇÕES ÚTEIS
+ */
+
+
+// Dispinibiliza ao utilizador um conjunto de informações úteis acerca do campeonato
+void InformacoesUteis() {
+	int num_desp = campeonato.getDesportos().size();
+	int num_equi = campeonato.getEquipas().size();
+	int num_atl = campeonato.getAtletas().size();
+
+	cout << "-------------------------------------------------------" << endl;
+	cout << "-               ** Informações úteis **               -" << endl;
+	cout << "-                                                     -" << endl;
+	cout << "- Data do início do Campeonato: " << campeonato.getDataInicio() << "             -" << endl;
+	cout << "- Data do fim do Campeonato: " << campeonato.getDataFim() << "               -" << endl;
+	cout << "- Número de Desportos: " << num_desp << "                              -" << endl;
+	cout << "- Número de Equipas: " << num_equi << "                                -" << endl;
+	cout << "- Número de Atletas: " << num_atl << "                                -" << endl;
+	cout << "-                                                     -" << endl;
+	cout << "- 1. Voltar ao Menu Principal                         -" << endl;
+	cout << "-                                                     -" << endl;
+	cout << "-------------------------------------------------------" << endl;
+
+	int escolha_listagens;
+	cin >> escolha_listagens;
+
+	if ( escolha_listagens != 1) {
+		cout << " Por favor, escolha 1 para voltar ao Menu Incial.";
+		cout << string(8,'\n');
+		InformacoesUteis();
+	} else {
+		cout << string(8,'\n');
+		MenuInicial();
+	}
+}
+
+
+/**
  *  MENUS RELACIONADOS COM AS LISTAGENS
  */
 
@@ -1365,10 +1592,10 @@ void ListaDeClassificacoes(){
 		cout << " Deseja voltar ao menuInicial (s ou n)? ";
 		cin >> resposta;
 		if (resposta == "s")
-			coisa =false;
+			coisa = false;
 		else if (resposta== "n") {
 			ListaDeClassificacoes();
-			coisa =false;
+			coisa = false;
 		}
 		else
 			cout << " Introduza uma opção valida!";
@@ -1394,39 +1621,6 @@ void ListaDeFuncionarios() {
 		cout << v[i]->getNome() << ":" <<v[i]->getAnosTrabalho() << endl;
 	}
 
-}
-
-
-// Dispinibiliza ao utilizador um conjunto de informações úteis acerca do campeonato
-void InformacoesUteis() {
-	int num_desp = campeonato.getDesportos().size();
-	int num_equi = campeonato.getEquipas().size();
-	int num_atl = campeonato.getAtletas().size();
-
-	cout << "-------------------------------------------------------" << endl;
-	cout << "-               ** Informações úteis **               -" << endl;
-	cout << "-                                                     -" << endl;
-	cout << "- Data do início do Campeonato: " << campeonato.getDataInicio() << "             -" << endl;
-	cout << "- Data do fim do Campeonato: " << campeonato.getDataFim() << "               -" << endl;
-	cout << "- Número de Desportos: " << num_desp << "                              -" << endl;
-	cout << "- Número de Equipas: " << num_equi << "                                -" << endl;
-	cout << "- Número de Atletas: " << num_atl << "                                -" << endl;
-	cout << "-                                                     -" << endl;
-	cout << "- 1. Voltar ao Menu Principal                         -" << endl;
-	cout << "-                                                     -" << endl;
-	cout << "-------------------------------------------------------" << endl;
-
-	int escolha_listagens;
-	cin >> escolha_listagens;
-
-	if ( escolha_listagens != 1) {
-		cout << " Por favor, escolha 1 para voltar ao Menu Incial.";
-		cout << string(8,'\n');
-		InformacoesUteis();
-	} else {
-		cout << string(8,'\n');
-		MenuInicial();
-	}
 }
 
 
@@ -1479,81 +1673,6 @@ void MenuListagens() {
 			MenuInicial();
 			break;
 
-	}
-}
-
-
-void MenuCalendario(){
-	string nome, data;
-	stringstream dia, mes, ano;
-	unsigned int dia_int, mes_int, ano_int;
-
-	cout << " Data (DD/MM/AAAA)? ";
-	cin >> data;
-	cin.ignore();
-
-	dia << data[0] << data[1];
-	mes << data[3] << data[4];
-	ano << data[6] << data[7] << data[8] << data[9];
-
-	dia_int = atoi(dia.str().c_str());
-	mes_int = atoi(mes.str().c_str());
-	ano_int = atoi(ano.str().c_str());
-
-	try {
-		Data *date = new Data(dia_int, mes_int, ano_int);
-		date->checkData(dia_int, mes_int, ano_int);
-	} catch( DataInvalida &e ) {
-		e.what();
-		MenuCalendario();
-	}
-
-	cout << " Provas que já passaram:" << endl;
-	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
-		Prova *match = campeonato.getProvas()[i];
-		Data *date = match->getData();
-		if ( date->getAno() < ano_int ) {
-			cout << " - ";
-			cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-		}
-		else if ( date->getAno() == ano_int ) {
-			if( date->getMes() < mes_int ) {
-				cout << " - ";
-				cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-			}
-			else if ( date->getMes() == mes_int ) {
-				if ( date->getDia() < dia_int ) {
-					cout << " - ";
-					cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-				}
-			}
-		}
-	}
-
-	cout << endl;
-	cout << " Provas que ainda não aconteceram ou estão a acontecer:" << endl;
-	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
-		Prova *match = campeonato.getProvas()[i];
-		Data *date = match->getData();
-
-		if ( date->getAno() > ano_int ) {
-			cout << " - ";
-			cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-		}
-		else if ( date->getAno() == ano_int ) {
-			if( date->getMes() > mes_int ) {
-				cout << " - ";
-				cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-			}
-			else if ( date->getMes() == mes_int ) {
-				if ( date->getDia() > dia_int ) {
-					cout << " - ";
-					cout << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-				}
-				else if ( date->getDia() == dia_int )
-					cout << " ESTA A DECORRER HOJE, APRESSE-SE A IR PARA O LOCAL " << match->getNome() << " " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-			}
-		}
 	}
 }
 
