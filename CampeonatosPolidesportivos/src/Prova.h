@@ -17,17 +17,20 @@ using namespace std;
 
 class Prova {
 	string nome;
+	int duracao;
 	Data *data;
 	Hora *hora;
 	Modalidade *modalidade;
 	Infrastrutura *infrastrutura;
 	map<Atleta*, int> classificacoes_atletas;
 public:
-	Prova(string name);
+	Prova(string name, int duration);
 	// Metodos get
 	string getNome() const;
+	int getDuracao() const;
 	Data* getData();
-	Hora* getHora();
+	Hora* getHoraInicio();
+	Hora* getHoraFim();
 	Modalidade* getModalidade();
 	Infrastrutura* getInfrastrutura();
 	map<Atleta*, int> getClassificacoesAtletas();

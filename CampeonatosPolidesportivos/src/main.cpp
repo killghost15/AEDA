@@ -792,6 +792,7 @@ void MenuDesportosModalidades() {
 // Apresenta o form para a criação de uma prova de uma modalidade
 void CriarProva(){
 	unsigned int dia_int, mes_int, ano_int, horas_int, minutos_int;
+	int duracao;
 	string nome_modalidade, nome_infrastrutura;
 	string nome_prova;
 	string data, hora;
@@ -841,6 +842,8 @@ void CriarProva(){
 		}
 	}
 
+	cout << endl;
+
 	// Input da data (dia, mês e ano) por parte do utilizador
 	exception_finish = true;
 	Data *date;
@@ -867,8 +870,6 @@ void CriarProva(){
 		}
 	}
 
-	cout << endl;
-
 	// Input da hora (horas e minutos) por parte do utilizador
 	exception_finish = true;
 	Hora *hour;
@@ -893,13 +894,16 @@ void CriarProva(){
 		}
 	}
 
+	// Input da duracao (minutos) por parte do utilizador
+	cout << " Duração da prova? ";
+	cin >> duracao;
+	cin.ignore();
+
 	Modalidade *mod = campeonato.findModalidade(nome_modalidade);
 	Infrastrutura *infra = campeonato.findInfrastrutura(nome_infrastrutura);
 
 	//criaçao do objeto da classe prova para adicionar à modalidade
-	Prova *prova;
-
-	prova = new Prova(nome_prova);
+	Prova *prova = new Prova(nome_prova, duracao);
 	prova->setData(date);
 	prova->setHora(hour),
 	prova->setModalidade(mod);
@@ -907,8 +911,7 @@ void CriarProva(){
 
 	campeonato.addProva(prova);
 
-	cout << " Prova adicionada à modalidade com sucesso!";
-
+	cout << endl << " Prova adicionada à modalidade com sucesso!";
 }
 
 
@@ -1187,43 +1190,56 @@ void MenuCalendario(){
 	cout << endl;
 	cout << " Provas que já passaram:" << endl;
 	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
+		string zero_init = "", zero_end = "";
 		Prova *match = campeonato.getProvas()[i];
 		Data *date = match->getData();
-		Hora *hour = match->getHora();
+		Hora *hour = match->getHoraInicio();
+		Hora *hour_end = match->getHoraFim();
+
+		if( hour->getMinuto() < 10 )	// verificar se o minuto da hora inicial é menor que 10
+			zero_init = "0";
+
+		if( hour_end->getMinuto() < 10 )	// verificar se o minuto da hora final é menor que 10
+			zero_end = "0";
 
 		if ( date->getAno() < ano_int ) {
 			cout << " - ";
 			cout << match->getNome() << endl;
-			cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-			cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+			cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+			cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+			cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 		}
 		else if ( date->getAno() == ano_int ) {
 			if( date->getMes() < mes_int ) {
 				cout << " - ";
 				cout << match->getNome() << endl;
-				cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-				cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+				cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+				cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+				cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 			}
 			else if ( date->getMes() == mes_int ) {
 				if( date->getDia() < dia_int ) {
 					cout << " - ";
 					cout << match->getNome() << endl;
-					cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-					cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+					cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+					cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+					cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 				}
 				else if( date->getDia() == dia_int ) {
-					if( hour->getHora() < horas_int ) {
+					if( hour_end->getHora() < horas_int ) {
 						cout << " - ";
 						cout << match->getNome() << endl;
-						cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-						cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+						cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+						cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+						cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 					}
 					else if( hour->getHora() == horas_int ) {
-						if( hour->getMinuto() <= minutos_int ) {
+						if( hour_end->getMinuto() <= minutos_int ) {
 							cout << " - ";
 							cout << match->getNome() << endl;
-							cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-							cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+							cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+							cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+							cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 						}
 					}
 				}
@@ -1231,47 +1247,120 @@ void MenuCalendario(){
 		}
 	}
 
-	// Display no ecrã das provas que já ainda vão acontecer, mediante a data e horas atuais
+	// Display das provas que estão a decorrer, mediante a data e horas atuais
 	cout << endl;
-	cout << " Provas que ainda não aconteceram ou estão a acontecer:" << endl;
+	cout << " Provas que estão a decorrer:" << endl;
 	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
+		string zero_init = "", zero_end = "";
 		Prova *match = campeonato.getProvas()[i];
 		Data *date = match->getData();
-		Hora *hour = match->getHora();
+		Hora *hour = match->getHoraInicio();
+		Hora *hour_end = match->getHoraFim();
+
+		if( hour->getMinuto() < 10 )	// verificar se o minuto da hora inicial é menor que 10
+			zero_init = "0";
+
+		if( hour_end->getMinuto() < 10 )	// verificar se o minuto da hora final é menor que 10
+			zero_end = "0";
+
+		if ( date->getAno() == ano_int ) {
+			if ( date->getMes() == mes_int ) {
+				if( date->getDia() == dia_int ) {
+					if( hour->getHora() < horas_int ) {
+						if( hour_end->getHora() > horas_int ) {
+							cout << " - ";
+							cout << match->getNome() << endl;
+							cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+							cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+							cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
+						}
+						else if( hour_end->getHora() == horas_int ) {
+							if( hour->getMinuto() > minutos_int ) {
+								cout << " - ";
+								cout << match->getNome() << endl;
+								cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+								cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+								cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
+							}
+						}
+					}
+					else if( hour->getHora() == horas_int ) {
+						if( hour->getHora() < hour_end->getHora() ) {
+							cout << " - ";
+							cout << match->getNome() << endl;
+							cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+							cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+							cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
+						}
+						else {
+							if ( hour->getMinuto() < minutos_int && hour_end->getMinuto() > minutos_int ) {
+								cout << " - ";
+								cout << match->getNome() << endl;
+								cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+								cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+								cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Display no ecrã das provas que ainda vão acontecer, mediante a data e horas atuais
+	cout << endl;
+	cout << " Provas que ainda vão acontecer:" << endl;
+	for ( unsigned int i = 0; i < campeonato.getProvas().size(); i++ ) {
+		string zero_init = "", zero_end = "";
+		Prova *match = campeonato.getProvas()[i];
+		Data *date = match->getData();
+		Hora *hour = match->getHoraInicio();
+		Hora *hour_end = match->getHoraFim();
+
+		if( hour->getMinuto() < 10 )	// verificar se o minuto da hora inicial é menor que 10
+			zero_init = "0";
+
+		if( hour_end->getMinuto() < 10 )	// verificar se o minuto da hora final é menor que 10
+			zero_end = "0";
 
 		if ( date->getAno() > ano_int ) {
 			cout << " - ";
 			cout << match->getNome() << endl;
-			cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-			cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+			cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+			cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+			cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 		}
 		else if ( date->getAno() == ano_int ) {
 			if( date->getMes() > mes_int ) {
 				cout << " - ";
 				cout << match->getNome() << endl;
-				cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-				cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+				cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+				cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+				cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 			}
 			else if ( date->getMes() == mes_int ) {
 				if ( date->getDia() > dia_int ) {
 					cout << " - ";
 					cout << match->getNome() << endl;
-					cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-					cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+					cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+					cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+					cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 				}
 				else if ( date->getDia() == dia_int ) {
 					if ( hour->getHora() > horas_int ) {
 						cout << " - ";
 						cout << match->getNome() << endl;
-						cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-						cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+						cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+						cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+						cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 					}
 					else if ( hour->getHora() == horas_int ) {
 						if ( hour->getMinuto() > minutos_int ) {
 							cout << " - ";
 							cout << match->getNome() << endl;
-							cout << "   Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
-							cout << "   Hora: " << hour->getHora() << ":" << hour->getMinuto() << endl;
+							cout << "    Dia: " << date->getDia() << "/" << date->getMes() << "/" << date->getAno() << endl;
+							cout << "    Hora início: " << hour->getHora() << ":" << zero_init << hour->getMinuto() << endl;
+							cout << "    Hora fim: " << hour_end->getHora() << ":" << zero_end << hour_end->getMinuto() << endl;
 						}
 					}
 				}

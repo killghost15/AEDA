@@ -1,9 +1,7 @@
 Basquetebol Prova1
-2015
+14/10/2015
+18:30
 10
-14
-20
-50
  Basquetebol
  Ninho de Pássaro
  Carmelo Anthony
@@ -12,25 +10,21 @@ Basquetebol Prova1
   1
 
 Bruços Prova1
-2015
-8
-15
-16
-10
+15/08/2015
+18:05
+20
  Bruços
  Estádio Nacional de Varsóvia
  Chauncey Billups
   3
- Carlão Sousa
-  1
  Guy-Manuel de Homem-Christo
   2
+ Carlão Sousa
+  1
 
 Maratona Prova1
-2015
-10
-14
-20
-20
+14/10/2015
+09:50
+200
  Maratona
  Allianz Arena

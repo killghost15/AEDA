@@ -704,7 +704,7 @@ void Campeonato::addModalidade(Modalidade *modal) {
 // Carrega a informação das provas do ficheiro provas.txt
 void Campeonato::loadProvas() {
 	string nome_prova, nome_modalidade, nome_infrastrutura, nome_atleta;
-	string ano, mes, dia, classificacao, hora, minuto;
+	string data, hora, classificacao, duracao;
 	string trash;
 	Prova *prova;
 
@@ -716,11 +716,9 @@ void Campeonato::loadProvas() {
 		while ( !fileprova.eof() ) {
 
 			getline(fileprova, nome_prova);
-			getline(fileprova, ano);
-			getline(fileprova, mes);
-			getline(fileprova, dia);
+			getline(fileprova, data);
 			getline(fileprova, hora);
-			getline(fileprova, minuto);
+			getline(fileprova, duracao);
 			getline(fileprova, nome_modalidade);
 			getline(fileprova, nome_infrastrutura);
 
@@ -743,16 +741,24 @@ void Campeonato::loadProvas() {
 				atl_classi.insert(pair<Atleta*, int>(atl, classificacao_int));
 			}
 
-			int ano_int = atoi(ano.c_str());
-			int mes_int = atoi(mes.c_str());
-			int dia_int = atoi(dia.c_str());
-			int hora_int = atoi(hora.c_str());
-			int minuto_int = atoi(minuto.c_str());
+			stringstream ano, mes, dia, horas, minutos;
+			dia << data[0] << data[1];
+			mes << data[3] << data[4];
+			ano << data[6] << data[7] << data[8] << data[9];
+			horas << hora[0] << hora[1];
+			minutos << hora[3] << hora[4];
+
+			int ano_int = atoi(ano.str().c_str());
+			int mes_int = atoi(mes.str().c_str());
+			int dia_int = atoi(dia.str().c_str());
+			int hora_int = atoi(horas.str().c_str());
+			int minuto_int = atoi(minutos.str().c_str());
+			int duracao_int = atoi(duracao.c_str());
 
 			nome_modalidade.erase(nome_modalidade.begin());
 			nome_infrastrutura.erase(nome_infrastrutura.begin());
 
-			prova = new Prova(nome_prova);
+			prova = new Prova(nome_prova, duracao_int);
 
 			Data *date = new Data(dia_int, mes_int, ano_int);
 			Hora *hour = new Hora(hora_int, minuto_int);
@@ -778,11 +784,22 @@ void Campeonato::saveProva() {
 
 	//guarda apenas a primeira prova
 	fileprova << provas[0]->getNome() << endl;
-	fileprova << provas[0]->getData()->getAno() << endl;
-	fileprova << provas[0]->getData()->getMes() << endl;
-	fileprova << provas[0]->getData()->getDia() << endl;
-	fileprova << provas[0]->getHora()->getHora() << endl;
-	fileprova << provas[0]->getHora()->getMinuto() << endl;
+
+	if( provas[0]->getData()->getMes() < 10 && provas[0]->getData()->getDia() >= 10 )
+		fileprova << provas[0]->getData()->getDia() << "/0" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
+	else if( provas[0]->getData()->getMes() >= 10 && provas[0]->getData()->getDia() < 10 )
+		fileprova << "0" << provas[0]->getData()->getDia() << "/" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
+	else if( provas[0]->getData()->getMes() < 10 && provas[0]->getData()->getDia() < 10 )
+		fileprova << "0" << provas[0]->getData()->getDia() << "/0" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
+	else
+		fileprova << provas[0]->getData()->getDia() << "/" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
+
+	if( provas[0]->getHoraInicio()->getMinuto() < 10 )
+		fileprova << provas[0]->getHoraInicio()->getHora() << ":0" << provas[0]->getHoraInicio()->getMinuto() << endl;
+	else
+		fileprova << provas[0]->getHoraInicio()->getHora() << ":" << provas[0]->getHoraInicio()->getMinuto() << endl;
+
+	fileprova << provas[0]->getDuracao() << endl;
 	fileprova << " " << provas[0]->getModalidade()->getNome() << endl;
 	fileprova << " " << provas[0]->getInfrastrutura()->getNome() << endl;
 
@@ -797,11 +814,24 @@ void Campeonato::saveProva() {
 	for ( unsigned int i = 1; i < provas.size(); i++ ) {
 		fileprova << endl;
 		fileprova << provas[i]->getNome() << endl;
-		fileprova << provas[i]->getData()->getAno() << endl;
-		fileprova << provas[i]->getData()->getMes() << endl;
-		fileprova << provas[i]->getData()->getDia() << endl;
-		fileprova << provas[0]->getHora()->getHora() << endl;
-		fileprova << provas[0]->getHora()->getMinuto() << endl;
+
+		if( provas[i]->getData()->getMes() < 10 && provas[i]->getData()->getDia() >= 10 )
+			fileprova << provas[i]->getData()->getDia() << "/0" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
+		else if( provas[i]->getData()->getMes() >= 10 && provas[i]->getData()->getDia() < 10 )
+			fileprova << "0" << provas[0]->getData()->getDia() << "/" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
+		else if( provas[i]->getData()->getMes() < 10 && provas[i]->getData()->getDia() < 10 )
+			fileprova << "0" << provas[0]->getData()->getDia() << "/0" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
+		else
+			fileprova << provas[i]->getData()->getDia() << "/" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
+
+		if( provas[i]->getHoraInicio()->getHora() >= 10 && provas[i]->getHoraInicio()->getMinuto() < 10 )
+			fileprova << provas[i]->getHoraInicio()->getHora() << ":0" << provas[i]->getHoraInicio()->getMinuto() << endl;
+		else if( provas[i]->getHoraInicio()->getHora() < 10 && provas[i]->getHoraInicio()->getMinuto() < 10 )
+			fileprova << provas[i]->getHoraInicio()->getHora() << ":0" << provas[i]->getHoraInicio()->getMinuto() << endl;
+		else
+			fileprova << provas[i]->getHoraInicio()->getHora() << ":" << provas[i]->getHoraInicio()->getMinuto() << endl;
+
+		fileprova << provas[i]->getDuracao() << endl;
 		fileprova << " " << provas[i]->getModalidade()->getNome() << endl;
 		fileprova << " " << provas[i]->getInfrastrutura()->getNome() << endl;
 

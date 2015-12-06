@@ -2,8 +2,9 @@
 
 
 
-Prova::Prova(string name){
+Prova::Prova(string name, int duration){
 	nome = name;
+	duracao = duration;
 }
 
 
@@ -12,12 +13,27 @@ string Prova::getNome() const {
 	return nome;
 }
 
+int Prova::getDuracao() const {
+	return duracao;
+}
+
 Data* Prova::getData() {
 	return data;
 }
 
-Hora* Prova::getHora() {
+Hora* Prova::getHoraInicio() {
 	return hora;
+}
+
+Hora* Prova::getHoraFim() {
+	Hora* hora_final;
+
+	if( (hora->getMinuto()+duracao) < 60 )
+		hora_final = new Hora(hora->getHora(), hora->getMinuto()+duracao);
+	else
+		hora_final = new Hora(hora->getHora()+((hora->getMinuto()+duracao)/60), (hora->getMinuto()+duracao)%60);
+
+	return hora_final;
 }
 
 Modalidade* Prova::getModalidade() {
