@@ -14,7 +14,7 @@ vector<Modalidade*> Campeonato::getModalidades() {
 	return modalidades;
 }
 
-vector<Prova*> Campeonato::getProvas() {
+vector<Prova*> Campeonato::getProvas()const {
 	return provas;
 }
 
@@ -1048,6 +1048,4 @@ void Campeonato::addFuncionario(Funcionario *func) {
 
 //BSTs
 
-void Campeonato::inserirProvaBST(Prova *prova){
-	TreeProva.insert(prova);
-}
+

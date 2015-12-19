@@ -20,7 +20,7 @@ public:
 	unsigned int getAno() const;
 	// Metodo check para verificar se os valores dos membros-dado estão de acordo com o calendario juliano
 	void checkData(unsigned int day, unsigned int month, unsigned int year);
-	bool operator < (Data d){
+	bool operator < (Data d)const{
 		if (this->ano < d.ano)return true;
 		if (this->ano == d.ano){
 			if (this->mes < d.mes)return true;

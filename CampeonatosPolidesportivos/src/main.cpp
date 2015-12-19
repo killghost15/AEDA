@@ -14,9 +14,140 @@ using namespace std;
 
 bool exception_finish = true;
 void MenuInicial();
+void AdicionarEquipa();
+void RetirarEquipa();
+void AdicionarAtletasEquipa();
+void RetirarAtleta();
+void MudarAtletaEquipa();
+void MenuEquipasAtletas();
+void AdicionarDesporto();
+void RetirarDesporto();
+void AdicionarAtletasModalidade();
+void RetirarAtletasModalidade();
+void MenuDesportosModalidades();
+void CriarProva();
+void EliminarProva();
+void LancaClassificacoesProva();
+void MudarInfrastruturaProva();
+void MenuProvas();
+void MenuCalendario();
+void AdicionarInfrastrutura();
+void ApagarInfrastrutura();
+void AdicionarFuncionario();
+void ApagarFuncionario();
+void MenuInfrastruturas();
+void InformacoesUteis();
+void ListaDeAtletas();
+void ListaDeClassificacoes();
+void ListaDeFuncionarios();
+void MenuListagens();
+void MenuInicial2();
+
+// Verifica se o ficheiro tem alguma coisa. Retorna true se nao tiver e false se tiver
+bool file_isEmpty( const char* filename ) {
+	ifstream file;
+	string trash;
+	file.open(filename);
+
+	getline(file, trash);
+
+	if ( trash == "" )
+		return true;
+
+	return false;
+}
+Prova defa("vazio",0);
+Campeonato campeonato(defa);
+int main() {
+	// Elimina o ficheiro se nao tiver nada
+	if ( file_isEmpty(file_equipas) == true )
+		remove(file_equipas);
+	if ( file_isEmpty(file_atletas) == true )
+		remove(file_atletas);
+	if ( file_isEmpty(file_modalidades) == true )
+		remove(file_modalidades);
+	if ( file_isEmpty(file_desportos) == true )
+		remove(file_desportos);
+	if ( file_isEmpty(file_infrastruturas) == true )
+		remove(file_infrastruturas);
+	if ( file_isEmpty(file_funcionarios) == true )
+		remove(file_funcionarios);
+	if ( file_isEmpty(file_provas) == true )
+		remove(file_provas);
+
+	// Carrega a informação para os respetivos vetores
+	campeonato.loadEquipas();
+	campeonato.loadAtletas();
+	campeonato.loadModalidades();
+	campeonato.loadDesportos();
+	campeonato.loadInfrastruturas();
+	campeonato.loadFuncionarios();
+	campeonato.loadProvas();
+	campeonato.eraseProva("vazio");
+	campeonato.provasToBST();
+	// Chama o Menu Inicial
+	MenuInicial();
+
+	return 0;
+}
 
 
-Campeonato campeonato;
+
+
+void MenuInicial2(){
+	int escolha_listagens;
+
+		cout << "-------------------------------------------------------------" << endl;
+		cout << "-                     *** Estruturas de dados ***           -" << endl;
+		cout << "-                                                           -" << endl;
+		cout << "- Qual das estruturas de daods pretende ?                   -" << endl;
+		cout << "-                                                           -" << endl;
+		cout << "- 1. Calendário com a BST                                   -" << endl;
+		cout << "- 2.                                                        -" << endl;
+		cout << "- 3.                                                        -" << endl;
+		cout << "- 4. Voltar ao Menu Principal                               -" << endl;
+		cout << "-                                                           -" << endl;
+		cout << "-------------------------------------------------------------" << endl;
+
+		cout << " O que pretende fazer? ";
+		cin >> escolha_listagens;
+
+		if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 ) {
+			cout << " Por favor, faça uma escolha adequada.";
+			cout << string(8,'\n');
+			MenuInicial();
+		}
+		char resposta;
+		switch (escolha_listagens) {
+			case 1:
+				cout << string(8,'\n');
+				campeonato.showProvasCalendar();
+				cout <<endl;
+				cout << "Deseja voltar ao menu inicial (s/n) ?";
+				cin >>resposta;
+
+				while(resposta != 's'){
+					cout << "Coloque a resposta s quando quiser sair: ";
+					cin >> resposta;
+				}
+				cout<<string(8,'\n');
+				MenuInicial();
+				break;
+			case 2:
+				cout << string(8,'\n');
+
+				break;
+			case 3:
+				cout << string(8,'\n');
+
+				break;
+			case 4:
+				cout << string(8,'\n');
+				MenuInicial();
+				break;
+
+		}
+}
 
 
 /**
@@ -1778,21 +1909,22 @@ void MenuInicial() {
 	cout << "----------------------------------------------------" << endl;
 	cout << "-            *** Menu Principal ***                -" << endl;
 	cout << "-                                                  -" << endl;
-	cout << "- 1. Manutenção de Equipas e Atletas               -" << endl;
-	cout << "- 2. Manutenção de Desportos e Modalidades         -" << endl;
-	cout << "- 3. Manutenção das Provas                         -" << endl;
-	cout << "- 4. Manutenção do Calendário                      -" << endl;
-	cout << "- 5. Manutenção de Infrastruturas e Funcionários   -" << endl;
-	cout << "- 6. Informações úteis                             -" << endl;
-	cout << "- 7. Listagens                                     -" << endl;
-	cout << "- 8. Terminar o programa                           -" << endl;
+	cout << "- 1. Menu para as Estruturas de dados do 2ºtrabalho-" << endl;
+	cout << "- 2. Manutenção de Equipas e Atletas               -" << endl;
+	cout << "- 3. Manutenção de Desportos e Modalidades         -" << endl;
+	cout << "- 4. Manutenção das Provas                         -" << endl;
+	cout << "- 5. Manutenção do Calendário                      -" << endl;
+	cout << "- 6. Manutenção de Infrastruturas e Funcionários   -" << endl;
+	cout << "- 7. Informações úteis                             -" << endl;
+	cout << "- 8. Listagens                                     -" << endl;
+	cout << "- 9. Terminar o programa                           -" << endl;
 	cout << "-                                                  -" << endl;
 	cout << "----------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_menu;
 
-	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6 && escolha_menu != 7 && escolha_menu != 8) {
+	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 && escolha_menu != 5 && escolha_menu != 6 && escolha_menu != 7 && escolha_menu != 8 && escolha_menu != 9) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInicial();
@@ -1800,84 +1932,41 @@ void MenuInicial() {
 
 	switch (escolha_menu) {
 		case 1:
-			cout << string(8,'\n');
-			MenuEquipasAtletas();
+			cout <<string(8,'\n');
+			MenuInicial2();
 			break;
 		case 2:
 			cout << string(8,'\n');
-			MenuDesportosModalidades();
+			MenuEquipasAtletas();
 			break;
 		case 3:
 			cout << string(8,'\n');
-			MenuProvas();
+			MenuDesportosModalidades();
 			break;
 		case 4:
+			cout << string(8,'\n');
+			MenuProvas();
+			break;
+		case 5:
 			cout << string(8,'\n');
 			MenuCalendario();
 			cout << string (8, '\n');
 			break;
-		case 5:
+		case 6:
 			cout << string(8,'\n');
 			MenuInfrastruturas();
 			break;
-		case 6:
+		case 7:
 			cout << string(8,'\n');
 			InformacoesUteis();
 			break;
-		case 7:
+		case 8:
 			cout << string(8,'\n');
 			MenuListagens();
 			break;
-		case 8:
+		case 9:
 			return;
 	}
 }
 
-
-// Verifica se o ficheiro tem alguma coisa. Retorna true se nao tiver e false se tiver
-bool file_isEmpty( const char* filename ) {
-	ifstream file;
-	string trash;
-	file.open(filename);
-
-	getline(file, trash);
-
-	if ( trash == "" )
-		return true;
-
-	return false;
-}
-
-
-int main() {
-	// Elimina o ficheiro se nao tiver nada
-	if ( file_isEmpty(file_equipas) == true )
-		remove(file_equipas);
-	if ( file_isEmpty(file_atletas) == true )
-		remove(file_atletas);
-	if ( file_isEmpty(file_modalidades) == true )
-		remove(file_modalidades);
-	if ( file_isEmpty(file_desportos) == true )
-		remove(file_desportos);
-	if ( file_isEmpty(file_infrastruturas) == true )
-		remove(file_infrastruturas);
-	if ( file_isEmpty(file_funcionarios) == true )
-		remove(file_funcionarios);
-	if ( file_isEmpty(file_provas) == true )
-		remove(file_provas);
-
-	// Carrega a informação para os respetivos vetores
-	campeonato.loadEquipas();
-	campeonato.loadAtletas();
-	campeonato.loadModalidades();
-	campeonato.loadDesportos();
-	campeonato.loadInfrastruturas();
-	campeonato.loadFuncionarios();
-	campeonato.loadProvas();
-
-	// Chama o Menu Inicial
-	MenuInicial();
-
-	return 0;
-}
 

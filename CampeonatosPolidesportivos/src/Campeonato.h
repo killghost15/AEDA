@@ -2,10 +2,11 @@
 #define CAMPEONATO_H
 
 
-#include <iostream>
+
 #include <fstream>
 #include <vector>
 #include <stdlib.h>
+#include "BST.h"
 #include <map>
 
 #include "Desporto.h"
@@ -22,7 +23,7 @@
 #define file_infrastruturas "infrastruturas.txt"
 #define file_funcionarios "funcionarios.txt"
 
-using namespace std;
+
 
 
 class Campeonato {
@@ -33,13 +34,17 @@ class Campeonato {
 	vector<Desporto*> desportos;
 	vector<Infrastrutura*> infrastruturas;
 	vector<Funcionario*> funcionarios;
-	BST<Prova*> TreeProva;
+
 public:
+	BST<Prova> TreeProva;
+	Campeonato(Prova prova):
+		TreeProva(prova){
+	};
 	// Metodos get
 	vector<Equipa*> getEquipas();
 	vector<Atleta*> getAtletas();
 	vector<Modalidade*> getModalidades();
-	vector<Prova*> getProvas();
+	vector<Prova*> getProvas()const;
 	vector<Desporto*> getDesportos();
 	vector<Infrastrutura*> getInfrastruturas();
 	vector<Funcionario*> getFuncionarios();
@@ -108,7 +113,19 @@ public:
 	void changeModalidade(int index, Modalidade *mod);
 	// Metodos para determinar a data do inicio e do fim do campeonato
 	//metodos da BST
-	void inserirProvaBST(Prova *prova);
+	void inserirProvaBST(const Prova prova){
+		TreeProva.insert(prova);
+	};
+	void provasToBST(){
+		for (vector<Prova*>::const_iterator it=provas.begin();it!=provas.end();it++ ){
+			TreeProva.insert(*(*it));
+		}
+	}
+	void showProvasCalendar(){
+		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
+			cout<< it.retrieve().getNome()<<":"<< it.retrieve().getDuracao()<<endl;
+		}
+	}
 
 
 };

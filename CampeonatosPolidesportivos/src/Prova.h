@@ -28,7 +28,7 @@ public:
 	// Metodos get
 	string getNome() const;
 	int getDuracao() const;
-	Data* getData();
+	Data* getData()const;
 	Hora* getHoraInicio();
 	Hora* getHoraFim();
 	Modalidade* getModalidade();
@@ -40,10 +40,10 @@ public:
 	void setModalidade(Modalidade *mod);
 	void setInfrastrutura(Infrastrutura *infra);
 	void setClassificacoesAtletas(map<Atleta*, int> map);
-	bool operator < (Prova prova){
-		if (this->getData()< prova.getData())return true;
-		if (this->getData()==prova.getData()){
-			if (this->getNome() < prova.getNome())return true;
+	bool operator < ( const Prova prova)const{
+		if (getData()< prova.getData())return true;
+		if (getData()==prova.getData()){
+			if (getNome() < prova.getNome())return true;
 		}
 		return false;
 	};

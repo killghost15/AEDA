@@ -17,7 +17,7 @@ int Prova::getDuracao() const {
 	return duracao;
 }
 
-Data* Prova::getData() {
+Data* Prova::getData()const  {
 	return data;
 }
 
