@@ -33,6 +33,7 @@ class Campeonato {
 	vector<Desporto*> desportos;
 	vector<Infrastrutura*> infrastruturas;
 	vector<Funcionario*> funcionarios;
+	BST<Prova*> TreeProva;
 public:
 	// Metodos get
 	vector<Equipa*> getEquipas();
@@ -106,6 +107,9 @@ public:
 	int findModalidadeIndex(string nomeModalidade);
 	void changeModalidade(int index, Modalidade *mod);
 	// Metodos para determinar a data do inicio e do fim do campeonato
+	//metodos da BST
+	void inserirProvaBST(Prova *prova);
+
 
 };
 

@@ -40,6 +40,13 @@ public:
 	void setModalidade(Modalidade *mod);
 	void setInfrastrutura(Infrastrutura *infra);
 	void setClassificacoesAtletas(map<Atleta*, int> map);
+	bool operator < (Prova prova){
+		if (this->getData()< prova.getData())return true;
+		if (this->getData()==prova.getData()){
+			if (this->getNome() < prova.getNome())return true;
+		}
+		return false;
+	};
 };
 
 

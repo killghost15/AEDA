@@ -1045,3 +1045,9 @@ void Campeonato::addFuncionario(Funcionario *func) {
 	saveFuncionario();
 }
 
+
+//BSTs
+
+void Campeonato::inserirProvaBST(Prova *prova){
+	TreeProva.insert(prova);
+}
