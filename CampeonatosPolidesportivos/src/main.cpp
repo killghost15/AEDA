@@ -142,6 +142,7 @@ void MenuInicial2(){
 				v=campeonato.getDayorNext(dia,mes,ano);
 				if (v.size()==0){
 					cout << "Não existem provas neste mês!"<<endl;
+					cout<<string(8,'\n');
 					MenuInicial2();
 					break;
 				}
@@ -150,6 +151,14 @@ void MenuInicial2(){
 				for (unsigned int j=0;j<v.size();j++)
 					cout<<v[j].getNome()<<":"<<v[j].getInfrastrutura()->getNome()<<" em "<<v[j].getInfrastrutura()->getCidade()<<endl;
 
+				cout << "Deseja voltar ao menu inicial (s/n) ?";
+				cin >>resposta;
+
+				while(resposta != 's'){
+					cout << "Coloque a resposta s quando quiser sair: ";
+					cin >> resposta;
+					}
+				cout<<string(8,'\n');
 				MenuInicial2();
 				break;
 				}
