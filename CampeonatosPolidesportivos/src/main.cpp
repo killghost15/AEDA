@@ -41,6 +41,7 @@ void ListaDeAtletas();
 void ListaDeClassificacoes();
 void ListaDeFuncionarios();
 void MenuListagens();
+void MenuBST();
 void MenuInicial2();
 
 // Verifica se o ficheiro tem alguma coisa. Retorna true se nao tiver e false se tiver
@@ -94,18 +95,19 @@ int main() {
 
 
 
-void MenuInicial2(){
+void MenuBST(){
 	int escolha_listagens;
 
 		cout << "-------------------------------------------------------------" << endl;
-		cout << "-                     *** Estruturas de dados ***           -" << endl;
+		cout << "-                     *** BST opções ***                    -" << endl;
 		cout << "-                                                           -" << endl;
 		cout << "- Qual das estruturas de dados pretende ?                   -" << endl;
 		cout << "-                                                           -" << endl;
 		cout << "- 1. Calendário com a BST                                   -" << endl;
 		cout << "- 2. Ver as provas existentes numa data específica          -" << endl;
 		cout << "- 3.                                                        -" << endl;
-		cout << "- 4. Voltar ao Menu Principal                               -" << endl;
+		cout << "- 4. Voltar ao Menu das estruturas de dados                  -" << endl;
+		cout << "- 5. Voltar ao Menu Principal                               -" << endl;
 		cout << "-                                                           -" << endl;
 		cout << "-------------------------------------------------------------" << endl;
 
@@ -133,7 +135,7 @@ void MenuInicial2(){
 					cin >> resposta;
 				}
 				cout<<string(8,'\n');
-				MenuInicial2();
+				MenuBST();
 				break;
 			case 2:
 				cout << string(8,'\n');
@@ -143,7 +145,7 @@ void MenuInicial2(){
 				if (v.size()==0){
 					cout << "Não existem provas neste mês!"<<endl;
 					cout<<string(8,'\n');
-					MenuInicial2();
+					MenuBST();
 					break;
 				}
 				else{
@@ -159,7 +161,7 @@ void MenuInicial2(){
 					cin >> resposta;
 					}
 				cout<<string(8,'\n');
-				MenuInicial2();
+				MenuBST();
 				break;
 				}
 			case 3:
@@ -167,6 +169,10 @@ void MenuInicial2(){
 
 				break;
 			case 4:
+				cout << string(8,'\n');
+				MenuInicial2();
+				break;
+			case 5:
 				cout << string(8,'\n');
 				MenuInicial();
 				break;
@@ -1925,8 +1931,47 @@ void MenuListagens() {
 /**
  *  MENU INICIAL
  */
+void MenuInicial2(){
+	int escolha_menu;
+
+		cout << "----------------------------------------------------" << endl;
+		cout << "-*** Menu das Estruturas de dados do 2ºtrabalho ***-" << endl;
+		cout << "-                                                  -" << endl;
+		cout << "- 1. BST                                           -" << endl;
+		cout << "- 2. Filas de prioridade                           -" << endl;
+		cout << "- 3. Tabelas de dispersão                          -" << endl;
+		cout << "- 4. Voltar ao menu inicial                        -" << endl;
 
 
+		cout << " O que pretende fazer? ";
+		cin >> escolha_menu;
+
+		if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3 && escolha_menu != 4 ) {
+			cout << " Por favor, faça uma escolha adequada.";
+			cout << string(8,'\n');
+			MenuInicial2();
+		}
+
+		switch (escolha_menu) {
+			case 1:
+				cout <<string(8,'\n');
+				MenuBST();
+				break;
+			case 2:
+				cout << string(8,'\n');
+
+				break;
+			case 3:
+				cout <<string(8,'\n');
+				break;
+			case 4:
+				cout <<string(8,'\n');
+				MenuInicial();
+				break;
+
+}
+
+}
 // Menu Inicial, chama todos os outros Menus mediante a escolha do utilizador
 void MenuInicial() {
 	int escolha_menu;
