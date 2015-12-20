@@ -84,7 +84,8 @@ int main() {
 	campeonato.loadInfrastruturas();
 	campeonato.loadFuncionarios();
 	campeonato.loadProvas();
-
+	//maneira para corrigir o bugg mas tem q ser resolvido
+	campeonato.eraseProva("");
 	campeonato.provasToBST();
 	//campeonato.removeProvaBST(defa);
 	// Chama o Menu Inicial
@@ -105,12 +106,13 @@ void InserirProva(){
 	cin >>duracao;
 	unsigned int hora,minuto,dia,mes,ano;
 	char pontos;
+	char barra;
 
 	Prova *p=new Prova(nome,duracao);
 	Prova f(nome,duracao);
 
-	cout << "Data da prova (dia mes ano):";
-	cin >>dia>>mes>>ano;
+	cout << "Data da prova (dia/mes/ano):";
+	cin >>dia>>barra>>mes>>barra>>ano;
 	cin.sync();
 	Data *d=new Data(dia,mes,ano);
 	p->setData(d);

@@ -785,15 +785,15 @@ void Campeonato::saveProva() {
 	//guarda apenas a primeira prova
 	fileprova << provas[0]->getNome() << endl;
 
-	if( provas[0]->getData()->getMes() < 10 && provas[0]->getData()->getDia() >= 10 )
-		fileprova << provas[0]->getData()->getDia() << "/0" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
-	else if( provas[0]->getData()->getMes() >= 10 && provas[0]->getData()->getDia() < 10 )
+	//if( provas[0]->getData()->getMes() < 10 && provas[0]->getData()->getDia() >= 10 )
+		fileprova << provas[0]->getData()->getDia() << "/" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
+	/*else if( provas[0]->getData()->getMes() >= 10 && provas[0]->getData()->getDia() < 10 )
 		fileprova << "0" << provas[0]->getData()->getDia() << "/" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
 	else if( provas[0]->getData()->getMes() < 10 && provas[0]->getData()->getDia() < 10 )
 		fileprova << "0" << provas[0]->getData()->getDia() << "/0" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
 	else
 		fileprova << provas[0]->getData()->getDia() << "/" << provas[0]->getData()->getMes() << "/" << provas[0]->getData()->getAno() << endl;
-
+*/
 	if( provas[0]->getHoraInicio()->getMinuto() < 10 )
 		fileprova << provas[0]->getHoraInicio()->getHora() << ":0" << provas[0]->getHoraInicio()->getMinuto() << endl;
 	else
@@ -815,15 +815,15 @@ void Campeonato::saveProva() {
 		fileprova << endl;
 		fileprova << provas[i]->getNome() << endl;
 
-		if( provas[i]->getData()->getMes() < 10 && provas[i]->getData()->getDia() >= 10 )
-			fileprova << provas[i]->getData()->getDia() << "/0" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
-		else if( provas[i]->getData()->getMes() >= 10 && provas[i]->getData()->getDia() < 10 )
+		//if( provas[i]->getData()->getMes() < 10 && provas[i]->getData()->getDia() >= 10 )
+			fileprova << provas[i]->getData()->getDia() << "/" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
+		/*else if( provas[i]->getData()->getMes() >= 10 && provas[i]->getData()->getDia() < 10 )
 			fileprova << "0" << provas[0]->getData()->getDia() << "/" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
 		else if( provas[i]->getData()->getMes() < 10 && provas[i]->getData()->getDia() < 10 )
 			fileprova << "0" << provas[0]->getData()->getDia() << "/0" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
 		else
 			fileprova << provas[i]->getData()->getDia() << "/" << provas[i]->getData()->getMes() << "/" << provas[i]->getData()->getAno() << endl;
-
+*/
 		if( provas[i]->getHoraInicio()->getHora() >= 10 && provas[i]->getHoraInicio()->getMinuto() < 10 )
 			fileprova << provas[i]->getHoraInicio()->getHora() << ":0" << provas[i]->getHoraInicio()->getMinuto() << endl;
 		else if( provas[i]->getHoraInicio()->getHora() < 10 && provas[i]->getHoraInicio()->getMinuto() < 10 )
