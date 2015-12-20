@@ -742,9 +742,19 @@ void Campeonato::loadProvas() {
 			}
 
 			stringstream ano, mes, dia, horas, minutos;
-			dia << data[0] << data[1];
-			mes << data[3] << data[4];
-			ano << data[6] << data[7] << data[8] << data[9];
+			unsigned int num=0;
+			for (unsigned int i=0; data[i] !='/';i++){
+			dia << data[i];
+			num++;
+			}
+			num+=1;
+			for (unsigned int j=num;data[j]!='/';j++){
+			mes << data[j];
+			num++;
+			}
+			num+=1;
+			for (unsigned int k=num;k<data.size();k++)
+			ano << data[k];
 			horas << hora[0] << hora[1];
 			minutos << hora[3] << hora[4];
 
