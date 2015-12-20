@@ -84,8 +84,9 @@ int main() {
 	campeonato.loadInfrastruturas();
 	campeonato.loadFuncionarios();
 	campeonato.loadProvas();
-	campeonato.eraseProva("vazio");
+
 	campeonato.provasToBST();
+	//campeonato.removeProvaBST(defa);
 	// Chama o Menu Inicial
 	MenuInicial();
 
@@ -93,7 +94,59 @@ int main() {
 }
 
 
+void InserirProva(){
+	string nome,modalidade,infraestrutura,cidade;
+	int duracao;
+	cin.sync();
+	cout << "Nome da prova:";
+	getline(cin,nome);
+	cin.sync();
+	cout << "Duracao em minutos:";
+	cin >>duracao;
+	unsigned int hora,minuto,dia,mes,ano;
+	char pontos;
 
+	Prova *p=new Prova(nome,duracao);
+	Prova f(nome,duracao);
+
+	cout << "Data da prova (dia mes ano):";
+	cin >>dia>>mes>>ano;
+	cin.sync();
+	Data *d=new Data(dia,mes,ano);
+	p->setData(d);
+	f.setData(d);
+	cout << "Hora prevista de inicio (hora:minutos):";
+	cin >> hora >>pontos >>minuto;
+	cin.sync();
+	Hora *h=new Hora(hora,minuto);
+	p->setHora(h);
+	f.setHora(h);
+	cout << "Modalidade desta prova:";
+	getline(cin,modalidade);
+	cin.sync();
+	Modalidade* mod=new Modalidade(modalidade);
+	p->setModalidade(mod);
+	f.setModalidade(mod);
+	cout << "Nome da infrastrutura da prova:";
+	getline(cin,infraestrutura);
+	cin.sync();
+
+	cout << "Cidade da infraestrutura:";
+	getline(cin,cidade);
+	cin.sync();
+	Infrastrutura *infra=new Infrastrutura(infraestrutura,cidade);
+	p->setInfrastrutura(infra);
+	f.setInfrastrutura(infra);
+	campeonato.inserirProvaBST(f);
+	campeonato.addProva(p);
+	string nada;
+	cout <<"A sua Prova foi inserida"<<endl;
+	cout << "Introduza um caracter seguido de enter para continuar para o menu das BST";
+	cin >> nada;
+
+
+
+}
 
 void MenuBST(){
 	int escolha_listagens;
@@ -105,8 +158,8 @@ void MenuBST(){
 		cout << "-                                                           -" << endl;
 		cout << "- 1. Calendário com a BST                                   -" << endl;
 		cout << "- 2. Ver as provas existentes numa data específica          -" << endl;
-		cout << "- 3.                                                        -" << endl;
-		cout << "- 4. Voltar ao Menu das estruturas de dados                  -" << endl;
+		cout << "- 3. Inserir Prova na BST                                   -" << endl;
+		cout << "- 4. Voltar ao Menu das estruturas de dados                 -" << endl;
 		cout << "- 5. Voltar ao Menu Principal                               -" << endl;
 		cout << "-                                                           -" << endl;
 		cout << "-------------------------------------------------------------" << endl;
@@ -114,7 +167,7 @@ void MenuBST(){
 		cout << " O que pretende fazer? ";
 		cin >> escolha_listagens;
 
-		if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 ) {
+		if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5) {
 			cout << " Por favor, faça uma escolha adequada.";
 			cout << string(8,'\n');
 			MenuInicial();
@@ -166,6 +219,10 @@ void MenuBST(){
 				}
 			case 3:
 				cout << string(8,'\n');
+				InserirProva();
+				cout << string(8,'\n');
+				MenuBST();
+
 
 				break;
 			case 4:

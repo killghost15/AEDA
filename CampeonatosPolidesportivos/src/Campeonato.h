@@ -113,13 +113,21 @@ public:
 	void changeModalidade(int index, Modalidade *mod);
 	// Metodos para determinar a data do inicio e do fim do campeonato
 	//metodos da BST
+	void removeProvaBST(const Prova prova){
+		TreeProva.remove(prova);
+	};
 	void inserirProvaBST(const Prova prova){
 		TreeProva.insert(prova);
 	};
 	void provasToBST(){
 		for (vector<Prova*>::const_iterator it=provas.begin();it!=provas.end();it++ ){
+			//Cena para disfarçar o problema do load...
+			if ((*it)->getNome()==""){}
+			else{
 			TreeProva.insert(*(*it));
 		}
+		}
+
 	}
 	void showProvasCalendar(){
 		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
@@ -165,7 +173,7 @@ public:
 					}
 				}
 		return v;
-	}
+	};
 
 
 };
