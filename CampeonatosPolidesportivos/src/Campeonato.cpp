@@ -766,7 +766,7 @@ void Campeonato::loadProvas() {
 			int duracao_int = atoi(duracao.c_str());
 
 			//nome_modalidade.erase(nome_modalidade.begin());
-			//nome_infrastrutura.erase(nome_infrastrutura.begin());
+			nome_infrastrutura.erase(nome_infrastrutura.begin());
 
 			prova = new Prova(nome_prova, duracao_int);
 

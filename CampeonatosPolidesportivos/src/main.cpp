@@ -127,6 +127,9 @@ void InserirProva(){
 	getline(cin,modalidade);
 	cin.sync();
 	Modalidade* mod=new Modalidade(modalidade);
+	if (!campeonato.existsModalidade(modalidade)){
+		campeonato.addModalidade(mod);
+	}
 	p->setModalidade(mod);
 	f.setModalidade(mod);
 	cout << "Nome da infrastrutura da prova:";
@@ -137,6 +140,9 @@ void InserirProva(){
 	getline(cin,cidade);
 	cin.sync();
 	Infrastrutura *infra=new Infrastrutura(infraestrutura,cidade);
+	if (!campeonato.existsInfrastrutura(infraestrutura)){
+		campeonato.addInfrastrutura(infra);
+	}
 	p->setInfrastrutura(infra);
 	f.setInfrastrutura(infra);
 	campeonato.inserirProvaBST(f);
