@@ -35,6 +35,12 @@ public:
 	Infrastrutura* getInfrastrutura();
 	map<Atleta*, int> getClassificacoesAtletas();
 	// Metodo set
+	void setNome(string name){
+		nome=name;
+	};
+	void setDuracao(int num){
+		duracao=num;
+	}
 	void setData(Data *date);
 	void setHora(Hora *hour);
 	void setModalidade(Modalidade *mod);

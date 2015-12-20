@@ -149,6 +149,84 @@ void InserirProva(){
 
 
 }
+void RemoverProvaBST(){
+	string nome;
+	cin.sync();
+	cout << "Qual o nome da prova que deseja remover:";
+	getline(cin,nome);
+	cin.sync();
+	campeonato.removeProvaBST(nome);
+	campeonato.eraseProva(nome);
+	cout  <<"Prova cancelada com sucesso, lamentamos a quem comprou bilhete "<<endl;
+}
+
+void ModifyProva(){
+
+	int opcao;
+	string nome;
+	bool s=true;
+	cout << "O que pretende alterar  ?"<<endl;
+	cout << "opções: 1. mudar nome      "<<endl;
+	cout << "        2. alterar a data da prova"<<endl;
+	cout << "        3. alterar duração "<<endl;
+	cout << "        4. alterar hora de inicio "<<endl;
+	cin.sync();
+	cout <<"opcao: ";
+	cin>>opcao;
+	cin.sync();
+	while(s ){
+		if(opcao == 1 || opcao==2 || opcao==3 || opcao== 4)
+			s=false;
+		else{
+		cout << "escolha uma das opções por favor!";
+		cin >>opcao;
+		}
+	}
+	cin.sync();
+	cout <<"nome da prova:";
+	getline(cin,nome);
+	Prova tmp=campeonato.encontraProvaBST(nome);
+	Prova *p=campeonato.findProva(nome);
+	campeonato.removeProvaBST(nome);
+	campeonato.eraseProva(nome);
+	cin.sync();
+	if(opcao==1){
+		string newname;
+		cout << "Novo nome:";
+		getline(cin,newname);
+		tmp.setNome(newname);
+	}
+
+	if(opcao==2){
+		unsigned int dia,mes,ano;
+		char barra;
+		cout <<"Data actual:"<<endl;
+		cout << tmp.getData()->getDia()<<"/"<<tmp.getData()->getMes()<<"/"<<tmp.getData()->getAno()<<endl;
+		cout<< "Nova Data(dia/mes/ano):";
+		cin >>dia>>barra>>mes>>barra>>ano;
+		Data *d=new Data(dia,mes,ano);
+		tmp.setData(d);
+	}
+	if(opcao==3){
+		int duracao;
+		cout <<"Duracao actual:"<<tmp.getDuracao()<<endl;
+		cin >>duracao;
+		tmp.setDuracao(duracao);
+	}
+	if (opcao==4){
+		unsigned int horas,minutos;
+		char pontos;
+		cout <<"Hora de inicio atual:"<<tmp.getHoraInicio()->getHora()<<":"<<tmp.getHoraInicio()->getMinuto()<<endl;
+		cout <<"Nova hora (horas:minutos):";
+		cin >>horas>>pontos>>minutos;
+		Hora *h=new Hora(horas,minutos);
+		tmp.setHora(h);
+	}
+
+	campeonato.inserirProvaBST(tmp);
+	campeonato.addProva(p);
+
+}
 
 void MenuBST(){
 	int escolha_listagens;
@@ -161,15 +239,17 @@ void MenuBST(){
 		cout << "- 1. Calendário com a BST                                   -" << endl;
 		cout << "- 2. Ver as provas existentes numa data específica          -" << endl;
 		cout << "- 3. Inserir Prova na BST                                   -" << endl;
-		cout << "- 4. Voltar ao Menu das estruturas de dados                 -" << endl;
-		cout << "- 5. Voltar ao Menu Principal                               -" << endl;
+		cout << "- 4. Cancelar Prova da BST(remover)                         -" << endl;
+		cout << "- 5. Modificar uma Prova                                    -" << endl;
+		cout << "- 6. Voltar ao Menu das estruturas de dados                 -" << endl;
+		cout << "- 7. Voltar ao Menu Principal                               -" << endl;
 		cout << "-                                                           -" << endl;
 		cout << "-------------------------------------------------------------" << endl;
 
 		cout << " O que pretende fazer? ";
 		cin >> escolha_listagens;
 
-		if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5) {
+		if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5 && escolha_listagens != 6 && escolha_listagens !=7) {
 			cout << " Por favor, faça uma escolha adequada.";
 			cout << string(8,'\n');
 			MenuInicial();
@@ -229,9 +309,21 @@ void MenuBST(){
 				break;
 			case 4:
 				cout << string(8,'\n');
-				MenuInicial2();
+				RemoverProvaBST();
+				cout << string(8,'\n');
+				MenuBST();
 				break;
 			case 5:
+				cout << string(8,'\n');
+				ModifyProva();
+				cout << string(8,'\n');
+				MenuBST();
+				break;
+			case 6:
+				cout << string(8,'\n');
+				MenuInicial2();
+				break;
+			case 7:
 				cout << string(8,'\n');
 				MenuInicial();
 				break;

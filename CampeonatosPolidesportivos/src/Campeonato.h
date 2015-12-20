@@ -113,8 +113,22 @@ public:
 	void changeModalidade(int index, Modalidade *mod);
 	// Metodos para determinar a data do inicio e do fim do campeonato
 	//metodos da BST
-	void removeProvaBST(const Prova prova){
-		TreeProva.remove(prova);
+	Prova encontraProvaBST(string nome){
+		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
+					if (it.retrieve().getNome()==nome){
+						return it.retrieve();
+					}
+		}
+
+	}
+
+	void removeProvaBST(string nome){
+		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
+			if (it.retrieve().getNome()==nome){
+				TreeProva.remove(it.retrieve());
+				return;
+			}
+		}
 	};
 	void inserirProvaBST(const Prova prova){
 		TreeProva.insert(prova);
@@ -131,7 +145,7 @@ public:
 	}
 	void showProvasCalendar(){
 		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
-			cout<< it.retrieve().getNome()<<":"<<" Data: "<<it.retrieve().getData()->getDia()<<"/"<<it.retrieve().getData()->getMes()<<"/"<<it.retrieve().getData()->getAno()<<" hora de inicio "<<it.retrieve().getHoraInicio()->getHora() <<" duração "<< it.retrieve().getDuracao()<<endl;
+			cout<< it.retrieve().getNome()<<":"<<" Data: "<<it.retrieve().getData()->getDia()<<"/"<<it.retrieve().getData()->getMes()<<"/"<<it.retrieve().getData()->getAno()<<" hora de inicio "<<it.retrieve().getHoraInicio()->getHora()<<":"<<it.retrieve().getHoraInicio()->getMinuto() <<" duração "<< it.retrieve().getDuracao()<<endl;
 		}
 	}
 	vector <Prova> getDayorNext(unsigned int &dia,unsigned int &mes, unsigned int ano){
