@@ -19,6 +19,16 @@ public:
 	unsigned int getMinuto() const;
 	// Metodo check para verificar se os valores dos membros-dado estão de acordo com as horas a que se podem realizar provas (9:00 - 18:00).
 	void checkHora(unsigned int hour, unsigned int minute);
+	bool operator <(const Hora h)const{
+		if (hora <h.getHora())return true;
+		if (hora==h.getHora()){
+			if(minuto < h.getMinuto())return true;
+
+		}
+		return false;
+
+
+	}
 };
 
 

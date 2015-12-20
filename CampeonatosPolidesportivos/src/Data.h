@@ -25,11 +25,16 @@ public:
 		if (this->ano == d.ano){
 			if (this->mes < d.mes)return true;
 			if (this->mes==d.mes){
-				if (dia <d.dia)return true;
+				if (dia < d.dia)return true;
 				}
 			}
 		return false;
 	}
+	bool operator==(Data d)const{
+		if (dia==d.dia && mes== d.mes && ano== d.ano)return true;
+		else return false;
+	}
+
 };
 
 

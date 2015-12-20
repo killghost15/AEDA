@@ -123,8 +123,48 @@ public:
 	}
 	void showProvasCalendar(){
 		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
-			cout<< it.retrieve().getNome()<<":"<< it.retrieve().getDuracao()<<endl;
+			cout<< it.retrieve().getNome()<<":"<<" Data: "<<it.retrieve().getData()->getDia()<<"/"<<it.retrieve().getData()->getMes()<<"/"<<it.retrieve().getData()->getAno()<<" hora de inicio "<<it.retrieve().getHoraInicio()->getHora() <<" duração "<< it.retrieve().getDuracao()<<endl;
 		}
+	}
+	vector <Prova> getDayorNext(unsigned int &dia,unsigned int &mes, unsigned int ano){
+		vector<Prova>v;
+
+		for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
+			if (it.retrieve().getData()->getAno()==ano){
+				if(it.retrieve().getData()->getMes()==mes){
+					if(it.retrieve().getData()->getDia()==dia)
+						v.push_back(it.retrieve());
+				}
+			}
+
+		}
+		if (v.size()==0){
+
+			for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
+						if (it.retrieve().getData()->getAno()==ano){
+							if(it.retrieve().getData()->getMes()==mes){
+								if(it.retrieve().getData()->getDia() > dia)
+									dia=it.retrieve().getData()->getDia();
+									v.push_back(it.retrieve());
+							}
+						}
+
+			}
+		}
+		if (v.size()==0){
+					mes++;
+					for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
+								if (it.retrieve().getData()->getAno()==ano){
+									if(it.retrieve().getData()->getMes()==mes){
+										if(it.retrieve().getData()->getDia() == 1)
+											dia=it.retrieve().getData()->getDia();
+											v.push_back(it.retrieve());
+									}
+								}
+
+					}
+				}
+		return v;
 	}
 
 

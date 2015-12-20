@@ -100,10 +100,10 @@ void MenuInicial2(){
 		cout << "-------------------------------------------------------------" << endl;
 		cout << "-                     *** Estruturas de dados ***           -" << endl;
 		cout << "-                                                           -" << endl;
-		cout << "- Qual das estruturas de daods pretende ?                   -" << endl;
+		cout << "- Qual das estruturas de dados pretende ?                   -" << endl;
 		cout << "-                                                           -" << endl;
 		cout << "- 1. Calendário com a BST                                   -" << endl;
-		cout << "- 2.                                                        -" << endl;
+		cout << "- 2. Ver as provas existentes numa data específica          -" << endl;
 		cout << "- 3.                                                        -" << endl;
 		cout << "- 4. Voltar ao Menu Principal                               -" << endl;
 		cout << "-                                                           -" << endl;
@@ -118,6 +118,8 @@ void MenuInicial2(){
 			MenuInicial();
 		}
 		char resposta;
+		unsigned int dia,mes,ano;
+		vector<Prova>v;
 		switch (escolha_listagens) {
 			case 1:
 				cout << string(8,'\n');
@@ -131,12 +133,26 @@ void MenuInicial2(){
 					cin >> resposta;
 				}
 				cout<<string(8,'\n');
-				MenuInicial();
+				MenuInicial2();
 				break;
 			case 2:
 				cout << string(8,'\n');
+				cout<< "Qual a data de que pretente obter as provas se não houver provas nesse dia será apresentado as provas do dia seguinte ou do mesmo mês até ao dia 1 do mês seguinte (dia mes ano):";
+				cin >>dia >> mes >>ano;
+				v=campeonato.getDayorNext(dia,mes,ano);
+				if (v.size()==0){
+					cout << "Não existem provas neste mês!"<<endl;
+					MenuInicial2();
+					break;
+				}
+				else{
+				cout<< dia <<"/"<< mes<<"/"<<ano <<endl;
+				for (unsigned int j=0;j<v.size();j++)
+					cout<<v[j].getNome()<<":"<<v[j].getInfrastrutura()->getNome()<<" em "<<v[j].getInfrastrutura()->getCidade()<<endl;
 
+				MenuInicial2();
 				break;
+				}
 			case 3:
 				cout << string(8,'\n');
 
