@@ -162,12 +162,12 @@ public:
 		}
 		if (v.size()==0){
 
-			for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
-						if (it.retrieve().getData()->getAno()==ano){
-							if(it.retrieve().getData()->getMes()==mes){
-								if(it.retrieve().getData()->getDia() > dia)
-									dia=it.retrieve().getData()->getDia();
-									v.push_back(it.retrieve());
+			for(BSTItrIn<Prova> it2(TreeProva);!it2.isAtEnd();it2.advance()){
+						if (it2.retrieve().getData()->getAno()==ano){
+							if(it2.retrieve().getData()->getMes()==mes){
+								if(it2.retrieve().getData()->getDia() > dia)
+									dia=it2.retrieve().getData()->getDia();
+									v.push_back(it2.retrieve());
 							}
 						}
 
@@ -175,12 +175,12 @@ public:
 		}
 		if (v.size()==0){
 					mes++;
-					for(BSTItrIn<Prova> it(TreeProva);!it.isAtEnd();it.advance()){
-								if (it.retrieve().getData()->getAno()==ano){
-									if(it.retrieve().getData()->getMes()==mes){
-										if(it.retrieve().getData()->getDia() == 1)
-											dia=it.retrieve().getData()->getDia();
-											v.push_back(it.retrieve());
+					for(BSTItrIn<Prova> it3(TreeProva);!it3.isAtEnd();it3.advance()){
+								if (it3.retrieve().getData()->getAno()==ano){
+									if(it3.retrieve().getData()->getMes()==mes){
+										if(it3.retrieve().getData()->getDia() == 1)
+											dia=it3.retrieve().getData()->getDia();
+											v.push_back(it3.retrieve());
 									}
 								}
 

@@ -277,6 +277,7 @@ void MenuBST(){
 				cout<< "Qual a data de que pretente obter as provas se não houver provas nesse dia será apresentado as provas do dia seguinte ou do mesmo mês até ao dia 1 do mês seguinte (dia mes ano):";
 				cin >>dia >> mes >>ano;
 				v=campeonato.getDayorNext(dia,mes,ano);
+
 				if (v.size()==0){
 					cout << "Não existem provas neste mês!"<<endl;
 					cout<<string(8,'\n');
@@ -285,8 +286,10 @@ void MenuBST(){
 				}
 				else{
 				cout<< dia <<"/"<< mes<<"/"<<ano <<endl;
-				for (unsigned int j=0;j<v.size();j++)
-					cout<<v[j].getNome()<<":"<<v[j].getInfrastrutura()->getNome()<<" em "<<v[j].getInfrastrutura()->getCidade()<<endl;
+				cin.sync();
+				for (unsigned int j=0;j<v.size();j++){
+					cout<<v[j].getNome()<<":"<<v[j].getModalidade()->getNome()<<" "<<v[j].getHoraInicio()->getHora() <<":"<<v[j].getHoraInicio()->getMinuto() <<"Local: "<<v[j].getInfrastrutura()->getNome()<<" em "<<v[j].getInfrastrutura()->getCidade()<<endl;
+				}
 
 				cout << "Deseja voltar ao menu inicial (s/n) ?";
 				cin >>resposta;
