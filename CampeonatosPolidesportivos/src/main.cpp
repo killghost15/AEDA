@@ -474,7 +474,7 @@ void AdicionarEquipa() {
 	}
 
 	//criaçao do objeto da classe equipa para adicionar ao campeonato
-	Equipa *equi = new Equipa(nome_equipa);
+	Equipa *equi = new Equipa(nome_equipa, 0, 0, 0);
 
 	for ( unsigned int j = 0; j < sports.size(); j++ ) {
 		string desporto_string = sports[j];
@@ -1338,6 +1338,18 @@ void LancaClassificacoesProva() {
 
 		Atleta *atlet = campeonato.findAtleta(nome_atleta);
 		points_athletes.insert(pair<Atleta*, int>(atlet, classificacao_atleta));
+
+		if ( classificacao_atleta == 1 ) {
+			atlet->getEquipa()->incOuro();
+			campeonato.getEquipas();
+		}
+		else if ( classificacao_atleta == 2 ) {
+			atlet->getEquipa()->incPrata();
+		}
+		else if ( classificacao_atleta == 3 ) {
+			atlet->getEquipa()->incBronze();
+		}
+
 	}
 
 	//criaçao do objeto da classe prova

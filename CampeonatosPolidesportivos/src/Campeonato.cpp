@@ -468,6 +468,7 @@ void Campeonato::changeModalidade(int index, Modalidade *mod) {
 // Carrega a informação das equipas do ficheiro equipas.txt
 void Campeonato::loadEquipas() {
 	string nome_equi, nome_desp;
+	string num_ouro, num_prata, num_bronze;
 	Equipa *equi;
 
 	ifstream fileequi;
@@ -478,8 +479,15 @@ void Campeonato::loadEquipas() {
 		while ( !fileequi.eof() ) {
 
 			getline(fileequi, nome_equi);
+			getline(fileequi, num_ouro);
+			getline(fileequi, num_prata);
+			getline(fileequi, num_bronze);
 
-			equi = new Equipa(nome_equi);
+			int ouro_int = atoi(num_ouro.c_str());
+			int prata_int = atoi(num_prata.c_str());
+			int bronze_int = atoi(num_bronze.c_str());
+
+			equi = new Equipa(nome_equi, ouro_int, prata_int, bronze_int);
 
 			vector<string> sports;
 			while ( true ) {
@@ -514,6 +522,9 @@ void Campeonato::saveEquipa() {
 
 	//guarda apenas a primeira equipa
 	fileequi << equipas[0]->getNome();
+	fileequi << equipas[0]->getOuro();
+	fileequi << equipas[0]->getPrata();
+	fileequi << equipas[0]->getBronze();
 
 	//guarda os desportos da primeira equipa
 	for( unsigned int i = 0; i < equipas[0]->getDesportos().size(); i++ ) {
@@ -527,6 +538,9 @@ void Campeonato::saveEquipa() {
 	for ( unsigned int j = 1; j < equipas.size(); j++ ) {
 		fileequi << endl;
 		fileequi << equipas[j]->getNome();
+		fileequi << equipas[j]->getOuro();
+		fileequi << equipas[j]->getPrata();
+		fileequi << equipas[j]->getBronze();
 
 		for( unsigned int i = 0; i < equipas[j]->getDesportos().size(); i++ ) {
 			fileequi << endl;
