@@ -8,7 +8,7 @@ void Bilhete::info(){
 	ad->info();
 	cout<<endl<<"Provas"<<endl;
 
-	for(int i=0; i<provas.size();i++){
+	for(unsigned int i=0; i<provas.size();i++){
 		cout << "Nome" << provas[i]->getNome()<< endl;
 	}
 }

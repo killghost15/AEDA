@@ -1099,8 +1099,8 @@ void Campeonato::loadBilhetes(){
 			ade = new Adepto(nome_adepto, idadeAdepto_int, email_adepto,morada_adepto);
 			adeptos.push_back(ade);
 			provas_bilhete.clear();
-			for(int i=0;i<provas.size();i++){
-				for(int j=0;j<provas_str.size();j++){
+			for(unsigned int i=0;i<provas.size();i++){
+				for(unsigned int j=0;j<provas_str.size();j++){
 					if(provas_str[j] == provas[i]->getNome()){
 						provas_bilhete.push_back(provas[i]);
 					}

@@ -2054,16 +2054,19 @@ void RankingEquipas() {
 	priority_queue<Equipa*> ranking;
 
 	for( unsigned int i = 0; i < campeonato.getEquipas().size(); i++ )
-		ranking.push(campeonato.getEquipas()[0]);
+		ranking.push(campeonato.getEquipas()[i]);
 
 	cout << "Ranking das equipas:" << endl;
 	cout << "" << endl;
 
-	while (!ranking.empty()) {
-	   cout << "1: " << ranking.front() << endl;  // Print highest priority string
-	   ranking.pop();                    // Remmove highest priority string
+	priority_queue<Equipa*> temp_rank = ranking;
+	int count = 1;
+	while (!temp_rank.empty()) {
+
+		cout << count << ": " << temp_rank.top()->getNome() << endl;
+		temp_rank.pop();
+		count++;
 	}
-	cout << "1: " << endl;
 
 }
 
@@ -2080,7 +2083,7 @@ void MenuListagens() {
 	cout << "- 1. Atletas                                                -" << endl;
 	cout << "- 2. Classificação das provas de uma modalidade             -" << endl;
 	cout << "- 3. Listagem de Funcionários ordenados por anos de serviço -" << endl;
-	cout << "- 4. Atletas                                                -" << endl;
+	cout << "- 4. Ranking de equipas                                     -" << endl;
 	cout << "- 5. Voltar ao Menu Principal                               -" << endl;
 	cout << "-                                                           -" << endl;
 	cout << "-------------------------------------------------------------" << endl;
