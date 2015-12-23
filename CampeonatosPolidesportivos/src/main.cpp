@@ -42,6 +42,7 @@ void ListaDeClassificacoes();
 void ListaDeFuncionarios();
 void MenuListagens();
 void MenuBST();
+void MenuHashTable();
 void MenuInicial2();
 
 // Verifica se o ficheiro tem alguma coisa. Retorna true se nao tiver e false se tiver
@@ -84,6 +85,7 @@ int main() {
 	campeonato.loadInfrastruturas();
 	campeonato.loadFuncionarios();
 	campeonato.loadProvas();
+	campeonato.loadBilhetes();
 	//maneira para corrigir o bugg mas tem q ser resolvido
 	campeonato.eraseProva("");
 	campeonato.provasToBST();
@@ -2087,6 +2089,74 @@ void MenuListagens() {
 	}
 }
 
+//MENU HASHTABLE
+
+
+void MenuHashTable(){
+	int escolha;
+
+		cout << "-------------------------------------------------------------" << endl;
+		cout << "-                     *** HashTable opções ***              -" << endl;
+		cout << "-                                                           -" << endl;
+		cout << "- O que pretende?						                     -" << endl;
+		cout << "-                                                           -" << endl;
+		cout << "- 1. Ver lista de adeptos                                   -" << endl;
+		cout << "- 2. Ver lista de adeptos com bilhete válido                -" << endl;
+		cout << "- 3. Comprar bilhete                                        -" << endl;
+		cout << "- 4. Vender bilhete                                         -" << endl;
+		cout << "- 5. Novo adepto                                            -" << endl;
+		cout << "- 6. Voltar ao Menu das estruturas de dados                 -" << endl;
+		cout << "- 7. Voltar ao Menu Principal                               -" << endl;
+		cout << "-                                                           -" << endl;
+		cout << "-------------------------------------------------------------" << endl;
+
+		cout << " O que pretende fazer? ";
+		cin >> escolha;
+		switch (escolha) {
+				case 1:
+					cout << string(3,'\n');
+					campeonato.listarAdeptos();
+					cout << string(3,'\n');
+					MenuHashTable();
+					break;
+				case 2:
+					cout << string(3,'\n');
+					campeonato.listarAdeptosComBilhete();
+					cout << string(3,'\n');
+					MenuHashTable();
+					break;
+				case 3:
+					cout << string(3,'\n');
+					campeonato.comprarBilhete();
+					campeonato.saveBilhetes();
+					cout <<string(3,'\n');
+					MenuHashTable();
+					break;
+				case 4:
+					cout << string(3,'\n');
+					campeonato.venderBilhete();
+					campeonato.saveBilhetes();
+					MenuHashTable();
+					break;
+				case 5:
+					cout << string(8,'\n');
+					campeonato.criaAdepto();
+					campeonato.saveBilhetes();
+					MenuHashTable();
+					break;
+				case 6:
+					cout << string(8,'\n');
+					MenuInicial2();
+					break;
+				case 7:
+					cout << string(8,'\n');
+					MenuInicial();
+					break;
+		}
+
+
+}
+
 
 /**
  *  MENU INICIAL
@@ -2119,10 +2189,10 @@ void MenuInicial2(){
 				break;
 			case 2:
 				cout << string(8,'\n');
-
 				break;
 			case 3:
 				cout <<string(8,'\n');
+				MenuHashTable();
 				break;
 			case 4:
 				cout <<string(8,'\n');

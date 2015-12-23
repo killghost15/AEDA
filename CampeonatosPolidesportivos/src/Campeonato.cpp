@@ -1055,7 +1055,78 @@ void Campeonato::addFuncionario(Funcionario *func) {
 	saveFuncionario();
 }
 
+void Campeonato::loadBilhetes(){
+	string nome_adepto, idade_adepto, email_adepto,  morada_adepto, prova;
+	string trash;
+	Adepto *ade;
+	Bilhete *b1;
+	vector<string> provas_str;
+	vector<Prova*> provas_bilhete;
+	ifstream filebil;
+	filebil.open(file_bilhetes);
 
-//BSTs
+	if ( filebil.is_open() ) {
+
+		while ( !filebil.eof() ) {
+			provas_str.clear();
+			getline(filebil, nome_adepto);
+			getline(filebil, idade_adepto);
+			getline(filebil, email_adepto);
+			getline(filebil, morada_adepto);
+			getline(filebil, prova);
+			while (prova != "-"){
+				provas_str.push_back(prova);
+				getline(filebil, prova);
+			}
+		//	getline(filebil, trash);	// trash não é usada para nada, apenas para ignorar 1 linha
+
+			int idadeAdepto_int = atoi(idade_adepto.c_str());
+
+			ade = new Adepto(nome_adepto, idadeAdepto_int, email_adepto,morada_adepto);
+			adeptos.push_back(ade);
+			provas_bilhete.clear();
+			for(int i=0;i<provas.size();i++){
+				for(int j=0;j<provas_str.size();j++){
+					if(provas_str[j] == provas[i]->getNome()){
+						provas_bilhete.push_back(provas[i]);
+					}
+				}
+			}
+			b1 = new Bilhete(provas_bilhete,ade);
+			addBilhete(b1);
+
+		}
+
+		filebil.close();
+	}
+}
+
+void Campeonato::saveBilhetes(){
+	ofstream filebil;
+	filebil.open(file_bilhetes);
+	Tabela::iterator it = bilhetes.begin();
+	Adepto* ad;
+	int id;
+	vector<Prova*> provas_bil;
+
+	for(;it!=bilhetes.end();it++){
+		ad = (*it)->getAdepto();
+		id = (*it)->getId();
+		provas_bil = (*it)->getProvas();
+
+		filebil<<ad->getNome() << endl;
+		filebil<<ad->getIdade() << endl;
+		filebil<<ad->getEmail() << endl;
+		filebil<<ad->getMorada() << endl;
+		for(unsigned int i=0;i<provas_bil.size();i++){
+			filebil<<provas_bil[i]->getNome()<< endl;
+		}
+		filebil<<"-" << endl;
+
+	}
+
+		filebil.close();
+}
+
 
 

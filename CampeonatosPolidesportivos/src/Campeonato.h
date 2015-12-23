@@ -8,7 +8,9 @@
 #include <stdlib.h>
 #include "BST.h"
 #include <map>
+#include<tr1/unordered_set>
 
+#include "Bilhete.h"
 #include "Desporto.h"
 #include "Infrastrutura.h"
 #include "Funcionario.h"
@@ -22,8 +24,23 @@
 #define file_desportos "desportos.txt"
 #define file_infrastruturas "infrastruturas.txt"
 #define file_funcionarios "funcionarios.txt"
+#define file_bilhetes "bilhetes.txt"
 
+using namespace std;
 
+typedef struct  {
+
+	int operator()(Bilhete *b) const{
+		int hash = b->getId();
+		return hash;
+	}
+
+	bool operator()( Bilhete *b1,  Bilhete *b2) const {
+		return b1->getId() == b2->getId();
+	}
+}hashBilhete;
+
+typedef tr1::unordered_set<Bilhete*, hashBilhete> Tabela;
 
 
 class Campeonato {
@@ -34,6 +51,8 @@ class Campeonato {
 	vector<Desporto*> desportos;
 	vector<Infrastrutura*> infrastruturas;
 	vector<Funcionario*> funcionarios;
+	vector<Adepto*> adeptos;
+	Tabela bilhetes;
 
 public:
 	BST<Prova> TreeProva;
@@ -189,6 +208,238 @@ public:
 		return v;
 	};
 
+	//HASHTABLE FUNCS
+
+	void addBilhete(Bilhete* b){
+		bilhetes.insert(b);
+	}
+
+	void retirarBilhete(Adepto* ad){
+		Tabela::iterator it = bilhetes.begin();
+		for(;it!=bilhetes.end();it++){
+			if((*it)->getAdepto()->getEmail() == ad->getEmail()){
+				bilhetes.erase(it);
+			}
+		}
+	}
+
+	bool existeAdepto(string nome){
+		for(unsigned int i=0;i<adeptos.size();i++){
+			if(adeptos[i]->getNome()==nome)
+				return true;
+		}
+		return false;
+	}
+
+	void venderBilhete(){
+		string nome_adepto;
+		vector<Prova*> provas_bil;
+		while(1){
+			cout<<"Nome do adepto(0 para sair): ";
+			cin>>nome_adepto;
+			cin.get();
+			if(nome_adepto=="0")
+				return;
+
+			if(!existeAdepto(nome_adepto)){
+				cout<<endl<<"Nao existe um adepto com esse nome"<<endl;
+				continue;
+			}
+
+			Tabela::iterator it = bilhetes.begin();
+
+			for(;it!=bilhetes.end();it++){
+				if((*it)->getAdepto()->getNome()==nome_adepto){
+					provas_bil = (*it)->getProvas();
+					provas_bil.clear();
+					(*it)->setProvas(provas_bil);
+				}
+			}
+			cout<<endl<<"O bilhete foi vendido com sucesso"<<endl;
+			return;
+		}
+	}
+
+	void comprarBilhete(){
+		string nome_adepto,prova_str;
+		bool found_adepto = false;
+		Adepto* ad;
+		vector<Prova*> provas_adepto;
+		string novo, novo_nome, novo_idade, novo_email, novo_morada;
+		int idade;
+
+		cout<<endl<<"Novo adepto? (0 - Sim / 1- Nao / Outro - Sair)"<<endl;
+		cin>>novo;
+		cin.clear();
+		if(novo == "0"){
+			while(1){
+
+				cout<<endl<<"Nome: ";
+				cin>>novo_nome;
+				cin.get();
+				if(existeAdepto(novo_nome)){
+					cout<<endl<<"Ja existe um adepto com esse nome"<<endl;
+				}
+				else
+					break;
+			}
+				cout<<endl<<"Idade: ";
+				cin>>novo_idade;
+				cin.get();
+
+				cout<<endl<<"Email: ";
+				cin>>novo_email;
+				cin.get();
+
+				cout<<endl<<"Morada: ";
+				cin>>novo_morada;
+				cin.get();
+
+				idade = atoi(novo_idade.c_str());
+				ad = new Adepto(novo_nome, idade, novo_email, novo_morada);
+				adeptos.push_back(ad);
+
+				cout <<endl<< "Provas?"<<endl;
+				while(1){
+					cout<<endl<<"Nome (0 to exit):";
+					getline(cin,prova_str);
+					if(prova_str == "0") break;
+					for(unsigned int i=0;i<provas.size();i++){
+						if(provas[i]->getNome()==prova_str){
+							provas_adepto.push_back(provas[i]);
+							cout<<endl<<"Prova junta ao bilhete com sucesso!";
+						}
+					}
+				}
+				if(provas_adepto.size() == 0){
+					cout<<endl<<"O bilhete nao foi adquirido"<<endl;
+					return;
+				}
+				Bilhete* b = new Bilhete(provas_adepto,ad);
+				addBilhete(b);
+				cout<<endl<<"O bilhete foi adquirido com sucesso"<<endl;
+				return;
+			}
+
+		if(novo =="1"){
+			while(1){
+				cout<<endl<<"Nome do adepto(0 para sair): ";
+				cin>>nome_adepto;
+				cin.get();
+				if(nome_adepto=="0")
+					return;
+				Tabela::iterator iter =bilhetes.begin();
+
+				for(;iter!=bilhetes.end();iter++){
+					if((*iter)->getAdepto()->getNome() == nome_adepto){
+						ad = (*iter)->getAdepto();
+						found_adepto = true;
+					}
+				}
+				if(!found_adepto)
+					cout<<endl<<"Nao existe nenhum adepto com esse nome"<<endl;
+				else
+					break;
+			}
+		}
+		else
+			return;
+
+		cout <<endl<< "Provas a juntar ao bilhete?"<<endl;
+		while(1){
+			cout<<endl<<"Nome (0 to exit):";
+			getline(cin, prova_str);
+			if(prova_str == "0") break;
+			for(unsigned int i=0;i<provas.size();i++){
+				if(provas[i]->getNome()==prova_str){
+					provas_adepto.push_back(provas[i]);
+					cout<<endl<<"Prova junta ao bilhete com sucesso!";
+				}
+			}
+		}
+		if(provas_adepto.size() == 0){
+			cout<<endl<<"Erro na operaçao"<<endl;
+			return;
+		}
+
+		Tabela::iterator it = bilhetes.begin();
+		for(;it!=bilhetes.end();it++){
+			if((*it)->getAdepto()->getNome()==ad->getNome()){
+				for(unsigned int k=0;k<provas_adepto.size();k++){
+					(*it)->addProva(provas_adepto[k]);
+				}
+			}
+		}
+
+		cout<<endl<<"O bilhete foi modificado com sucesso"<<endl;
+
+	}
+
+	void listarAdeptos(){
+		Tabela::iterator it = bilhetes.begin();
+		for(;it!=bilhetes.end();it++){
+			(*it)->getAdepto()->info();
+			cout<<endl;
+		}
+	}
+
+	void listarAdeptosComBilhete(){
+		vector<Prova*> provas_adepto;
+		Tabela::iterator it = bilhetes.begin();
+		for(;it!=bilhetes.end();it++){
+			if((*it)->getProvas().size()!=0){
+				cout<<endl<<"Nome: "<< (*it)->getAdepto()->getNome()<<endl;
+				cout<<"Provas"<<endl;
+				provas_adepto =(*it)->getProvas();
+				for(unsigned int i=0;i<provas_adepto.size();i++){
+					cout<<".."<< provas_adepto[i]->getNome()<<endl;
+				}
+				provas_adepto.clear();
+			}
+		}
+	}
+
+	void criaAdepto(){
+		string novo_nome, novo_idade, novo_email,novo_morada;
+		int idade;
+		Adepto* ad;
+			while(1){
+
+				cout<<endl<<"Nome: ";
+				cin>>novo_nome;
+				cin.get();
+				if(existeAdepto(novo_nome)){
+					cout<<endl<<"Ja existe um adepto com esse nome"<<endl;
+				}
+				else
+					break;
+			}
+				cout<<endl<<"Idade: ";
+				cin>>novo_idade;
+				cin.get();
+
+				cout<<endl<<"Email: ";
+				cin>>novo_email;
+				cin.get();
+
+				cout<<endl<<"Morada: ";
+				cin>>novo_morada;
+				cin.get();
+
+				idade = atoi(novo_idade.c_str());
+				ad = new Adepto(novo_nome, idade, novo_email, novo_morada);
+				adeptos.push_back(ad);
+
+				vector<Prova*>provas_adepto;
+				Bilhete* b = new Bilhete(provas_adepto,ad);
+				addBilhete(b);
+				cout<<endl<<"Ja existe um novo adepto!"<<endl;
+				return;
+	}
+
+
+	void loadBilhetes();
+	void saveBilhetes();
 
 };
 

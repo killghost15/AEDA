@@ -12,3 +12,6 @@ Munique
 
 Estádio Nacional de Varsóvia
 Varsóvia
+
+infra2
+Viseu
