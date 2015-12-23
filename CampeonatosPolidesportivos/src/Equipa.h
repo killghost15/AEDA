@@ -27,6 +27,7 @@ public:
 	void incBronze();
 	// outros metodos
 	void pushDesporto(string desp);
+	bool operator <( const Equipa &equi );
 };
 
 

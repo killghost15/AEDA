@@ -1341,13 +1341,15 @@ void LancaClassificacoesProva() {
 
 		if ( classificacao_atleta == 1 ) {
 			atlet->getEquipa()->incOuro();
-			campeonato.getEquipas();
+			campeonato.findEquipa(atlet->getEquipa()->getNome())->incOuro();
 		}
 		else if ( classificacao_atleta == 2 ) {
 			atlet->getEquipa()->incPrata();
+			campeonato.findEquipa(atlet->getEquipa()->getNome())->incPrata();
 		}
 		else if ( classificacao_atleta == 3 ) {
 			atlet->getEquipa()->incBronze();
+			campeonato.findEquipa(atlet->getEquipa()->getNome())->incBronze();
 		}
 
 	}
@@ -1787,7 +1789,6 @@ void AdicionarFuncionario() {
 			if( campeonato.existsFuncionario(nome_funcionario) == true )
 				throw FuncionarioJaExistente(nome_funcionario);
 			else {
-
 				cout << " Idade do Funcionario: ";
 				cin >> idade_funcionario;
 				if( idade_funcionario < 18 )
@@ -2049,6 +2050,24 @@ void ListaDeFuncionarios() {
 }
 
 
+void RankingEquipas() {
+	priority_queue<Equipa*> ranking;
+
+	for( unsigned int i = 0; i < campeonato.getEquipas().size(); i++ )
+		ranking.push(campeonato.getEquipas()[0]);
+
+	cout << "Ranking das equipas:" << endl;
+	cout << "" << endl;
+
+	while (!ranking.empty()) {
+	   cout << "1: " << ranking.front() << endl;  // Print highest priority string
+	   ranking.pop();                    // Remmove highest priority string
+	}
+	cout << "1: " << endl;
+
+}
+
+
 // Menu das Listagens, efetua a listagem de toda a informação que o utilizador quiser
 void MenuListagens() {
 	int escolha_listagens;
@@ -2061,14 +2080,15 @@ void MenuListagens() {
 	cout << "- 1. Atletas                                                -" << endl;
 	cout << "- 2. Classificação das provas de uma modalidade             -" << endl;
 	cout << "- 3. Listagem de Funcionários ordenados por anos de serviço -" << endl;
-	cout << "- 4. Voltar ao Menu Principal                               -" << endl;
+	cout << "- 4. Atletas                                                -" << endl;
+	cout << "- 5. Voltar ao Menu Principal                               -" << endl;
 	cout << "-                                                           -" << endl;
 	cout << "-------------------------------------------------------------" << endl;
 
 	cout << " O que pretende fazer? ";
 	cin >> escolha_listagens;
 
-	if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 ) {
+	if ( escolha_listagens != 1 && escolha_listagens != 2 && escolha_listagens != 3 && escolha_listagens != 4 && escolha_listagens != 5 ) {
 		cout << " Por favor, faça uma escolha adequada.";
 		cout << string(8,'\n');
 		MenuInicial();
@@ -2094,6 +2114,12 @@ void MenuListagens() {
 			MenuInicial();
 			break;
 		case 4:
+			cout << string(8,'\n');
+			RankingEquipas();
+			cout <<string(8,'\n');
+			MenuInicial();
+			break;
+		case 5:
 			cout << string(8,'\n');
 			MenuInicial();
 			break;

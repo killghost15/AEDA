@@ -47,3 +47,19 @@ void Equipa::incBronze() {
 void Equipa::pushDesporto(string desp) {
 	desportos.push_back(desp);
 }
+
+
+bool Equipa::operator <( const Equipa &equi ) {
+	if( ouro < equi.ouro )
+		return true;
+	else if( ouro == equi.ouro ) {
+		if( prata < equi.prata )
+			return true;
+		else if( prata == equi.prata )
+			if( bronze < equi.bronze )
+				return true;
+	}
+
+	return false;
+}
+
