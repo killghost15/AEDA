@@ -14,15 +14,15 @@ string Equipa::getNome() const {
 	return nome;
 }
 
-int Equipa::getOuro() {
+int Equipa::getOuro() const{
 	return ouro;
 }
 
-int Equipa::getPrata() {
+int Equipa::getPrata() const{
 	return prata;
 }
 
-int Equipa::getBronze() {
+int Equipa::getBronze() const{
 	return bronze;
 }
 
@@ -49,15 +49,20 @@ void Equipa::pushDesporto(string desp) {
 }
 
 
-bool Equipa::operator <( const Equipa &equi ) {
+bool Equipa::operator <( const Equipa equi ) const{
 	if( ouro < equi.ouro )
 		return true;
 	else if( ouro == equi.ouro ) {
 		if( prata < equi.prata )
 			return true;
-		else if( prata == equi.prata )
+		else if( prata == equi.prata ){
 			if( bronze < equi.bronze )
 				return true;
+			if (bronze==equi.bronze){
+				if(nome> equi.nome)
+					return true;
+			}
+		}
 	}
 
 	return false;

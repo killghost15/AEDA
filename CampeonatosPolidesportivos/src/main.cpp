@@ -5,9 +5,6 @@
 #include <map>
 
 #include "Campeonato.h"
-#include "Infrastrutura.h"
-#include "Exceptions.h"
-#include "Data.h"
 
 using namespace std;
 
@@ -89,7 +86,7 @@ int main() {
 	//maneira para corrigir o bugg mas tem q ser resolvido
 	campeonato.eraseProva("");
 	campeonato.provasToBST();
-	//campeonato.removeProvaBST(defa);
+	campeonato.equipatopriority();
 	// Chama o Menu Inicial
 	MenuInicial();
 
@@ -2051,19 +2048,20 @@ void ListaDeFuncionarios() {
 
 
 void RankingEquipas() {
-	priority_queue<Equipa*> ranking;
 
-	for( unsigned int i = 0; i < campeonato.getEquipas().size(); i++ )
-		ranking.push(campeonato.getEquipas()[i]);
+
 
 	cout << "Ranking das equipas:" << endl;
 	cout << "" << endl;
 
-	priority_queue<Equipa*> temp_rank = ranking;
+	priority_queue<Equipa> temp_rank = campeonato.getRank();
 	int count = 1;
 	while (!temp_rank.empty()) {
 
-		cout << count << ": " << temp_rank.top()->getNome() << endl;
+		cout << count << ": " << temp_rank.top().getNome()<<endl;
+		cout << "medalhas de ouro:"<<temp_rank.top().getOuro() <<endl;
+		cout << "medalhas de prata:"<<temp_rank.top().getPrata() <<endl;
+		cout << "medalhas de ouro:"<<temp_rank.top().getBronze()<<endl;
 		temp_rank.pop();
 		count++;
 	}
@@ -2201,7 +2199,58 @@ void MenuHashTable(){
 
 /**
  *  MENU INICIAL
+ *
+ *
+ *
  */
+void Desclassifica(){
+	string nome;
+	cin.sync();
+	cout << "Qual o nome da equipa que deve ser desclassificada:";
+	getline(cin,nome);
+	cin.sync();
+	if(campeonato.DesclassificaEquipaQueue(nome))
+		cout << "Equipa desclassificada ninguem está acima das regras!"<<endl;
+		else
+			cout <<"Equipa não existe"<<endl;
+}
+
+void MenuPriority(){
+	int escolha_menu;
+	cout << "----------------------------------------------------" << endl;
+	cout << "-        *** Menu da fila de prioridade ***        -" << endl;
+	cout << "-                                                  -" << endl;
+	cout << "- 1. Ver ranking das equipas                       -" << endl;
+	cout << "- 2. Desclassificar equipa                         -" << endl;
+	cout << "- 3. Voltar ao menu anterior                       -" << endl;
+	cout << "-                                                  -" << endl;
+	cout << " O que pretende fazer? ";
+	cin >> escolha_menu;
+
+	if ( escolha_menu != 1 && escolha_menu != 2 && escolha_menu != 3) {
+				cout << " Por favor, faça uma escolha adequada.";
+				cout << string(8,'\n');
+				MenuPriority();
+			}
+	switch (escolha_menu) {
+	case 1:
+		cout <<string(8,'\n');
+		RankingEquipas();
+		cout <<string(8,'\n');
+		MenuPriority();
+		break;
+	case 2:
+		cout <<string(8,'\n');
+		Desclassifica();
+		cout <<string(8,'\n');
+		MenuPriority();
+		break;
+	case 3:
+		MenuInicial2();
+		break;
+	}
+
+}
 void MenuInicial2(){
 	int escolha_menu;
 
@@ -2212,6 +2261,9 @@ void MenuInicial2(){
 		cout << "- 2. Filas de prioridade                           -" << endl;
 		cout << "- 3. Tabelas de dispersão                          -" << endl;
 		cout << "- 4. Voltar ao menu inicial                        -" << endl;
+		cout << "-                                                  -" << endl;
+		cout << "----------------------------------------------------" << endl;
+
 
 
 		cout << " O que pretende fazer? ";
@@ -2230,6 +2282,7 @@ void MenuInicial2(){
 				break;
 			case 2:
 				cout << string(8,'\n');
+				MenuPriority();
 				break;
 			case 3:
 				cout <<string(8,'\n');
@@ -2292,6 +2345,7 @@ void MenuInicial() {
 			cout << string(8,'\n');
 			MenuCalendario();
 			cout << string (8, '\n');
+			MenuInicial();
 			break;
 		case 6:
 			cout << string(8,'\n');

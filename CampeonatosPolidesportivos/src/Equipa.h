@@ -17,9 +17,9 @@ public:
 	Equipa(string name, int gold, int silver, int brass);
 	// Metodos get
 	string getNome() const;
-	int getOuro();
-	int getPrata();
-	int getBronze();
+	int getOuro()const;
+	int getPrata()const;
+	int getBronze()const;
 	vector<string> getDesportos();
 	// Metodos set
 	void incOuro();
@@ -27,7 +27,7 @@ public:
 	void incBronze();
 	// outros metodos
 	void pushDesporto(string desp);
-	bool operator <( const Equipa &equi );
+	bool operator <( const Equipa equi )const;
 };
 
 

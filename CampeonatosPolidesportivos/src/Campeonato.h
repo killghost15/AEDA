@@ -16,6 +16,10 @@
 #include "Funcionario.h"
 #include "Prova.h"
 
+#include "Exceptions.h"
+#include "Data.h"
+
+
 
 #define file_equipas "equipas.txt"
 #define file_atletas "atletas.txt"
@@ -53,6 +57,8 @@ class Campeonato {
 	vector<Funcionario*> funcionarios;
 	vector<Adepto*> adeptos;
 	Tabela bilhetes;
+	priority_queue<Equipa> rank;
+
 
 public:
 	BST<Prova> TreeProva;
@@ -154,7 +160,6 @@ public:
 	};
 	void provasToBST(){
 		for (vector<Prova*>::const_iterator it=provas.begin();it!=provas.end();it++ ){
-			//Cena para disfarçar o problema do load...
 			if ((*it)->getNome()==""){}
 			else{
 			TreeProva.insert(*(*it));
@@ -436,7 +441,33 @@ public:
 				cout<<endl<<"Ja existe um novo adepto!"<<endl;
 				return;
 	}
+void equipatopriority(){
+	for (unsigned int i=0;i < equipas.size();i++){
+		rank.push(*(equipas[i]));
+	}
 
+
+}
+priority_queue <Equipa> getRank()const{
+	return rank;
+}
+bool DesclassificaEquipaQueue(string nome){
+	eraseEquipa(nome);
+	priority_queue<Equipa> tmp=rank;
+	unsigned int alterou=tmp.size();
+	priority_queue<Equipa> res;
+	while(!tmp.empty()){
+		if(tmp.top().getNome()!= nome)
+		res.push(tmp.top());
+
+
+		tmp.pop();
+	}
+	rank=res;
+	if (alterou==rank.size())
+		return false;
+	else return true;
+}
 
 	void loadBilhetes();
 	void saveBilhetes();
