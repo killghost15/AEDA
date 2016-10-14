@@ -1,20 +1,10 @@
-Traquinas
-0
-1
-1
+Traquinas011
  Basquetebol
  Corrida
 
-Marrecos
-2
-0
-0
- Natação
- Lançamento do peso
-
-Fever4ever
-0
-1
-0
+Fever4ever010
  Basquetebol
  Halterofilismo
+
+Teste000
+ Basquetebol

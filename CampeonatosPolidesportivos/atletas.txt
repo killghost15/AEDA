@@ -10,10 +10,10 @@ Carmelo Anthony
 2.05
  Traquinas
 
-Cookie Óscar
-29
-70
-1.71
+Carlão Sousa
+23
+77
+1.86
  Marrecos
 
 Guy-Manuel de Homem-Christo
@@ -22,8 +22,8 @@ Guy-Manuel de Homem-Christo
 1.77
  Fever4ever
 
-Carlão Sousa
-23
-77
-1.86
- Marrecos
+Bas
+19
+90
+1.7
+ Teste

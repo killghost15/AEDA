@@ -15,16 +15,16 @@ Bruços Prova1
 20
  Bruços Prova1
  Estádio Nacional de Varsóvia
- Guy-Manuel de Homem-Christo
-  2
  Chauncey Billups
   3
+ Guy-Manuel de Homem-Christo
+  2
  Carlão Sousa
   1
 
 Maratona Prova1
 14/10/2015
-9:50
+9:00
 200
  Maratona Prova1
  Allianz Arena
@@ -33,5 +33,9 @@ NOMEDAPROVA
 15/11/2016
 22:55
 15
- Basquetebol
+ NOMEDAPROVA
  infra2
+ Carlão Sousa
+  2
+ Bas
+  1
